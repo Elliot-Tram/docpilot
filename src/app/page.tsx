@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 
 /* ─────────────────────── Icons (outline, 1.5px stroke) ─────────────────────── */
 
@@ -231,10 +232,21 @@ export default function Home() {
           <WaitlistForm />
           <div className="flex items-center justify-center gap-6 mt-8">
             <span className="text-xs text-dark/30 font-medium">Se connecte à</span>
-            {["Zendesk", "Intercom", "Freshdesk"].map((name) => (
-              <span key={name} className="text-sm font-medium text-dark/40 border border-dark/8 px-3 py-1.5 rounded-lg">
-                {name}
-              </span>
+            {[
+              { name: "Zendesk", domain: "zendesk.com" },
+              { name: "Intercom", domain: "intercom.com" },
+              { name: "Freshdesk", domain: "freshdesk.com" },
+            ].map((tool) => (
+              <div key={tool.name} className="flex items-center gap-2 border border-dark/8 px-3 py-1.5 rounded-lg">
+                <Image
+                  src={`https://cdn.brandfetch.io/${tool.domain}?c=1idYXkEn8JPR8HmylTb`}
+                  alt={tool.name}
+                  width={20}
+                  height={20}
+                  className="rounded-sm"
+                />
+                <span className="text-sm font-medium text-dark/40">{tool.name}</span>
+              </div>
             ))}
           </div>
         </div>
