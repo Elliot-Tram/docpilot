@@ -214,7 +214,7 @@ export default function Home() {
         <div className="max-w-[912px] mx-auto text-center">
           <div className="inline-block mb-6">
             <span className="font-mono text-sm bg-orchid/20 text-accent-purple px-4 py-1.5 rounded-full">
-              Propulsé par l&apos;IA — 100% français, hébergé en Europe 🇪🇺
+              Bientôt disponible — 100% français, hébergé en Europe 🇪🇺
             </span>
           </div>
           <h1 className="text-5xl md:text-[64px] font-normal leading-[1.08] tracking-[-2px] mb-6">
