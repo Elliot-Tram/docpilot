@@ -1,17 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
-import { promises as fs } from "fs";
-import path from "path";
+import { Redis } from "@upstash/redis";
+import { Resend } from "resend";
 
-const DATA_FILE = path.join(process.cwd(), "waitlist.json");
+const redis = Redis.fromEnv();
+const resend = new Resend(process.env.RESEND_API_KEY);
 
-async function getEmails(): Promise<string[]> {
-  try {
-    const data = await fs.readFile(DATA_FILE, "utf-8");
-    return JSON.parse(data);
-  } catch {
-    return [];
-  }
-}
+const WAITLIST_KEY = "waitlist:emails";
 
 export async function POST(req: NextRequest) {
   try {
@@ -22,18 +16,29 @@ export async function POST(req: NextRequest) {
     }
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
+    if (!emailRegex.test(email.trim())) {
       return NextResponse.json({ error: "Email invalide" }, { status: 400 });
     }
 
-    const emails = await getEmails();
+    const normalizedEmail = email.toLowerCase().trim();
 
-    if (emails.includes(email.toLowerCase())) {
+    // Check if already registered
+    const isMember = await redis.sismember(WAITLIST_KEY, normalizedEmail);
+    if (isMember) {
       return NextResponse.json({ error: "Cet email est déjà inscrit" }, { status: 409 });
     }
 
-    emails.push(email.toLowerCase());
-    await fs.writeFile(DATA_FILE, JSON.stringify(emails, null, 2));
+    // Store in Redis
+    await redis.sadd(WAITLIST_KEY, normalizedEmail);
+
+    // Notify Elliot of new signup
+    const count = await redis.scard(WAITLIST_KEY);
+    await resend.emails.send({
+      from: "Docpilot <onboarding@resend.dev>",
+      to: "elliot.tristram@gmail.com",
+      subject: `Nouvelle inscription waitlist Docpilot (#${count})`,
+      html: `<p><strong>${normalizedEmail}</strong> vient de s'inscrire sur la waitlist.</p><p>Total : ${count} inscrits.</p>`,
+    });
 
     return NextResponse.json({ success: true, message: "Inscrit avec succès !" });
   } catch {
