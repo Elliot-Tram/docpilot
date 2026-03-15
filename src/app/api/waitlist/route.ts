@@ -2,9 +2,6 @@ import { NextRequest, NextResponse } from "next/server";
 import { Redis } from "@upstash/redis";
 import { Resend } from "resend";
 
-const redis = Redis.fromEnv();
-const resend = new Resend(process.env.RESEND_API_KEY);
-
 const WAITLIST_KEY = "waitlist:emails";
 
 export async function POST(req: NextRequest) {
@@ -21,6 +18,7 @@ export async function POST(req: NextRequest) {
     }
 
     const normalizedEmail = email.toLowerCase().trim();
+    const redis = Redis.fromEnv();
 
     // Check if already registered
     const isMember = await redis.sismember(WAITLIST_KEY, normalizedEmail);
@@ -32,6 +30,7 @@ export async function POST(req: NextRequest) {
     await redis.sadd(WAITLIST_KEY, normalizedEmail);
 
     // Notify Elliot of new signup
+    const resend = new Resend(process.env.RESEND_API_KEY);
     const count = await redis.scard(WAITLIST_KEY);
     await resend.emails.send({
       from: "Docpilot <onboarding@resend.dev>",
