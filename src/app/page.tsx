@@ -213,6 +213,9 @@ export default function Home() {
       {/* ───── Hero ───── */}
       <section className="pt-40 pb-24 px-8">
         <div className="max-w-[912px] mx-auto text-center">
+          <p className="text-sm font-medium uppercase tracking-[0.2em] text-dark/30 mb-4">
+            Help center autonome
+          </p>
           <div className="inline-block mb-6">
             <span className="font-mono text-sm bg-orchid/20 text-accent-purple px-4 py-1.5 rounded-full">
               Bientôt disponible — 100% français, hébergé en Europe 🇪🇺
