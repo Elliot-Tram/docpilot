@@ -70,26 +70,26 @@ const features = [
   {
     icon: IconTicketToArticle,
     color: "bg-orchid/30 text-accent-purple",
-    label: "Création automatique",
-    title: "Tickets → Articles en un clic",
+    label: "Fini les tickets répétitifs",
+    title: "Vos tickets deviennent des articles",
     description:
-      "Docpilot analyse vos tickets Zendesk, Intercom ou Freshdesk. Il détecte les questions récurrentes et génère automatiquement des articles de help center prêts à publier.",
+      "Docpilot analyse vos tickets Zendesk, Intercom ou Freshdesk, détecte les questions récurrentes et génère des articles prêts à publier. Vos clients trouvent la réponse eux-mêmes — le ticket n'arrive jamais.",
   },
   {
     icon: IconRadar,
     color: "bg-sky/30 text-accent-purple",
-    label: "Veille concurrentielle",
-    title: "Surveillez les help centers concurrents",
+    label: "Toujours à jour",
+    title: "Votre doc suit le rythme de votre produit",
     description:
-      "Docpilot scrape régulièrement les help centers de vos concurrents, détecte les nouveaux articles et vous alerte sur les sujets que vous ne couvrez pas encore.",
+      "À chaque nouvelle feature, bug récurrent ou changement produit, Docpilot détecte le gap et propose un brouillon. Votre help center n'est plus jamais en retard.",
   },
   {
     icon: IconSlackBot,
     color: "bg-mint/30 text-accent-purple",
-    label: "Pipeline ingénieurs",
-    title: "Collectez l'info technique via Slack",
+    label: "Zéro effort pour votre équipe",
+    title: "Relisez, approuvez, c'est en ligne",
     description:
-      "Un bot Slack ping automatiquement vos ingénieurs pour récupérer les détails techniques. Leurs réponses alimentent directement les brouillons d'articles.",
+      "Docpilot collecte l'info technique auprès de vos ingénieurs via Slack, rédige le brouillon et vous le soumet. Vous validez en un clic — pas besoin d'écrire une ligne.",
   },
 ];
 
@@ -113,7 +113,7 @@ const steps = [
 
 const stats = [
   { value: "81%", label: "des clients consultent la KB avant de contacter le support" },
-  { value: "3x", label: "moins de tickets récurrents après 3 mois d'utilisation" },
+  { value: "40%", label: "des tickets support portent sur des questions déjà documentables" },
   { value: "< 5 min", label: "pour générer un article complet depuis vos tickets" },
   { value: "78%", label: "des clients ne reviennent pas après un mauvais service" },
 ];
@@ -222,10 +222,13 @@ export default function Home() {
             <br />
             <span className="text-accent-purple">Vos clients le savent.</span>
           </h1>
+          <p className="text-2xl md:text-3xl font-normal tracking-[-1px] text-dark/80 mb-4">
+            Le premier help center autonome.
+          </p>
           <p className="text-lg md:text-xl text-dark/60 max-w-[640px] mx-auto font-light leading-relaxed mb-10">
-            Docpilot analyse vos tickets support et maintient votre base de
-            connaissances à jour — automatiquement. Moins de tickets, plus de
-            clients satisfaits.
+            Docpilot transforme vos tickets support en articles de help center —
+            automatiquement. Vos clients trouvent les réponses eux-mêmes,
+            votre équipe se concentre sur les vrais sujets.
           </p>
           <WaitlistForm />
         </div>
@@ -257,12 +260,12 @@ export default function Home() {
               Fonctionnalités
             </span>
             <h2 className="text-4xl md:text-[48px] font-normal tracking-[-1.5px] mt-6 mb-4">
-              Trois piliers, un seul outil
+              Un help center qui travaille pour vous
             </h2>
             <p className="text-dark/50 text-lg font-light max-w-[560px] mx-auto">
-              Docpilot combine ce que personne ne réunit aujourd&apos;hui :
-              génération, veille et collaboration — dans un produit pensé pour
-              les équipes support.
+              Pendant que votre équipe gère les cas complexes, Docpilot
+              s&apos;occupe de maintenir votre documentation à jour. Moins de
+              tickets, plus de clients satisfaits.
             </p>
           </div>
           <div className="grid md:grid-cols-3 gap-6">
@@ -428,11 +431,11 @@ export default function Home() {
       <section className="py-28 px-8" id="waitlist">
         <div className="max-w-[640px] mx-auto text-center">
           <h2 className="text-4xl md:text-[48px] font-normal tracking-[-1.5px] mb-4">
-            Prêt à automatiser votre help center ?
+            Arrêtez de courir après votre documentation.
           </h2>
           <p className="text-dark/50 text-lg font-light mb-10">
-            Rejoignez la waitlist et soyez parmi les premiers à tester Docpilot.
-            Accès anticipé gratuit pour les early adopters.
+            Rejoignez la waitlist et soyez parmi les premiers à tester le
+            help center autonome. Accès anticipé gratuit.
           </p>
           <WaitlistForm />
         </div>
