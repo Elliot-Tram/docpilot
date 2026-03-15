@@ -220,7 +220,7 @@ export default function Home() {
           <h1 className="text-5xl md:text-[64px] font-normal leading-[1.08] tracking-[-2px] mb-6">
             Vous fermez un ticket.
             <br />
-            <span className="text-accent-purple">Un article de help center apparaît.</span>
+            <span className="text-accent-purple">Un article apparaît.</span>
           </h1>
           <p className="text-lg md:text-xl text-dark/60 max-w-[640px] mx-auto font-light leading-relaxed mb-10">
             Docpilot utilise l&apos;IA pour analyser vos tickets support,
