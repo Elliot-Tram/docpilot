@@ -223,12 +223,20 @@ export default function Home() {
             <span className="text-accent-purple">Un article de help center apparaît.</span>
           </h1>
           <p className="text-lg md:text-xl text-dark/60 max-w-[640px] mx-auto font-light leading-relaxed mb-10">
-            Docpilot connecte votre Zendesk, Intercom ou Freshdesk et
-            utilise l&apos;IA pour détecter les questions récurrentes de vos
-            clients. Il rédige automatiquement les articles de help center
-            qui manquent — vous n&apos;avez plus qu&apos;à approuver.
+            Docpilot utilise l&apos;IA pour analyser vos tickets support,
+            détecter les questions récurrentes et rédiger automatiquement
+            les articles qui manquent. Un help center autonome —
+            vous n&apos;avez plus qu&apos;à approuver.
           </p>
           <WaitlistForm />
+          <div className="flex items-center justify-center gap-6 mt-8">
+            <span className="text-xs text-dark/30 font-medium">Se connecte à</span>
+            {["Zendesk", "Intercom", "Freshdesk"].map((name) => (
+              <span key={name} className="text-sm font-medium text-dark/40 border border-dark/8 px-3 py-1.5 rounded-lg">
+                {name}
+              </span>
+            ))}
+          </div>
         </div>
       </section>
 
