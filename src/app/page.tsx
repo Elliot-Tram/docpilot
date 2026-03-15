@@ -113,7 +113,7 @@ const steps = [
 ];
 
 const stats = [
-  { value: "81%", label: "des clients consultent la KB avant de contacter le support" },
+  { value: "81%", label: "des clients cherchent dans la doc avant de contacter le support" },
   { value: "40%", label: "des tickets support portent sur des questions déjà documentables" },
   { value: "< 5 min", label: "pour générer un article complet depuis vos tickets" },
   { value: "78%", label: "des clients ne reviennent pas après un mauvais service" },
@@ -353,26 +353,36 @@ export default function Home() {
             Se connecte à vos outils
           </h2>
           <p className="text-dark/50 text-lg font-light max-w-[560px] mx-auto mb-12">
-            Import des tickets, publication sur votre KB, notifications dans
-            Slack — Docpilot s&apos;intègre là où vous travaillez déjà.
+            Import des tickets, publication sur votre base de connaissances,
+            notifications dans Slack — Docpilot s&apos;intègre là où vous
+            travaillez déjà.
           </p>
-          <div className="flex flex-wrap items-center justify-center gap-4">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 max-w-[640px] mx-auto">
             {[
-              "Zendesk",
-              "Intercom",
-              "Freshdesk",
-              "Notion",
-              "GitBook",
-              "Slack",
-              "Teams",
-              "Confluence",
+              { name: "Zendesk", domain: "zendesk.com" },
+              { name: "Intercom", domain: "intercom.com" },
+              { name: "Freshdesk", domain: "freshdesk.com" },
+              { name: "Notion", domain: "notion.so" },
+              { name: "GitBook", domain: "gitbook.com" },
+              { name: "Slack", domain: "slack.com" },
+              { name: "Teams", domain: "microsoft.com" },
+              { name: "Confluence", domain: "atlassian.com" },
             ].map((tool) => (
-              <span
-                key={tool}
-                className="bg-lift border border-dark/8 rounded-xl px-6 py-3 text-sm font-medium shadow-[0_2px_12px_rgba(0,0,0,0.03)] hover:border-orchid/40 transition-colors duration-300"
+              <div
+                key={tool.name}
+                className="bg-lift border border-dark/8 rounded-2xl p-5 flex flex-col items-center gap-3 shadow-[0_2px_20px_rgba(0,0,0,0.03)] hover:border-orchid/40 hover:scale-[1.03] transition-all duration-300"
               >
-                {tool}
-              </span>
+                <Image
+                  src={`https://cdn.brandfetch.io/${tool.domain}?c=1idYXkEn8JPR8HmylTb`}
+                  alt={tool.name}
+                  width={36}
+                  height={36}
+                  className="rounded-lg"
+                />
+                <span className="text-sm font-medium text-dark/60">
+                  {tool.name}
+                </span>
+              </div>
             ))}
           </div>
         </div>
