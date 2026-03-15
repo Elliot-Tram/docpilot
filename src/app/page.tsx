@@ -248,6 +248,7 @@ export default function Home() {
                 <span className="text-sm font-medium text-dark/40">{tool.name}</span>
               </div>
             ))}
+            <span className="text-sm text-dark/30">et bien d&apos;autres</span>
           </div>
         </div>
       </section>
@@ -357,29 +358,39 @@ export default function Home() {
             notifications dans Slack — Docpilot s&apos;intègre là où vous
             travaillez déjà.
           </p>
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 max-w-[640px] mx-auto">
+          <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-4 max-w-[900px] mx-auto">
             {[
               { name: "Zendesk", domain: "zendesk.com" },
               { name: "Intercom", domain: "intercom.com" },
               { name: "Freshdesk", domain: "freshdesk.com" },
+              { name: "Crisp", domain: "crisp.chat" },
+              { name: "HubSpot", domain: "hubspot.com" },
+              { name: "Front", domain: "front.com" },
+              { name: "Helpscout", domain: "helpscout.com" },
+              { name: "Zoho Desk", domain: "zoho.com" },
+              { name: "Jira", domain: "atlassian.com" },
+              { name: "Slack", domain: "slack.com" },
               { name: "Notion", domain: "notion.so" },
               { name: "GitBook", domain: "gitbook.com" },
-              { name: "Slack", domain: "slack.com" },
-              { name: "Teams", domain: "microsoft.com" },
               { name: "Confluence", domain: "atlassian.com" },
+              { name: "Teams", domain: "microsoft.com" },
+              { name: "LiveChat", domain: "livechat.com" },
+              { name: "Salesforce", domain: "salesforce.com" },
+              { name: "Kayako", domain: "kayako.com" },
+              { name: "ReadMe", domain: "readme.com" },
             ].map((tool) => (
               <div
                 key={tool.name}
-                className="bg-lift border border-dark/8 rounded-2xl p-5 flex flex-col items-center gap-3 shadow-[0_2px_20px_rgba(0,0,0,0.03)] hover:border-orchid/40 hover:scale-[1.03] transition-all duration-300"
+                className="bg-lift border border-dark/8 rounded-2xl p-4 flex flex-col items-center gap-2.5 shadow-[0_2px_20px_rgba(0,0,0,0.03)] hover:border-orchid/40 hover:scale-[1.03] transition-all duration-300"
               >
                 <Image
                   src={`https://cdn.brandfetch.io/${tool.domain}?c=1idYXkEn8JPR8HmylTb`}
                   alt={tool.name}
-                  width={36}
-                  height={36}
+                  width={32}
+                  height={32}
                   className="rounded-lg"
                 />
-                <span className="text-sm font-medium text-dark/60">
+                <span className="text-xs font-medium text-dark/50">
                   {tool.name}
                 </span>
               </div>
