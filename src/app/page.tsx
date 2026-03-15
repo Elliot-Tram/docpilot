@@ -214,13 +214,13 @@ export default function Home() {
         <div className="max-w-[912px] mx-auto text-center">
           <div className="inline-block mb-6">
             <span className="font-mono text-sm bg-orchid/20 text-accent-purple px-4 py-1.5 rounded-full">
-              Propulsé par l&apos;IA — 100% français, hébergé en EU
+              Propulsé par l&apos;IA — 100% français, hébergé en Europe 🇪🇺
             </span>
           </div>
           <h1 className="text-5xl md:text-[64px] font-normal leading-[1.08] tracking-[-2px] mb-6">
             Vous fermez un ticket.
             <br />
-            <span className="text-accent-purple">Un article apparaît.</span>
+            <span className="text-accent-purple">Un article de help center apparaît.</span>
           </h1>
           <p className="text-lg md:text-xl text-dark/60 max-w-[640px] mx-auto font-light leading-relaxed mb-10">
             Docpilot connecte votre Zendesk, Intercom ou Freshdesk et
