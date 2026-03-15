@@ -218,17 +218,14 @@ export default function Home() {
             </span>
           </div>
           <h1 className="text-5xl md:text-[64px] font-normal leading-[1.08] tracking-[-2px] mb-6">
-            Votre help center est obsolète.
+            Un help center qui se construit
             <br />
-            <span className="text-accent-purple">Vos clients le savent.</span>
+            <span className="text-accent-purple">avec les questions de vos clients.</span>
           </h1>
-          <p className="text-2xl md:text-3xl font-normal tracking-[-1px] text-dark/80 mb-4">
-            Le premier help center autonome.
-          </p>
           <p className="text-lg md:text-xl text-dark/60 max-w-[640px] mx-auto font-light leading-relaxed mb-10">
-            Docpilot transforme vos tickets support en articles de help center —
-            automatiquement. Vos clients trouvent les réponses eux-mêmes,
-            votre équipe se concentre sur les vrais sujets.
+            Chaque ticket est une opportunité de documentation. Docpilot
+            transforme les questions récurrentes de vos clients en articles
+            de help center — automatiquement.
           </p>
           <WaitlistForm />
         </div>
