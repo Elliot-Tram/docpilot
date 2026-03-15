@@ -214,18 +214,19 @@ export default function Home() {
         <div className="max-w-[912px] mx-auto text-center">
           <div className="inline-block mb-6">
             <span className="font-mono text-sm bg-orchid/20 text-accent-purple px-4 py-1.5 rounded-full">
-              Bientôt disponible — 100% français, hébergé en EU
+              Propulsé par l&apos;IA — 100% français, hébergé en EU
             </span>
           </div>
           <h1 className="text-5xl md:text-[64px] font-normal leading-[1.08] tracking-[-2px] mb-6">
-            Votre help center se remplit
+            Vous fermez un ticket.
             <br />
-            <span className="text-accent-purple">tout seul.</span>
+            <span className="text-accent-purple">Un article apparaît.</span>
           </h1>
           <p className="text-lg md:text-xl text-dark/60 max-w-[640px] mx-auto font-light leading-relaxed mb-10">
-            Plus besoin de rédiger vos articles à la main. Docpilot
-            transforme vos tickets support en documentation —
-            votre help center se met à jour à chaque question client.
+            Docpilot connecte votre Zendesk, Intercom ou Freshdesk et
+            utilise l&apos;IA pour détecter les questions récurrentes de vos
+            clients. Il rédige automatiquement les articles de help center
+            qui manquent — vous n&apos;avez plus qu&apos;à approuver.
           </p>
           <WaitlistForm />
         </div>
