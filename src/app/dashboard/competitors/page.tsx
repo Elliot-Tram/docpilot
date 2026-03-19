@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback, useRef } from "react";
+import { useState, useCallback } from "react";
 
 interface CompetitorAnalysis {
   name: string;
@@ -138,23 +138,11 @@ const stepDelays = [1200, 1800, 2200, 2800, 1500, 2000, 1600, 1400, 1800, 1000, 
 
 export default function CompetitorsPage() {
   const [competitors, setCompetitors] = useState<CompetitorAnalysis[]>([]);
-  const [url, setUrl] = useState("");
+  const [url, setUrl] = useState("https://support.aircall.io");
   const [scanning, setScanning] = useState(false);
   const [scanStep, setScanStep] = useState(0);
   const [selectedCompetitor, setSelectedCompetitor] =
     useState<CompetitorAnalysis | null>(null);
-  const [shouldAutoScan, setShouldAutoScan] = useState(false);
-  const autoStarted = useRef(false);
-
-  useEffect(() => {
-    const prefill = sessionStorage.getItem("docpilot-competitor-url");
-    if (prefill && !autoStarted.current) {
-      autoStarted.current = true;
-      sessionStorage.removeItem("docpilot-competitor-url");
-      setUrl(prefill);
-      setShouldAutoScan(true);
-    }
-  }, []);
 
   const runScan = useCallback(() => {
     setScanning(true);
@@ -187,14 +175,6 @@ export default function CompetitorsPage() {
     }
     nextStep();
   }, [url]);
-
-  useEffect(() => {
-    if (shouldAutoScan && url && !scanning) {
-      setShouldAutoScan(false);
-      const timer = setTimeout(() => runScan(), 600);
-      return () => clearTimeout(timer);
-    }
-  }, [shouldAutoScan, url, scanning, runScan]);
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();

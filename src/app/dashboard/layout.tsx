@@ -1,9 +1,7 @@
 "use client";
 
-import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import Onboarding from "./onboarding";
 
 const navItems = [
   {
@@ -68,34 +66,6 @@ export default function DashboardLayout({
   children: React.ReactNode;
 }) {
   const pathname = usePathname();
-  const [showOnboarding, setShowOnboarding] = useState(false);
-
-  useEffect(() => {
-    const dismissed = sessionStorage.getItem("docpilot-onboarding-dismissed");
-    if (!dismissed) setShowOnboarding(true);
-  }, []);
-
-  const [demoStep, setDemoStep] = useState(0);
-
-  // Sync demo step from sessionStorage on navigation
-  useEffect(() => {
-    if (!showOnboarding) return;
-    const step = sessionStorage.getItem("docpilot-onboarding-step");
-    setDemoStep(step ? parseInt(step, 10) : 0);
-  }, [pathname, showOnboarding]);
-
-  function dismissOnboarding() {
-    setShowOnboarding(false);
-    sessionStorage.setItem("docpilot-onboarding-dismissed", "true");
-  }
-
-  // Map onboarding step to which sidebar href should pulse
-  const demoHighlight: Record<number, string> = {
-    0: "/dashboard/suggestions",
-    1: "/dashboard/knowledge",
-    2: "/dashboard/competitors",
-    3: "/dashboard/competitors",
-  };
 
   return (
     <div className="min-h-screen bg-light flex">
@@ -112,31 +82,19 @@ export default function DashboardLayout({
               item.href === "/dashboard"
                 ? pathname === "/dashboard"
                 : pathname.startsWith(item.href);
-            const shouldPulse =
-              showOnboarding && demoHighlight[demoStep] === item.href && !isActive;
             return (
               <Link
                 key={item.href}
                 href={item.href}
                 className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors duration-200 ${
-                  shouldPulse
-                    ? "text-orchid bg-orchid/15 ring-1 ring-orchid/40"
-                    : isActive
+                  isActive
                     ? "bg-white/10 text-light"
-                    : showOnboarding && demoHighlight[demoStep]
-                    ? "text-light/20"
                     : "text-light/50 hover:text-light hover:bg-white/5"
                 }`}
               >
                 {item.icon}
                 {item.label}
-                {shouldPulse && (
-                  <span className="ml-auto relative flex h-3 w-3">
-                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-orchid opacity-75" />
-                    <span className="relative inline-flex rounded-full h-3 w-3 bg-orchid" />
-                  </span>
-                )}
-                {!shouldPulse && item.badge && (
+                {item.badge && (
                   <span className="ml-auto bg-orchid/30 text-orchid text-xs font-medium px-2 py-0.5 rounded-full">
                     {item.badge}
                   </span>
@@ -149,7 +107,7 @@ export default function DashboardLayout({
           <button
             onClick={() => {
               sessionStorage.clear();
-              window.location.href = "/dashboard";
+              window.location.href = "/dashboard/knowledge";
             }}
             className="flex items-center gap-2 px-3 py-2 w-full rounded-lg text-sm text-light/30 hover:text-light/60 hover:bg-white/5 transition-colors"
           >
@@ -173,9 +131,6 @@ export default function DashboardLayout({
       {/* Main content */}
       <main className="flex-1 overflow-auto">
         <div className="max-w-[1200px] mx-auto px-8 py-8">
-          {showOnboarding && (
-            <Onboarding onDismiss={dismissOnboarding} />
-          )}
           {children}
         </div>
       </main>

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback, useRef } from "react";
+import { useState, useCallback } from "react";
 
 interface BrandProfile {
   tone: string[];
@@ -69,22 +69,10 @@ const scanSteps = [
 const stepDelays = [1200, 1600, 2400, 1800, 2000, 2200, 1800, 1500, 1200, 0];
 
 export default function KnowledgePage() {
-  const [url, setUrl] = useState("");
+  const [url, setUrl] = useState("https://help.withallo.com/fr/get-started");
   const [scanning, setScanning] = useState(false);
   const [scanStep, setScanStep] = useState(0);
   const [profile, setProfile] = useState<BrandProfile | null>(null);
-  const [shouldAutoScan, setShouldAutoScan] = useState(false);
-  const autoStarted = useRef(false);
-
-  useEffect(() => {
-    const prefill = sessionStorage.getItem("docpilot-kb-url");
-    if (prefill && !autoStarted.current) {
-      autoStarted.current = true;
-      sessionStorage.removeItem("docpilot-kb-url");
-      setUrl(prefill);
-      setShouldAutoScan(true);
-    }
-  }, []);
 
   const runScan = useCallback(() => {
     setScanning(true);
@@ -109,14 +97,6 @@ export default function KnowledgePage() {
     }
     nextStep();
   }, []);
-
-  useEffect(() => {
-    if (shouldAutoScan && url && !scanning) {
-      setShouldAutoScan(false);
-      const timer = setTimeout(() => runScan(), 600);
-      return () => clearTimeout(timer);
-    }
-  }, [shouldAutoScan, url, scanning, runScan]);
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
