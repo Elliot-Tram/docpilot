@@ -1,5 +1,8 @@
-import { mockStats, mockArticles } from "@/lib/mock-data";
+"use client";
+
+import { useState, useEffect } from "react";
 import Link from "next/link";
+import type { SuggestedArticle } from "@/lib/mock-data";
 
 const statusLabel: Record<string, string> = {
   draft: "Brouillon",
@@ -15,31 +18,51 @@ const statusColor: Record<string, string> = {
   rejected: "bg-coral/20 text-coral",
 };
 
-const stats = [
-  {
-    label: "Tickets analysés",
-    value: mockStats.ticketsAnalyzed.toLocaleString("fr-FR"),
-    color: "bg-orchid/15 text-accent-purple",
-  },
-  {
-    label: "Articles générés",
-    value: mockStats.articlesGenerated,
-    color: "bg-mint/20 text-dark",
-  },
-  {
-    label: "Gaps détectés",
-    value: mockStats.gapsDetected,
-    color: "bg-coral/15 text-dark",
-  },
-  {
-    label: "Tickets déviés",
-    value: mockStats.ticketsDeflected,
-    color: "bg-sky/20 text-dark",
-  },
-];
+interface Stats {
+  ticketsAnalyzed: number;
+  articlesGenerated: number;
+  gapsDetected: number;
+  ticketsDeflected: number;
+}
 
 export default function DashboardOverview() {
-  const recentArticles = mockArticles.slice(0, 4);
+  const [stats, setStats] = useState<Stats | null>(null);
+  const [articles, setArticles] = useState<SuggestedArticle[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    Promise.all([
+      fetch("/api/stats").then((r) => r.json()),
+      fetch("/api/articles").then((r) => r.json()),
+    ])
+      .then(([statsData, articlesData]) => {
+        setStats(statsData);
+        setArticles(Array.isArray(articlesData) ? articlesData : []);
+      })
+      .finally(() => setLoading(false));
+  }, []);
+
+  const statCards = stats
+    ? [
+        {
+          label: "Tickets analysés",
+          value: stats.ticketsAnalyzed.toLocaleString("fr-FR"),
+        },
+        { label: "Articles générés", value: stats.articlesGenerated },
+        { label: "Gaps détectés", value: stats.gapsDetected },
+        { label: "Tickets déviés", value: stats.ticketsDeflected },
+      ]
+    : [];
+
+  const recentArticles = articles.slice(0, 4);
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center py-20">
+        <p className="text-dark/30 text-sm">Chargement...</p>
+      </div>
+    );
+  }
 
   return (
     <div>
@@ -54,7 +77,7 @@ export default function DashboardOverview() {
 
       {/* Stats cards */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-10">
-        {stats.map((s) => (
+        {statCards.map((s) => (
           <div
             key={s.label}
             className="bg-lift rounded-2xl p-6 shadow-[0_2px_20px_rgba(0,0,0,0.03)]"
@@ -65,88 +88,108 @@ export default function DashboardOverview() {
         ))}
       </div>
 
+      {/* Empty state */}
+      {articles.length === 0 && (
+        <div className="bg-lift rounded-2xl shadow-[0_2px_20px_rgba(0,0,0,0.03)] p-12 text-center">
+          <p className="text-dark/40 mb-2">Aucun article pour le moment</p>
+          <p className="text-sm text-dark/30">
+            Connectez une source de tickets pour commencer.
+          </p>
+          <Link
+            href="/dashboard/sources"
+            className="inline-block mt-4 bg-dark text-light px-5 py-2.5 rounded-lg text-sm font-medium hover:bg-accent-purple transition-colors duration-300"
+          >
+            Ajouter une source
+          </Link>
+        </div>
+      )}
+
       {/* Recent suggestions */}
-      <div className="flex items-center justify-between mb-4">
-        <h2 className="text-lg font-medium">Suggestions récentes</h2>
-        <Link
-          href="/dashboard/suggestions"
-          className="text-sm text-accent-purple hover:underline"
-        >
-          Voir toutes →
-        </Link>
-      </div>
-      <div className="bg-lift rounded-2xl shadow-[0_2px_20px_rgba(0,0,0,0.03)] overflow-hidden">
-        <table className="w-full">
-          <thead>
-            <tr className="border-b border-dark/5">
-              <th className="text-left text-xs font-medium text-dark/40 uppercase tracking-wider px-6 py-3">
-                Article
-              </th>
-              <th className="text-left text-xs font-medium text-dark/40 uppercase tracking-wider px-6 py-3">
-                Catégorie
-              </th>
-              <th className="text-left text-xs font-medium text-dark/40 uppercase tracking-wider px-6 py-3">
-                Tickets
-              </th>
-              <th className="text-left text-xs font-medium text-dark/40 uppercase tracking-wider px-6 py-3">
-                Confiance
-              </th>
-              <th className="text-left text-xs font-medium text-dark/40 uppercase tracking-wider px-6 py-3">
-                Statut
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {recentArticles.map((article) => (
-              <tr
-                key={article.id}
-                className="border-b border-dark/5 last:border-0 hover:bg-dark/[0.02] transition-colors"
-              >
-                <td className="px-6 py-4">
-                  <Link
-                    href={`/dashboard/suggestions/${article.id}`}
-                    className="font-medium text-sm hover:text-accent-purple transition-colors"
+      {recentArticles.length > 0 && (
+        <>
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="text-lg font-medium">Suggestions récentes</h2>
+            <Link
+              href="/dashboard/suggestions"
+              className="text-sm text-accent-purple hover:underline"
+            >
+              Voir toutes
+            </Link>
+          </div>
+          <div className="bg-lift rounded-2xl shadow-[0_2px_20px_rgba(0,0,0,0.03)] overflow-hidden">
+            <table className="w-full">
+              <thead>
+                <tr className="border-b border-dark/5">
+                  <th className="text-left text-xs font-medium text-dark/40 uppercase tracking-wider px-6 py-3">
+                    Article
+                  </th>
+                  <th className="text-left text-xs font-medium text-dark/40 uppercase tracking-wider px-6 py-3">
+                    Catégorie
+                  </th>
+                  <th className="text-left text-xs font-medium text-dark/40 uppercase tracking-wider px-6 py-3">
+                    Tickets
+                  </th>
+                  <th className="text-left text-xs font-medium text-dark/40 uppercase tracking-wider px-6 py-3">
+                    Confiance
+                  </th>
+                  <th className="text-left text-xs font-medium text-dark/40 uppercase tracking-wider px-6 py-3">
+                    Statut
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {recentArticles.map((article) => (
+                  <tr
+                    key={article.id}
+                    className="border-b border-dark/5 last:border-0 hover:bg-dark/[0.02] transition-colors"
                   >
-                    {article.title}
-                  </Link>
-                </td>
-                <td className="px-6 py-4">
-                  <span className="font-mono text-xs text-dark/50">
-                    {article.category}
-                  </span>
-                </td>
-                <td className="px-6 py-4">
-                  <span className="text-sm font-medium">
-                    {article.ticketCount}
-                  </span>
-                </td>
-                <td className="px-6 py-4">
-                  <div className="flex items-center gap-2">
-                    <div className="w-16 h-1.5 rounded-full bg-dark/10 overflow-hidden">
-                      <div
-                        className="h-full rounded-full bg-accent-purple"
-                        style={{ width: `${article.confidence}%` }}
-                      />
-                    </div>
-                    <span className="text-xs text-dark/40">
-                      {article.confidence}%
-                    </span>
-                  </div>
-                </td>
-                <td className="px-6 py-4">
-                  <span
-                    className={`text-xs font-medium px-2.5 py-1 rounded-full ${
-                      statusColor[article.status]
-                    }`}
-                  >
-                    {statusLabel[article.status]}
-                  </span>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+                    <td className="px-6 py-4">
+                      <Link
+                        href={`/dashboard/suggestions/${article.id}`}
+                        className="font-medium text-sm hover:text-accent-purple transition-colors"
+                      >
+                        {article.title}
+                      </Link>
+                    </td>
+                    <td className="px-6 py-4">
+                      <span className="font-mono text-xs text-dark/50">
+                        {article.category}
+                      </span>
+                    </td>
+                    <td className="px-6 py-4">
+                      <span className="text-sm font-medium">
+                        {article.ticketCount}
+                      </span>
+                    </td>
+                    <td className="px-6 py-4">
+                      <div className="flex items-center gap-2">
+                        <div className="w-16 h-1.5 rounded-full bg-dark/10 overflow-hidden">
+                          <div
+                            className="h-full rounded-full bg-accent-purple"
+                            style={{ width: `${article.confidence}%` }}
+                          />
+                        </div>
+                        <span className="text-xs text-dark/40">
+                          {article.confidence}%
+                        </span>
+                      </div>
+                    </td>
+                    <td className="px-6 py-4">
+                      <span
+                        className={`text-xs font-medium px-2.5 py-1 rounded-full ${
+                          statusColor[article.status]
+                        }`}
+                      >
+                        {statusLabel[article.status]}
+                      </span>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </>
+      )}
     </div>
   );
 }

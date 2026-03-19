@@ -1,8 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useParams, useRouter } from "next/navigation";
-import { mockArticles, type ArticleStatus } from "@/lib/mock-data";
+import type { SuggestedArticle, ArticleStatus } from "@/lib/mock-data";
 
 const statusLabel: Record<string, string> = {
   draft: "Brouillon",
@@ -21,13 +21,55 @@ const statusColor: Record<string, string> = {
 export default function ArticleDetailPage() {
   const { id } = useParams();
   const router = useRouter();
-  const article = mockArticles.find((a) => a.id === id);
-
-  const [status, setStatus] = useState<ArticleStatus>(
-    article?.status ?? "draft"
-  );
-  const [content, setContent] = useState(article?.content ?? "");
+  const [article, setArticle] = useState<SuggestedArticle | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [status, setStatus] = useState<ArticleStatus>("draft");
+  const [content, setContent] = useState("");
   const [showSuccess, setShowSuccess] = useState("");
+
+  useEffect(() => {
+    fetch(`/api/articles/${id}`)
+      .then((r) => {
+        if (!r.ok) throw new Error("Not found");
+        return r.json();
+      })
+      .then((data) => {
+        setArticle(data);
+        setStatus(data.status);
+        setContent(data.content);
+      })
+      .catch(() => setArticle(null))
+      .finally(() => setLoading(false));
+  }, [id]);
+
+  async function handleAction(newStatus: ArticleStatus, message: string) {
+    await fetch(`/api/articles/${id}`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ status: newStatus, content }),
+    });
+    setStatus(newStatus);
+    setShowSuccess(message);
+    setTimeout(() => setShowSuccess(""), 3000);
+  }
+
+  async function handleSave() {
+    await fetch(`/api/articles/${id}`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ content }),
+    });
+    setShowSuccess("Modifications enregistrées");
+    setTimeout(() => setShowSuccess(""), 3000);
+  }
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center py-20">
+        <p className="text-dark/30 text-sm">Chargement...</p>
+      </div>
+    );
+  }
 
   if (!article) {
     return (
@@ -35,12 +77,6 @@ export default function ArticleDetailPage() {
         <p className="text-dark/40">Article introuvable.</p>
       </div>
     );
-  }
-
-  function handleAction(newStatus: ArticleStatus, message: string) {
-    setStatus(newStatus);
-    setShowSuccess(message);
-    setTimeout(() => setShowSuccess(""), 3000);
   }
 
   return (
@@ -96,7 +132,17 @@ export default function ArticleDetailPage() {
               <h2 className="text-sm font-medium text-dark/60">
                 Contenu de l&apos;article
               </h2>
-              <span className="font-mono text-xs text-dark/30">Markdown</span>
+              <div className="flex items-center gap-2">
+                <span className="font-mono text-xs text-dark/30">Markdown</span>
+                {content !== article.content && (
+                  <button
+                    onClick={handleSave}
+                    className="text-xs bg-accent-purple text-light px-3 py-1 rounded-md hover:bg-dark transition-colors"
+                  >
+                    Sauvegarder
+                  </button>
+                )}
+              </div>
             </div>
             <textarea
               value={content}
@@ -167,7 +213,7 @@ export default function ArticleDetailPage() {
           </div>
         </div>
 
-        {/* Sidebar — source tickets */}
+        {/* Sidebar */}
         <div className="space-y-4">
           <div className="bg-lift rounded-2xl shadow-[0_2px_20px_rgba(0,0,0,0.03)] p-6">
             <h3 className="text-sm font-medium text-dark/60 mb-4">

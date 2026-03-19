@@ -1,8 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
-import { mockArticles, type ArticleStatus } from "@/lib/mock-data";
+import type { SuggestedArticle, ArticleStatus } from "@/lib/mock-data";
 
 const statusLabel: Record<string, string> = {
   draft: "Brouillon",
@@ -26,14 +26,31 @@ const filters: { label: string; value: ArticleStatus | "all" }[] = [
 ];
 
 export default function SuggestionsPage() {
+  const [articles, setArticles] = useState<SuggestedArticle[]>([]);
+  const [loading, setLoading] = useState(true);
   const [activeFilter, setActiveFilter] = useState<ArticleStatus | "all">(
     "all"
   );
 
+  useEffect(() => {
+    fetch("/api/articles")
+      .then((r) => r.json())
+      .then((data) => setArticles(Array.isArray(data) ? data : []))
+      .finally(() => setLoading(false));
+  }, []);
+
   const filtered =
     activeFilter === "all"
-      ? mockArticles
-      : mockArticles.filter((a) => a.status === activeFilter);
+      ? articles
+      : articles.filter((a) => a.status === activeFilter);
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center py-20">
+        <p className="text-dark/30 text-sm">Chargement...</p>
+      </div>
+    );
+  }
 
   return (
     <div>
@@ -47,7 +64,7 @@ export default function SuggestionsPage() {
           </p>
         </div>
         <span className="font-mono text-sm bg-orchid/15 text-accent-purple px-4 py-1.5 rounded-full">
-          {mockArticles.length} articles
+          {articles.length} articles
         </span>
       </div>
 
@@ -67,6 +84,16 @@ export default function SuggestionsPage() {
           </button>
         ))}
       </div>
+
+      {/* Empty state */}
+      {articles.length === 0 && (
+        <div className="bg-lift rounded-2xl shadow-[0_2px_20px_rgba(0,0,0,0.03)] p-12 text-center">
+          <p className="text-dark/40 mb-2">Aucune suggestion pour le moment</p>
+          <p className="text-sm text-dark/30">
+            Les articles seront générés automatiquement après l&apos;import de vos tickets.
+          </p>
+        </div>
+      )}
 
       {/* Articles grid */}
       <div className="grid md:grid-cols-2 gap-4">
