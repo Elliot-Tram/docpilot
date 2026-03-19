@@ -119,17 +119,22 @@ export default function DashboardLayout({
                 key={item.href}
                 href={item.href}
                 className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors duration-200 ${
-                  isActive
+                  shouldPulse
+                    ? "text-orchid bg-orchid/15 ring-1 ring-orchid/40"
+                    : isActive
                     ? "bg-white/10 text-light"
-                    : shouldPulse
-                    ? "text-orchid bg-orchid/10 animate-pulse"
+                    : showOnboarding && demoHighlight[demoStep]
+                    ? "text-light/20"
                     : "text-light/50 hover:text-light hover:bg-white/5"
                 }`}
               >
                 {item.icon}
                 {item.label}
                 {shouldPulse && (
-                  <span className="ml-auto w-2 h-2 rounded-full bg-orchid animate-ping" />
+                  <span className="ml-auto relative flex h-3 w-3">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-orchid opacity-75" />
+                    <span className="relative inline-flex rounded-full h-3 w-3 bg-orchid" />
+                  </span>
                 )}
                 {!shouldPulse && item.badge && (
                   <span className="ml-auto bg-orchid/30 text-orchid text-xs font-medium px-2 py-0.5 rounded-full">
