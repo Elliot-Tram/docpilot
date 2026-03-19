@@ -1,6 +1,6 @@
 "use client";
 
-import { useRouter, usePathname } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 const steps = [
   {
@@ -33,26 +33,15 @@ const steps = [
   },
 ];
 
-function getCompletedFromPath(pathname: string): number {
-  if (pathname.startsWith("/dashboard/competitors")) return 3;
-  if (pathname.startsWith("/dashboard/suggestions")) return 2;
-  if (pathname.startsWith("/dashboard/knowledge")) return 1;
-  return 0;
-}
-
 export default function Onboarding({
   onDismiss,
 }: {
   onDismiss: () => void;
 }) {
   const router = useRouter();
-  const pathname = usePathname();
 
   const storedStep = sessionStorage.getItem("docpilot-onboarding-step");
-  const completedFromStorage = storedStep ? parseInt(storedStep, 10) : 0;
-  const completedFromPath = getCompletedFromPath(pathname);
-  const completed = Math.max(completedFromStorage, completedFromPath);
-  const currentStep = Math.min(completed, steps.length - 1);
+  const currentStep = storedStep ? Math.min(parseInt(storedStep, 10), steps.length - 1) : 0;
 
   function handleStepClick(stepIndex: number) {
     const step = steps[stepIndex];

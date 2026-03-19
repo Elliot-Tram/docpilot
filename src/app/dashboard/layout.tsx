@@ -83,13 +83,13 @@ export default function DashboardLayout({
   return (
     <div className="min-h-screen bg-light flex">
       {/* Sidebar */}
-      <aside className="w-64 bg-dark text-light flex flex-col shrink-0">
-        <div className="px-6 h-16 flex items-center border-b border-white/10">
+      <aside className="w-64 bg-dark text-light flex flex-col shrink-0 h-screen sticky top-0">
+        <div className="px-6 h-16 flex items-center border-b border-white/10 shrink-0">
           <Link href="/" className="text-xl font-semibold tracking-tight">
             doc<span className="text-orchid">pilot</span>
           </Link>
         </div>
-        <nav className="flex-1 px-3 py-4 space-y-1">
+        <nav className="flex-1 px-3 py-4 space-y-1 overflow-y-auto">
           {navItems.map((item) => {
             const isActive =
               item.href === "/dashboard"
@@ -116,7 +116,7 @@ export default function DashboardLayout({
             );
           })}
         </nav>
-        <div className="px-3 py-4 border-t border-white/10 space-y-3">
+        <div className="px-3 py-4 border-t border-white/10 space-y-3 shrink-0">
           <button
             onClick={() => {
               sessionStorage.clear();
@@ -130,12 +130,12 @@ export default function DashboardLayout({
             Relancer la demo
           </button>
           <div className="flex items-center gap-3 px-3">
-            <div className="w-8 h-8 rounded-full bg-orchid/30 flex items-center justify-center text-sm font-medium text-orchid">
+            <div className="w-8 h-8 rounded-full bg-orchid/30 flex items-center justify-center text-sm font-medium text-orchid shrink-0">
               E
             </div>
-            <div className="text-sm">
-              <p className="font-medium text-light/90">Elliot</p>
-              <p className="text-light/40 text-xs">Plan Pro</p>
+            <div className="text-sm min-w-0">
+              <p className="font-medium text-light/90 truncate">Elliot</p>
+              <p className="text-light/40 text-xs truncate">Plan Pro</p>
             </div>
           </div>
         </div>
