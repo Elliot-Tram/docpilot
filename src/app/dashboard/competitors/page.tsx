@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 
 interface CompetitorAnalysis {
   name: string;
@@ -143,6 +143,16 @@ export default function CompetitorsPage() {
   const [scanStep, setScanStep] = useState(0);
   const [selectedCompetitor, setSelectedCompetitor] =
     useState<CompetitorAnalysis | null>(null);
+  const autoStarted = useRef(false);
+
+  useEffect(() => {
+    const prefill = sessionStorage.getItem("docpilot-competitor-url");
+    if (prefill && !autoStarted.current) {
+      autoStarted.current = true;
+      sessionStorage.removeItem("docpilot-competitor-url");
+      setUrl(prefill);
+    }
+  }, []);
 
   const runScan = useCallback(() => {
     setScanning(true);

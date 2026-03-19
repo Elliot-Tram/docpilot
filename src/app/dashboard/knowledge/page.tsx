@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 
 interface BrandProfile {
   tone: string[];
@@ -73,6 +73,16 @@ export default function KnowledgePage() {
   const [scanning, setScanning] = useState(false);
   const [scanStep, setScanStep] = useState(0);
   const [profile, setProfile] = useState<BrandProfile | null>(null);
+  const autoStarted = useRef(false);
+
+  useEffect(() => {
+    const prefill = sessionStorage.getItem("docpilot-kb-url");
+    if (prefill && !autoStarted.current) {
+      autoStarted.current = true;
+      sessionStorage.removeItem("docpilot-kb-url");
+      setUrl(prefill);
+    }
+  }, []);
 
   const runScan = useCallback(() => {
     setScanning(true);

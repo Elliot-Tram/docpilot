@@ -1,8 +1,10 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import useSWR from "swr";
 import Link from "next/link";
 import type { SuggestedArticle } from "@/lib/mock-data";
+import Onboarding from "./onboarding";
 
 const fetcher = (url: string) => fetch(url).then((r) => r.json());
 
@@ -31,6 +33,17 @@ export default function DashboardOverview() {
   const { data: stats } = useSWR<Stats>("/api/stats", fetcher);
   const { data: articlesData } = useSWR<SuggestedArticle[]>("/api/articles", fetcher);
   const articles = Array.isArray(articlesData) ? articlesData : [];
+  const [showOnboarding, setShowOnboarding] = useState(false);
+
+  useEffect(() => {
+    const dismissed = sessionStorage.getItem("docpilot-onboarding-dismissed");
+    if (!dismissed) setShowOnboarding(true);
+  }, []);
+
+  function dismissOnboarding() {
+    setShowOnboarding(false);
+    sessionStorage.setItem("docpilot-onboarding-dismissed", "true");
+  }
 
   const statCards = stats
     ? [
@@ -48,12 +61,14 @@ export default function DashboardOverview() {
 
   return (
     <div>
+      {showOnboarding && <Onboarding onDismiss={dismissOnboarding} />}
+
       <div className="mb-8">
         <h1 className="text-2xl font-medium tracking-[-0.5px]">
           Vue d&apos;ensemble
         </h1>
         <p className="text-dark/50 mt-1">
-          Activité de votre help center automatisé
+          Activite de votre help center automatise
         </p>
       </div>
 
