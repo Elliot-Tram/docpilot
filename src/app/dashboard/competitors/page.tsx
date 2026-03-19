@@ -195,12 +195,22 @@ export default function CompetitorsPage() {
 
   return (
     <div className="relative">
-      {/* Spotlight overlay */}
+      {/* Spotlight overlay with intro text */}
       {spotlightActive && (
         <div
           className="fixed inset-0 bg-black/60 z-40 animate-[fadeIn_0.4s_ease-out]"
           onClick={() => setShowSpotlight(false)}
-        />
+        >
+          <div className="absolute top-8 left-1/2 -translate-x-1/2 text-center text-white max-w-lg">
+            <p className="text-lg font-medium mb-2">
+              Comparez-vous a la concurrence
+            </p>
+            <p className="text-white/60 text-sm">
+              Docpilot analyse le help center d&apos;un concurrent et identifie les sujets
+              qu&apos;il couvre et pas vous. Cliquez sur Analyser pour lancer la comparaison.
+            </p>
+          </div>
+        </div>
       )}
 
       <div className="mb-8">
@@ -234,11 +244,7 @@ export default function CompetitorsPage() {
           <button
             type="submit"
             disabled={scanning || !url.trim()}
-            className={`px-6 py-2.5 rounded-lg text-sm font-medium whitespace-nowrap transition-all duration-300 disabled:opacity-50 ${
-              spotlightActive
-                ? "bg-orchid text-white animate-pulse shadow-[0_0_20px_rgba(168,85,247,0.5)] scale-105"
-                : "bg-dark text-light hover:bg-accent-purple"
-            }`}
+            className="bg-dark text-light px-6 py-2.5 rounded-lg text-sm font-medium hover:bg-accent-purple transition-colors duration-300 disabled:opacity-50 whitespace-nowrap"
           >
             {scanning ? "Analyse..." : "Analyser"}
           </button>

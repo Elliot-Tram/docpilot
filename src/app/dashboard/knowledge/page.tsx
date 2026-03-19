@@ -106,14 +106,26 @@ export default function KnowledgePage() {
     runScan();
   }
 
+  const spotlightActive = showSpotlight && !scanning && !profile;
+
   return (
     <div className="relative">
-      {/* Spotlight overlay */}
-      {showSpotlight && !scanning && !profile && (
+      {/* Spotlight overlay with intro text */}
+      {spotlightActive && (
         <div
           className="fixed inset-0 bg-black/60 z-40 animate-[fadeIn_0.4s_ease-out]"
           onClick={() => setShowSpotlight(false)}
-        />
+        >
+          <div className="absolute top-8 left-1/2 -translate-x-1/2 text-center text-white max-w-lg">
+            <p className="text-lg font-medium mb-2">
+              Avant de commencer, Docpilot doit comprendre votre style
+            </p>
+            <p className="text-white/60 text-sm">
+              Votre help center existant contient votre ton, votre vocabulaire et votre structure.
+              Cliquez sur Scanner pour que Docpilot s&apos;en imprègne.
+            </p>
+          </div>
+        </div>
       )}
 
       <div className="mb-8">
@@ -128,7 +140,7 @@ export default function KnowledgePage() {
 
       {/* URL input */}
       <div className={`bg-lift rounded-2xl shadow-[0_2px_20px_rgba(0,0,0,0.03)] p-6 mb-6 transition-all duration-300 ${
-        showSpotlight && !scanning && !profile ? "relative z-50 ring-2 ring-orchid shadow-[0_0_40px_rgba(168,85,247,0.25)]" : ""
+        spotlightActive ? "relative z-50 ring-2 ring-orchid shadow-[0_0_40px_rgba(168,85,247,0.25)]" : ""
       }`}>
         <h2 className="text-lg font-medium mb-1">Help center existant</h2>
         <p className="text-sm text-dark/40 mb-5">
@@ -147,11 +159,7 @@ export default function KnowledgePage() {
           <button
             type="submit"
             disabled={scanning || !url.trim()}
-            className={`px-6 py-2.5 rounded-lg text-sm font-medium whitespace-nowrap transition-all duration-300 disabled:opacity-50 ${
-              showSpotlight && !scanning && !profile
-                ? "bg-orchid text-white animate-pulse shadow-[0_0_20px_rgba(168,85,247,0.5)] scale-105"
-                : "bg-dark text-light hover:bg-accent-purple"
-            }`}
+            className="bg-dark text-light px-6 py-2.5 rounded-lg text-sm font-medium hover:bg-accent-purple transition-colors duration-300 disabled:opacity-50 whitespace-nowrap"
           >
             {scanning ? "Analyse en cours..." : "Scanner"}
           </button>
@@ -321,6 +329,17 @@ export default function KnowledgePage() {
               ))}
             </div>
           </div>
+
+          {/* Next step */}
+          <a
+            href="/dashboard/competitors"
+            className="block bg-dark text-light rounded-2xl p-6 text-center hover:bg-accent-purple transition-colors duration-300"
+          >
+            <p className="text-lg font-medium">Etape suivante</p>
+            <p className="text-light/60 text-sm mt-1">
+              Voyez comment vous vous positionnez face a vos concurrents
+            </p>
+          </a>
         </div>
       )}
     </div>
