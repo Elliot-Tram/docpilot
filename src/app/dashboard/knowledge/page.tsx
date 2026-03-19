@@ -73,6 +73,7 @@ export default function KnowledgePage() {
   const [scanning, setScanning] = useState(false);
   const [scanStep, setScanStep] = useState(0);
   const [profile, setProfile] = useState<BrandProfile | null>(null);
+  const [showSpotlight, setShowSpotlight] = useState(true);
 
   const runScan = useCallback(() => {
     setScanning(true);
@@ -101,11 +102,20 @@ export default function KnowledgePage() {
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (!url.trim()) return;
+    setShowSpotlight(false);
     runScan();
   }
 
   return (
-    <div>
+    <div className="relative">
+      {/* Spotlight overlay */}
+      {showSpotlight && !scanning && !profile && (
+        <div
+          className="fixed inset-0 bg-black/60 z-40 animate-[fadeIn_0.4s_ease-out]"
+          onClick={() => setShowSpotlight(false)}
+        />
+      )}
+
       <div className="mb-8">
         <h1 className="text-2xl font-medium tracking-[-0.5px]">
           Base de connaissances
@@ -117,7 +127,9 @@ export default function KnowledgePage() {
       </div>
 
       {/* URL input */}
-      <div className="bg-lift rounded-2xl shadow-[0_2px_20px_rgba(0,0,0,0.03)] p-6 mb-6">
+      <div className={`bg-lift rounded-2xl shadow-[0_2px_20px_rgba(0,0,0,0.03)] p-6 mb-6 transition-all duration-300 ${
+        showSpotlight && !scanning && !profile ? "relative z-50 ring-2 ring-orchid shadow-[0_0_40px_rgba(168,85,247,0.25)]" : ""
+      }`}>
         <h2 className="text-lg font-medium mb-1">Help center existant</h2>
         <p className="text-sm text-dark/40 mb-5">
           Entrez l&apos;URL de votre help center. Docpilot va scanner vos
@@ -135,7 +147,11 @@ export default function KnowledgePage() {
           <button
             type="submit"
             disabled={scanning || !url.trim()}
-            className="bg-dark text-light px-6 py-2.5 rounded-lg text-sm font-medium hover:bg-accent-purple transition-colors duration-300 disabled:opacity-50 whitespace-nowrap"
+            className={`px-6 py-2.5 rounded-lg text-sm font-medium whitespace-nowrap transition-all duration-300 disabled:opacity-50 ${
+              showSpotlight && !scanning && !profile
+                ? "bg-orchid text-white animate-pulse shadow-[0_0_20px_rgba(168,85,247,0.5)] scale-105"
+                : "bg-dark text-light hover:bg-accent-purple"
+            }`}
           >
             {scanning ? "Analyse en cours..." : "Scanner"}
           </button>
