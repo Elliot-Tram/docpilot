@@ -1,7 +1,6 @@
 "use client";
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 
 const steps = [
   {
@@ -34,39 +33,57 @@ const steps = [
   },
 ];
 
+// Map pathname to which step should be marked done
+function getStepFromPath(pathname: string): number {
+  if (pathname.startsWith("/dashboard/suggestions")) return 3;
+  if (pathname.startsWith("/dashboard/competitors")) return 2;
+  if (pathname.startsWith("/dashboard/knowledge")) return 1;
+  return 0;
+}
+
 export default function Onboarding({
   onDismiss,
 }: {
   onDismiss: () => void;
 }) {
   const router = useRouter();
-  const [currentStep, setCurrentStep] = useState(0);
+  const pathname = usePathname();
 
-  function handleStepClick() {
-    const step = steps[currentStep];
+  // Determine current step based on progress stored + current page
+  const completedRaw = sessionStorage.getItem("docpilot-onboarding-step");
+  const completedFromStorage = completedRaw ? parseInt(completedRaw, 10) : 0;
+  const completedFromPath = getStepFromPath(pathname);
+  const completed = Math.max(completedFromStorage, completedFromPath);
+
+  // The current active step is the next one to do
+  const currentStep = Math.min(completed, steps.length - 1);
+
+  function handleStepClick(stepIndex: number) {
+    const step = steps[stepIndex];
 
     // Store prefill value for the target page to pick up
     if (step.prefillKey && step.prefillValue) {
       sessionStorage.setItem(step.prefillKey, step.prefillValue);
     }
 
-    router.push(step.href);
+    // Mark this step as the current progress
+    sessionStorage.setItem(
+      "docpilot-onboarding-step",
+      String(stepIndex + 1)
+    );
 
-    // Advance to next step (or dismiss if last)
-    if (currentStep < steps.length - 1) {
-      setCurrentStep(currentStep + 1);
-    } else {
+    if (stepIndex === steps.length - 1) {
       onDismiss();
     }
+
+    router.push(step.href);
   }
 
   return (
     <div className="bg-lift rounded-2xl shadow-[0_2px_20px_rgba(0,0,0,0.03)] p-8 mb-8 border border-orchid/15">
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h2 className="text-lg font-medium">
-            Bienvenue sur Docpilot
-          </h2>
+          <h2 className="text-lg font-medium">Bienvenue sur Docpilot</h2>
           <p className="text-sm text-dark/40 mt-0.5">
             Decouvrez la plateforme en 3 etapes
           </p>
@@ -82,8 +99,8 @@ export default function Onboarding({
       {/* Steps */}
       <div className="grid md:grid-cols-3 gap-4">
         {steps.map((step, i) => {
-          const isActive = i === currentStep;
           const isDone = i < currentStep;
+          const isActive = i === currentStep;
 
           return (
             <div
@@ -161,7 +178,7 @@ export default function Onboarding({
 
               {isActive && (
                 <button
-                  onClick={handleStepClick}
+                  onClick={() => handleStepClick(i)}
                   className="w-full bg-orchid text-white py-2.5 rounded-lg text-sm font-medium hover:bg-orchid/90 transition-colors"
                 >
                   {step.cta}

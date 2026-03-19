@@ -1,7 +1,9 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import Onboarding from "./onboarding";
 
 const navItems = [
   {
@@ -66,6 +68,17 @@ export default function DashboardLayout({
   children: React.ReactNode;
 }) {
   const pathname = usePathname();
+  const [showOnboarding, setShowOnboarding] = useState(false);
+
+  useEffect(() => {
+    const dismissed = sessionStorage.getItem("docpilot-onboarding-dismissed");
+    if (!dismissed) setShowOnboarding(true);
+  }, []);
+
+  function dismissOnboarding() {
+    setShowOnboarding(false);
+    sessionStorage.setItem("docpilot-onboarding-dismissed", "true");
+  }
 
   return (
     <div className="min-h-screen bg-light flex">
@@ -118,7 +131,12 @@ export default function DashboardLayout({
 
       {/* Main content */}
       <main className="flex-1 overflow-auto">
-        <div className="max-w-[1200px] mx-auto px-8 py-8">{children}</div>
+        <div className="max-w-[1200px] mx-auto px-8 py-8">
+          {showOnboarding && (
+            <Onboarding onDismiss={dismissOnboarding} />
+          )}
+          {children}
+        </div>
       </main>
     </div>
   );
