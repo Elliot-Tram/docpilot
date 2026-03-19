@@ -1,8 +1,11 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
+import useSWR from "swr";
 import Link from "next/link";
 import type { SuggestedArticle, ArticleStatus } from "@/lib/mock-data";
+
+const fetcher = (url: string) => fetch(url).then((r) => r.json());
 
 const statusLabel: Record<string, string> = {
   draft: "Brouillon",
@@ -26,31 +29,16 @@ const filters: { label: string; value: ArticleStatus | "all" }[] = [
 ];
 
 export default function SuggestionsPage() {
-  const [articles, setArticles] = useState<SuggestedArticle[]>([]);
-  const [loading, setLoading] = useState(true);
+  const { data: articlesData } = useSWR<SuggestedArticle[]>("/api/articles", fetcher);
+  const articles = Array.isArray(articlesData) ? articlesData : [];
   const [activeFilter, setActiveFilter] = useState<ArticleStatus | "all">(
     "all"
   );
-
-  useEffect(() => {
-    fetch("/api/articles")
-      .then((r) => r.json())
-      .then((data) => setArticles(Array.isArray(data) ? data : []))
-      .finally(() => setLoading(false));
-  }, []);
 
   const filtered =
     activeFilter === "all"
       ? articles
       : articles.filter((a) => a.status === activeFilter);
-
-  if (loading) {
-    return (
-      <div className="flex items-center justify-center py-20">
-        <p className="text-dark/30 text-sm">Chargement...</p>
-      </div>
-    );
-  }
 
   return (
     <div>

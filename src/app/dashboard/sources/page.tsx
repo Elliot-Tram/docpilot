@@ -1,7 +1,10 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
+import useSWR from "swr";
 import type { ConnectedSource } from "@/lib/mock-data";
+
+const fetcher = (url: string) => fetch(url).then((r) => r.json());
 
 const sourceLogos: Record<string, { label: string; color: string }> = {
   zendesk: { label: "Zendesk", color: "bg-sand" },
@@ -50,25 +53,14 @@ const availableSources = [
 ];
 
 export default function SourcesPage() {
-  const [sources, setSources] = useState<ConnectedSource[]>([]);
-  const [loading, setLoading] = useState(true);
+  const { data: sourcesData, mutate } = useSWR<ConnectedSource[]>("/api/sources", fetcher);
+  const sources = Array.isArray(sourcesData) ? sourcesData : [];
   const [showConnect, setShowConnect] = useState(false);
   const [selectedType, setSelectedType] = useState<typeof availableSources[number] | null>(null);
   const [formData, setFormData] = useState<Record<string, string>>({});
   const [formName, setFormName] = useState("");
   const [formError, setFormError] = useState("");
   const [formLoading, setFormLoading] = useState(false);
-
-  useEffect(() => {
-    fetchSources();
-  }, []);
-
-  async function fetchSources() {
-    const res = await fetch("/api/sources");
-    const data = await res.json();
-    setSources(Array.isArray(data) ? data : []);
-    setLoading(false);
-  }
 
   async function handleConnect(e: React.FormEvent) {
     e.preventDefault();
@@ -102,25 +94,17 @@ export default function SourcesPage() {
     setShowConnect(false);
     setFormData({});
     setFormName("");
-    fetchSources();
+    mutate();
   }
 
   async function handleSync(sourceId: string) {
     await fetch(`/api/sources/${sourceId}/sync`, { method: "POST" });
-    fetchSources();
+    mutate();
   }
 
   async function handleDelete(sourceId: string) {
     await fetch(`/api/sources/${sourceId}`, { method: "DELETE" });
-    fetchSources();
-  }
-
-  if (loading) {
-    return (
-      <div className="flex items-center justify-center py-20">
-        <p className="text-dark/30 text-sm">Chargement...</p>
-      </div>
-    );
+    mutate();
   }
 
   return (

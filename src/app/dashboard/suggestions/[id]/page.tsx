@@ -1,8 +1,14 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import useSWR from "swr";
 import { useParams, useRouter } from "next/navigation";
 import type { SuggestedArticle, ArticleStatus } from "@/lib/mock-data";
+
+const fetcher = (url: string) => fetch(url).then((r) => {
+  if (!r.ok) throw new Error("Not found");
+  return r.json();
+});
 
 const statusLabel: Record<string, string> = {
   draft: "Brouillon",
@@ -21,26 +27,22 @@ const statusColor: Record<string, string> = {
 export default function ArticleDetailPage() {
   const { id } = useParams();
   const router = useRouter();
-  const [article, setArticle] = useState<SuggestedArticle | null>(null);
-  const [loading, setLoading] = useState(true);
+  const { data: article, error } = useSWR<SuggestedArticle>(
+    id ? `/api/articles/${id}` : null,
+    fetcher
+  );
   const [status, setStatus] = useState<ArticleStatus>("draft");
   const [content, setContent] = useState("");
   const [showSuccess, setShowSuccess] = useState("");
+  const [initialized, setInitialized] = useState(false);
 
   useEffect(() => {
-    fetch(`/api/articles/${id}`)
-      .then((r) => {
-        if (!r.ok) throw new Error("Not found");
-        return r.json();
-      })
-      .then((data) => {
-        setArticle(data);
-        setStatus(data.status);
-        setContent(data.content);
-      })
-      .catch(() => setArticle(null))
-      .finally(() => setLoading(false));
-  }, [id]);
+    if (article && !initialized) {
+      setStatus(article.status);
+      setContent(article.content);
+      setInitialized(true);
+    }
+  }, [article, initialized]);
 
   async function handleAction(newStatus: ArticleStatus, message: string) {
     await fetch(`/api/articles/${id}`, {
@@ -63,18 +65,24 @@ export default function ArticleDetailPage() {
     setTimeout(() => setShowSuccess(""), 3000);
   }
 
-  if (loading) {
+  if (error) {
     return (
-      <div className="flex items-center justify-center py-20">
-        <p className="text-dark/30 text-sm">Chargement...</p>
+      <div className="text-center py-20">
+        <p className="text-dark/40">Article introuvable.</p>
       </div>
     );
   }
 
   if (!article) {
     return (
-      <div className="text-center py-20">
-        <p className="text-dark/40">Article introuvable.</p>
+      <div className="animate-pulse space-y-6">
+        <div className="h-8 w-96 bg-dark/5 rounded" />
+        <div className="h-4 w-64 bg-dark/5 rounded" />
+        <div className="bg-lift rounded-2xl p-6 space-y-3">
+          {[0, 1, 2, 3, 4].map((i) => (
+            <div key={i} className="h-4 bg-dark/5 rounded" style={{ width: `${80 - i * 10}%` }} />
+          ))}
+        </div>
       </div>
     );
   }

@@ -1,8 +1,10 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import useSWR from "swr";
 import Link from "next/link";
 import type { SuggestedArticle } from "@/lib/mock-data";
+
+const fetcher = (url: string) => fetch(url).then((r) => r.json());
 
 const statusLabel: Record<string, string> = {
   draft: "Brouillon",
@@ -26,21 +28,9 @@ interface Stats {
 }
 
 export default function DashboardOverview() {
-  const [stats, setStats] = useState<Stats | null>(null);
-  const [articles, setArticles] = useState<SuggestedArticle[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    Promise.all([
-      fetch("/api/stats").then((r) => r.json()),
-      fetch("/api/articles").then((r) => r.json()),
-    ])
-      .then(([statsData, articlesData]) => {
-        setStats(statsData);
-        setArticles(Array.isArray(articlesData) ? articlesData : []);
-      })
-      .finally(() => setLoading(false));
-  }, []);
+  const { data: stats } = useSWR<Stats>("/api/stats", fetcher);
+  const { data: articlesData } = useSWR<SuggestedArticle[]>("/api/articles", fetcher);
+  const articles = Array.isArray(articlesData) ? articlesData : [];
 
   const statCards = stats
     ? [
@@ -56,14 +46,6 @@ export default function DashboardOverview() {
 
   const recentArticles = articles.slice(0, 4);
 
-  if (loading) {
-    return (
-      <div className="flex items-center justify-center py-20">
-        <p className="text-dark/30 text-sm">Chargement...</p>
-      </div>
-    );
-  }
-
   return (
     <div>
       <div className="mb-8">
@@ -77,15 +59,25 @@ export default function DashboardOverview() {
 
       {/* Stats cards */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-10">
-        {statCards.map((s) => (
-          <div
-            key={s.label}
-            className="bg-lift rounded-2xl p-6 shadow-[0_2px_20px_rgba(0,0,0,0.03)]"
-          >
-            <p className="text-sm text-dark/40 font-medium mb-2">{s.label}</p>
-            <p className="text-3xl font-semibold tracking-tight">{s.value}</p>
-          </div>
-        ))}
+        {statCards.length > 0
+          ? statCards.map((s) => (
+              <div
+                key={s.label}
+                className="bg-lift rounded-2xl p-6 shadow-[0_2px_20px_rgba(0,0,0,0.03)]"
+              >
+                <p className="text-sm text-dark/40 font-medium mb-2">{s.label}</p>
+                <p className="text-3xl font-semibold tracking-tight">{s.value}</p>
+              </div>
+            ))
+          : [0, 1, 2, 3].map((i) => (
+              <div
+                key={i}
+                className="bg-lift rounded-2xl p-6 shadow-[0_2px_20px_rgba(0,0,0,0.03)] animate-pulse"
+              >
+                <div className="h-4 w-24 bg-dark/5 rounded mb-3" />
+                <div className="h-8 w-16 bg-dark/5 rounded" />
+              </div>
+            ))}
       </div>
 
       {/* Empty state */}
