@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, useRef, useEffect } from "react";
 
 interface BrandProfile {
   tone: string[];
@@ -55,18 +55,14 @@ const mockProfile: BrandProfile = {
 
 const scanSteps = [
   "Connexion au help center...",
-  "Exploration des pages...",
   "Scan des articles publies (34 trouves)...",
-  "Analyse de la structure...",
   "Extraction du vocabulaire...",
-  "Analyse des formulations recurrentes...",
   "Detection du ton redactionnel...",
   "Identification des lacunes...",
-  "Generation du profil...",
   "Profil redactionnel genere !",
 ];
 
-const stepDelays = [1200, 1600, 2400, 1800, 2000, 2200, 1800, 1500, 1200, 0];
+const stepDelays = [800, 1200, 1000, 1200, 1000, 0];
 
 export default function KnowledgePage() {
   const [url, setUrl] = useState("https://help.withallo.com/fr/get-started");
@@ -74,6 +70,28 @@ export default function KnowledgePage() {
   const [scanStep, setScanStep] = useState(0);
   const [profile, setProfile] = useState<BrandProfile | null>(null);
   const [showSpotlight, setShowSpotlight] = useState(true);
+  const sectionRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const [activeSection, setActiveSection] = useState(-1);
+
+  // Auto-scroll through results then navigate to competitors
+  useEffect(() => {
+    if (!profile || activeSection < 0) return;
+    if (activeSection >= sectionRefs.current.length) {
+      // Done scrolling, go to competitors
+      const timer = setTimeout(() => {
+        window.location.href = "/dashboard/competitors";
+      }, 1500);
+      return () => clearTimeout(timer);
+    }
+    const el = sectionRefs.current[activeSection];
+    if (el) {
+      el.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+    const timer = setTimeout(() => {
+      setActiveSection((s) => s + 1);
+    }, 2000);
+    return () => clearTimeout(timer);
+  }, [profile, activeSection]);
 
   const runScan = useCallback(() => {
     setScanning(true);
@@ -86,6 +104,8 @@ export default function KnowledgePage() {
         setTimeout(() => {
           setScanning(false);
           setProfile(mockProfile);
+          // Start auto-scroll after a short pause
+          setTimeout(() => setActiveSection(0), 800);
         }, 800);
         return;
       }
@@ -213,7 +233,7 @@ export default function KnowledgePage() {
       {profile && (
         <div className="space-y-6">
           {/* Stats bar */}
-          <div className="grid grid-cols-3 gap-4">
+          <div ref={(el) => { sectionRefs.current[0] = el; }} className={`grid grid-cols-3 gap-4 transition-all duration-500 ${activeSection === 0 ? "ring-2 ring-orchid/30 rounded-2xl" : ""}`}>
             <div className="bg-lift rounded-2xl p-5 shadow-[0_2px_20px_rgba(0,0,0,0.03)]">
               <p className="text-sm text-dark/40 font-medium mb-1">
                 Articles scannes
@@ -241,7 +261,7 @@ export default function KnowledgePage() {
           </div>
 
           {/* Tone */}
-          <div className="bg-lift rounded-2xl shadow-[0_2px_20px_rgba(0,0,0,0.03)] p-6">
+          <div ref={(el) => { sectionRefs.current[1] = el; }} className={`bg-lift rounded-2xl shadow-[0_2px_20px_rgba(0,0,0,0.03)] p-6 transition-all duration-500 ${activeSection === 1 ? "ring-2 ring-orchid/30" : ""}`}>
             <h3 className="text-base font-medium mb-4 flex items-center gap-2">
               <span className="w-2 h-2 rounded-full bg-orchid" />
               Ton redactionnel detecte
@@ -259,7 +279,7 @@ export default function KnowledgePage() {
           </div>
 
           {/* Vocabulary */}
-          <div className="bg-lift rounded-2xl shadow-[0_2px_20px_rgba(0,0,0,0.03)] p-6">
+          <div ref={(el) => { sectionRefs.current[2] = el; }} className={`bg-lift rounded-2xl shadow-[0_2px_20px_rgba(0,0,0,0.03)] p-6 transition-all duration-500 ${activeSection === 2 ? "ring-2 ring-orchid/30" : ""}`}>
             <h3 className="text-base font-medium mb-4 flex items-center gap-2">
               <span className="w-2 h-2 rounded-full bg-sky" />
               Vocabulaire specifique
@@ -277,7 +297,7 @@ export default function KnowledgePage() {
           </div>
 
           {/* Structure */}
-          <div className="bg-lift rounded-2xl shadow-[0_2px_20px_rgba(0,0,0,0.03)] p-6">
+          <div ref={(el) => { sectionRefs.current[3] = el; }} className={`bg-lift rounded-2xl shadow-[0_2px_20px_rgba(0,0,0,0.03)] p-6 transition-all duration-500 ${activeSection === 3 ? "ring-2 ring-orchid/30" : ""}`}>
             <h3 className="text-base font-medium mb-4 flex items-center gap-2">
               <span className="w-2 h-2 rounded-full bg-mint" />
               Structure type des articles
@@ -295,7 +315,7 @@ export default function KnowledgePage() {
           </div>
 
           {/* Insights */}
-          <div className="bg-lift rounded-2xl shadow-[0_2px_20px_rgba(0,0,0,0.03)] p-6">
+          <div ref={(el) => { sectionRefs.current[4] = el; }} className={`bg-lift rounded-2xl shadow-[0_2px_20px_rgba(0,0,0,0.03)] p-6 transition-all duration-500 ${activeSection === 4 ? "ring-2 ring-orchid/30" : ""}`}>
             <h3 className="text-base font-medium mb-4 flex items-center gap-2">
               <span className="w-2 h-2 rounded-full bg-coral" />
               Analyse et lacunes detectees
@@ -313,7 +333,7 @@ export default function KnowledgePage() {
           </div>
 
           {/* Categories */}
-          <div className="bg-lift rounded-2xl shadow-[0_2px_20px_rgba(0,0,0,0.03)] p-6">
+          <div ref={(el) => { sectionRefs.current[5] = el; }} className={`bg-lift rounded-2xl shadow-[0_2px_20px_rgba(0,0,0,0.03)] p-6 transition-all duration-500 ${activeSection === 5 ? "ring-2 ring-orchid/30" : ""}`}>
             <h3 className="text-base font-medium mb-4 flex items-center gap-2">
               <span className="w-2 h-2 rounded-full bg-sand" />
               Categories existantes
@@ -330,16 +350,6 @@ export default function KnowledgePage() {
             </div>
           </div>
 
-          {/* Next step */}
-          <a
-            href="/dashboard/competitors"
-            className="block bg-dark text-light rounded-2xl p-6 text-center hover:bg-accent-purple transition-colors duration-300"
-          >
-            <p className="text-lg font-medium">Etape suivante</p>
-            <p className="text-light/60 text-sm mt-1">
-              Voyez comment vous vous positionnez face a vos concurrents
-            </p>
-          </a>
         </div>
       )}
     </div>

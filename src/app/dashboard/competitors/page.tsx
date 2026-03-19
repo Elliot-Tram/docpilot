@@ -121,20 +121,14 @@ const mockCompetitors: CompetitorAnalysis[] = [
 
 const scanSteps = [
   "Connexion au help center concurrent...",
-  "Exploration de l'arborescence...",
-  "Indexation des articles publics...",
-  "Extraction du contenu (186 articles trouves)...",
-  "Classification par theme...",
+  "Indexation des articles publics (186 trouves)...",
   "Analyse de la couverture thematique...",
   "Comparaison avec votre base de connaissances...",
-  "Calcul des ecarts de couverture...",
   "Detection des opportunites...",
-  "Generation du rapport...",
   "Rapport pret !",
 ];
 
-// Variable delays per step (ms) to feel organic
-const stepDelays = [1200, 1800, 2200, 2800, 1500, 2000, 1600, 1400, 1800, 1000, 0];
+const stepDelays = [800, 1400, 1200, 1000, 1200, 0];
 
 export default function CompetitorsPage() {
   const [competitors, setCompetitors] = useState<CompetitorAnalysis[]>([]);
