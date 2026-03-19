@@ -85,7 +85,7 @@ const features = [
     label: "Fini les tickets répétitifs",
     title: "Vos tickets deviennent des articles",
     description:
-      "Docpilot analyse vos tickets Zendesk, Intercom ou Freshdesk, détecte les questions récurrentes et génère des articles prêts à publier. Vos clients trouvent la réponse eux-mêmes — le ticket n'arrive jamais.",
+      "Docpilot analyse vos tickets Zendesk, Intercom ou Freshdesk, détecte les questions récurrentes et génère des articles prêts à publier. Vos clients trouvent la réponse eux-mêmes, le ticket n'arrive jamais.",
   },
   {
     icon: IconRadar,
@@ -101,7 +101,7 @@ const features = [
     label: "Zéro effort pour votre équipe",
     title: "Relisez, approuvez, c'est en ligne",
     description:
-      "Docpilot collecte l'info technique auprès de vos ingénieurs via Slack, rédige le brouillon et vous le soumet. Vous validez en un clic — pas besoin d'écrire une ligne.",
+      "Docpilot collecte l'info technique auprès de vos ingénieurs via Slack, rédige le brouillon et vous le soumet. Vous validez en un clic, pas besoin d'écrire une ligne.",
   },
 ];
 
@@ -109,7 +109,7 @@ const steps = [
   {
     num: "01",
     title: "Connectez vos sources",
-    description: "Zendesk, Intercom, Freshdesk — en 2 minutes.",
+    description: "Zendesk, Intercom, Freshdesk, en 2 minutes.",
   },
   {
     num: "02",
@@ -229,7 +229,7 @@ export default function Home() {
           </p>
           <div className="inline-block mb-6">
             <span className="font-mono text-sm bg-orchid/20 text-accent-purple px-4 py-1.5 rounded-full">
-              Bientôt disponible — 100% français, hébergé en Europe 🇪🇺
+              Bientôt disponible · 100% français, hébergé en Europe 🇪🇺
             </span>
           </div>
           <h1 className="text-5xl md:text-[64px] font-normal leading-[1.08] tracking-[-2px] mb-6">
@@ -347,7 +347,7 @@ export default function Home() {
               <p className="text-dark/55 text-lg font-light leading-relaxed mb-8">
                 La logique est simple&nbsp;: si vos concurrents ont jugé un sujet
                 suffisamment important pour le documenter, c&apos;est que leurs
-                clients le demandent. Et les vôtres aussi — ou le feront bientôt.
+                clients le demandent. Et les vôtres aussi, ou le feront bientôt.
                 <span className="text-dark font-medium"> Ne les laissez pas
                 chercher la réponse chez un concurrent.</span>
               </p>
@@ -434,7 +434,7 @@ export default function Home() {
           </h2>
           <p className="text-dark/50 text-lg font-light max-w-[560px] mx-auto mb-12">
             Import des tickets, publication sur votre base de connaissances,
-            notifications dans Slack — Docpilot s&apos;intègre là où vous
+            notifications dans Slack. Docpilot s&apos;intègre là où vous
             travaillez déjà.
           </p>
           <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-4 max-w-[900px] mx-auto">
