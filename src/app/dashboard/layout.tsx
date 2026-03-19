@@ -116,7 +116,21 @@ export default function DashboardLayout({
             );
           })}
         </nav>
-        <div className="px-3 py-4 border-t border-white/10">
+        <div className="px-3 py-4 border-t border-white/10 space-y-3">
+          <button
+            onClick={() => {
+              sessionStorage.removeItem("docpilot-onboarding-dismissed");
+              sessionStorage.removeItem("docpilot-onboarding-step");
+              setShowOnboarding(true);
+            }}
+            className="flex items-center gap-2 px-3 py-2 w-full rounded-lg text-sm text-light/30 hover:text-light/60 hover:bg-white/5 transition-colors"
+          >
+            <svg className="w-4 h-4" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M4 10a6 6 0 1011.47-2.47" />
+              <path d="M15 3v5h-5" />
+            </svg>
+            Relancer la demo
+          </button>
           <div className="flex items-center gap-3 px-3">
             <div className="w-8 h-8 rounded-full bg-orchid/30 flex items-center justify-center text-sm font-medium text-orchid">
               E
