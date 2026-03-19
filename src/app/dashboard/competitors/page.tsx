@@ -121,12 +121,20 @@ const mockCompetitors: CompetitorAnalysis[] = [
 
 const scanSteps = [
   "Connexion au help center concurrent...",
+  "Exploration de l'arborescence...",
   "Indexation des articles publics...",
+  "Extraction du contenu (186 articles trouves)...",
+  "Classification par theme...",
   "Analyse de la couverture thematique...",
   "Comparaison avec votre base de connaissances...",
+  "Calcul des ecarts de couverture...",
   "Detection des opportunites...",
-  "Rapport genere !",
+  "Generation du rapport...",
+  "Rapport pret !",
 ];
+
+// Variable delays per step (ms) to feel organic
+const stepDelays = [1200, 1800, 2200, 2800, 1500, 2000, 1600, 1400, 1800, 1000, 0];
 
 export default function CompetitorsPage() {
   const [competitors, setCompetitors] = useState<CompetitorAnalysis[]>([]);
@@ -141,14 +149,10 @@ export default function CompetitorsPage() {
     setScanStep(0);
 
     let step = 0;
-    const interval = setInterval(() => {
-      step++;
-      setScanStep(step);
+    function nextStep() {
       if (step >= scanSteps.length - 1) {
-        clearInterval(interval);
         setTimeout(() => {
           setScanning(false);
-          // Pick a mock based on URL content
           const isAircall = url.toLowerCase().includes("aircall");
           const mock = isAircall ? mockCompetitors[0] : mockCompetitors[1];
           const result = { ...mock, url };
@@ -159,9 +163,17 @@ export default function CompetitorsPage() {
           });
           setSelectedCompetitor(result);
           setUrl("");
-        }, 600);
+        }, 800);
+        return;
       }
-    }, 700);
+      const delay = stepDelays[step] + Math.random() * 600 - 300;
+      setTimeout(() => {
+        step++;
+        setScanStep(step);
+        nextStep();
+      }, delay);
+    }
+    nextStep();
   }, [url]);
 
   function handleSubmit(e: React.FormEvent) {

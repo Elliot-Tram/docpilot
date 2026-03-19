@@ -55,13 +55,18 @@ const mockProfile: BrandProfile = {
 
 const scanSteps = [
   "Connexion au help center...",
-  "Scan des articles publies...",
+  "Exploration des pages...",
+  "Scan des articles publies (34 trouves)...",
   "Analyse de la structure...",
   "Extraction du vocabulaire...",
+  "Analyse des formulations recurrentes...",
   "Detection du ton redactionnel...",
   "Identification des lacunes...",
+  "Generation du profil...",
   "Profil redactionnel genere !",
 ];
+
+const stepDelays = [1200, 1600, 2400, 1800, 2000, 2200, 1800, 1500, 1200, 0];
 
 export default function KnowledgePage() {
   const [url, setUrl] = useState("");
@@ -75,17 +80,22 @@ export default function KnowledgePage() {
     setProfile(null);
 
     let step = 0;
-    const interval = setInterval(() => {
-      step++;
-      setScanStep(step);
+    function nextStep() {
       if (step >= scanSteps.length - 1) {
-        clearInterval(interval);
         setTimeout(() => {
           setScanning(false);
           setProfile(mockProfile);
-        }, 600);
+        }, 800);
+        return;
       }
-    }, 800);
+      const delay = stepDelays[step] + Math.random() * 600 - 300;
+      setTimeout(() => {
+        step++;
+        setScanStep(step);
+        nextStep();
+      }, delay);
+    }
+    nextStep();
   }, []);
 
   function handleSubmit(e: React.FormEvent) {
