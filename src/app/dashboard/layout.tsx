@@ -75,10 +75,27 @@ export default function DashboardLayout({
     if (!dismissed) setShowOnboarding(true);
   }, []);
 
+  const [demoStep, setDemoStep] = useState(0);
+
+  // Sync demo step from sessionStorage on navigation
+  useEffect(() => {
+    if (!showOnboarding) return;
+    const step = sessionStorage.getItem("docpilot-onboarding-step");
+    setDemoStep(step ? parseInt(step, 10) : 0);
+  }, [pathname, showOnboarding]);
+
   function dismissOnboarding() {
     setShowOnboarding(false);
     sessionStorage.setItem("docpilot-onboarding-dismissed", "true");
   }
+
+  // Map onboarding step to which sidebar href should pulse
+  const demoHighlight: Record<number, string> = {
+    0: "/dashboard/suggestions",
+    1: "/dashboard/knowledge",
+    2: "/dashboard/competitors",
+    3: "/dashboard/competitors",
+  };
 
   return (
     <div className="min-h-screen bg-light flex">
@@ -95,6 +112,8 @@ export default function DashboardLayout({
               item.href === "/dashboard"
                 ? pathname === "/dashboard"
                 : pathname.startsWith(item.href);
+            const shouldPulse =
+              showOnboarding && demoHighlight[demoStep] === item.href && !isActive;
             return (
               <Link
                 key={item.href}
@@ -102,12 +121,17 @@ export default function DashboardLayout({
                 className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors duration-200 ${
                   isActive
                     ? "bg-white/10 text-light"
+                    : shouldPulse
+                    ? "text-orchid bg-orchid/10 animate-pulse"
                     : "text-light/50 hover:text-light hover:bg-white/5"
                 }`}
               >
                 {item.icon}
                 {item.label}
-                {item.badge && (
+                {shouldPulse && (
+                  <span className="ml-auto w-2 h-2 rounded-full bg-orchid animate-ping" />
+                )}
+                {!shouldPulse && item.badge && (
                   <span className="ml-auto bg-orchid/30 text-orchid text-xs font-medium px-2 py-0.5 rounded-full">
                     {item.badge}
                   </span>
