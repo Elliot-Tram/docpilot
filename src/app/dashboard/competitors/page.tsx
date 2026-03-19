@@ -143,6 +143,7 @@ export default function CompetitorsPage() {
   const [scanStep, setScanStep] = useState(0);
   const [selectedCompetitor, setSelectedCompetitor] =
     useState<CompetitorAnalysis | null>(null);
+  const [shouldAutoScan, setShouldAutoScan] = useState(false);
   const autoStarted = useRef(false);
 
   useEffect(() => {
@@ -151,6 +152,7 @@ export default function CompetitorsPage() {
       autoStarted.current = true;
       sessionStorage.removeItem("docpilot-competitor-url");
       setUrl(prefill);
+      setShouldAutoScan(true);
     }
   }, []);
 
@@ -185,6 +187,14 @@ export default function CompetitorsPage() {
     }
     nextStep();
   }, [url]);
+
+  useEffect(() => {
+    if (shouldAutoScan && url && !scanning) {
+      setShouldAutoScan(false);
+      const timer = setTimeout(() => runScan(), 600);
+      return () => clearTimeout(timer);
+    }
+  }, [shouldAutoScan, url, scanning, runScan]);
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();

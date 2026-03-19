@@ -73,6 +73,7 @@ export default function KnowledgePage() {
   const [scanning, setScanning] = useState(false);
   const [scanStep, setScanStep] = useState(0);
   const [profile, setProfile] = useState<BrandProfile | null>(null);
+  const [shouldAutoScan, setShouldAutoScan] = useState(false);
   const autoStarted = useRef(false);
 
   useEffect(() => {
@@ -81,6 +82,7 @@ export default function KnowledgePage() {
       autoStarted.current = true;
       sessionStorage.removeItem("docpilot-kb-url");
       setUrl(prefill);
+      setShouldAutoScan(true);
     }
   }, []);
 
@@ -107,6 +109,14 @@ export default function KnowledgePage() {
     }
     nextStep();
   }, []);
+
+  useEffect(() => {
+    if (shouldAutoScan && url && !scanning) {
+      setShouldAutoScan(false);
+      const timer = setTimeout(() => runScan(), 600);
+      return () => clearTimeout(timer);
+    }
+  }, [shouldAutoScan, url, scanning, runScan]);
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
