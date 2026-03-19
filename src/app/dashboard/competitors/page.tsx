@@ -135,7 +135,7 @@ export default function CompetitorsPage() {
   const [url, setUrl] = useState("https://support.aircall.io");
   const [scanning, setScanning] = useState(false);
   const [scanStep, setScanStep] = useState(0);
-  const [showSpotlight, setShowSpotlight] = useState(true);
+  const [demoStep, setDemoStep] = useState<"intro" | "scan" | "done">("intro");
   const [selectedCompetitor, setSelectedCompetitor] =
     useState<CompetitorAnalysis | null>(null);
 
@@ -174,7 +174,7 @@ export default function CompetitorsPage() {
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (!url.trim() || scanning) return;
-    setShowSpotlight(false);
+    setDemoStep("done");
     runScan();
   }
 
@@ -185,26 +185,40 @@ export default function CompetitorsPage() {
     1
   );
 
-  const spotlightActive = showSpotlight && !scanning && competitors.length === 0;
+  const scanPromptActive = demoStep === "scan" && !scanning && competitors.length === 0;
 
   return (
     <div className="relative">
-      {/* Spotlight overlay with intro text */}
-      {spotlightActive && (
-        <div
-          className="fixed inset-0 bg-black/60 z-40 animate-[fadeIn_0.4s_ease-out]"
-          onClick={() => setShowSpotlight(false)}
-        >
-          <div className="absolute top-8 left-1/2 -translate-x-1/2 text-center text-white max-w-lg">
-            <p className="text-lg font-medium mb-2">
-              Comparez-vous a la concurrence
+      {/* Intro modal */}
+      {demoStep === "intro" && (
+        <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center">
+          <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full mx-4 p-8">
+            <div className="w-12 h-12 rounded-xl bg-orchid/15 flex items-center justify-center mb-5">
+              <span className="text-xl font-semibold text-accent-purple">vs</span>
+            </div>
+            <h2 className="text-xl font-semibold mb-3">
+              Veille concurrentielle
+            </h2>
+            <p className="text-dark/60 leading-relaxed mb-3">
+              Docpilot peut analyser le help center de vos concurrents et le comparer au votre.
             </p>
-            <p className="text-white/60 text-sm">
-              Docpilot analyse le help center d&apos;un concurrent et identifie les sujets
-              qu&apos;il couvre et pas vous. Cliquez sur Analyser pour lancer la comparaison.
+            <p className="text-dark/60 leading-relaxed mb-6">
+              Vous verrez quels sujets ils couvrent et pas vous, leurs forces, leurs faiblesses,
+              et les opportunites pour vous demarquer.
             </p>
+            <button
+              onClick={() => setDemoStep("scan")}
+              className="w-full bg-dark text-light py-3 rounded-xl text-sm font-medium hover:bg-accent-purple transition-colors duration-300"
+            >
+              Lancer l&apos;analyse
+            </button>
           </div>
         </div>
+      )}
+
+      {/* Scan prompt overlay */}
+      {scanPromptActive && (
+        <div className="fixed inset-0 bg-black/50 z-40" />
       )}
 
       <div className="mb-8">
@@ -219,7 +233,7 @@ export default function CompetitorsPage() {
 
       {/* Add competitor */}
       <div className={`bg-lift rounded-2xl shadow-[0_2px_20px_rgba(0,0,0,0.03)] p-6 mb-6 transition-all duration-300 ${
-        spotlightActive ? "relative z-50 ring-2 ring-orchid shadow-[0_0_40px_rgba(168,85,247,0.25)]" : ""
+        scanPromptActive ? "relative z-50 ring-2 ring-orchid shadow-[0_0_40px_rgba(168,85,247,0.25)]" : ""
       }`}>
         <h2 className="text-lg font-medium mb-1">Analyser un concurrent</h2>
         <p className="text-sm text-dark/40 mb-5">

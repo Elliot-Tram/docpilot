@@ -69,7 +69,7 @@ export default function KnowledgePage() {
   const [scanning, setScanning] = useState(false);
   const [scanStep, setScanStep] = useState(0);
   const [profile, setProfile] = useState<BrandProfile | null>(null);
-  const [showSpotlight, setShowSpotlight] = useState(true);
+  const [demoStep, setDemoStep] = useState<"welcome" | "scan" | "done">("welcome");
   const sectionRefs = useRef<(HTMLDivElement | null)[]>([]);
   const [activeSection, setActiveSection] = useState(-1);
 
@@ -122,30 +122,44 @@ export default function KnowledgePage() {
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (!url.trim()) return;
-    setShowSpotlight(false);
+    setDemoStep("done");
     runScan();
   }
 
-  const spotlightActive = showSpotlight && !scanning && !profile;
-
   return (
     <div className="relative">
-      {/* Spotlight overlay with intro text */}
-      {spotlightActive && (
-        <div
-          className="fixed inset-0 bg-black/60 z-40 animate-[fadeIn_0.4s_ease-out]"
-          onClick={() => setShowSpotlight(false)}
-        >
-          <div className="absolute top-8 left-1/2 -translate-x-1/2 text-center text-white max-w-lg">
-            <p className="text-lg font-medium mb-2">
-              Avant de commencer, Docpilot doit comprendre votre style
+      {/* Welcome modal */}
+      {demoStep === "welcome" && (
+        <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center">
+          <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full mx-4 p-8">
+            <div className="w-12 h-12 rounded-xl bg-orchid/15 flex items-center justify-center mb-5">
+              <span className="text-xl font-semibold text-accent-purple">dp</span>
+            </div>
+            <h2 className="text-xl font-semibold mb-3">
+              Bienvenue sur Docpilot
+            </h2>
+            <p className="text-dark/60 leading-relaxed mb-3">
+              Docpilot genere automatiquement des articles pour votre help center
+              a partir de vos tickets support.
             </p>
-            <p className="text-white/60 text-sm">
-              Votre help center existant contient votre ton, votre vocabulaire et votre structure.
-              Cliquez sur Scanner pour que Docpilot s&apos;en imprègne.
+            <p className="text-dark/60 leading-relaxed mb-6">
+              Mais avant, il faut qu&apos;on apprenne a vous connaitre.
+              Votre help center existant contient votre ton, votre vocabulaire et
+              votre facon de structurer vos articles.
             </p>
+            <button
+              onClick={() => setDemoStep("scan")}
+              className="w-full bg-dark text-light py-3 rounded-xl text-sm font-medium hover:bg-accent-purple transition-colors duration-300"
+            >
+              Commencer
+            </button>
           </div>
         </div>
+      )}
+
+      {/* Scan prompt overlay */}
+      {demoStep === "scan" && !scanning && !profile && (
+        <div className="fixed inset-0 bg-black/50 z-40" />
       )}
 
       <div className="mb-8">
@@ -160,7 +174,7 @@ export default function KnowledgePage() {
 
       {/* URL input */}
       <div className={`bg-lift rounded-2xl shadow-[0_2px_20px_rgba(0,0,0,0.03)] p-6 mb-6 transition-all duration-300 ${
-        spotlightActive ? "relative z-50 ring-2 ring-orchid shadow-[0_0_40px_rgba(168,85,247,0.25)]" : ""
+        demoStep === "scan" && !scanning && !profile ? "relative z-50 ring-2 ring-orchid shadow-[0_0_40px_rgba(168,85,247,0.25)]" : ""
       }`}>
         <h2 className="text-lg font-medium mb-1">Help center existant</h2>
         <p className="text-sm text-dark/40 mb-5">
