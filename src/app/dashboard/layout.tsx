@@ -48,6 +48,16 @@ const navItems = [
       </svg>
     ),
   },
+  {
+    label: "Veille concurrentielle",
+    href: "/dashboard/competitors",
+    icon: (
+      <svg className="w-5 h-5" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <circle cx="10" cy="10" r="7" />
+        <path d="M10 6v4l3 2" />
+      </svg>
+    ),
+  },
 ];
 
 export default function DashboardLayout({
