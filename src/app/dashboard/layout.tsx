@@ -125,9 +125,8 @@ export default function DashboardLayout({
             }}
             className="flex items-center gap-2 px-3 py-2 w-full rounded-lg text-sm text-light/30 hover:text-light/60 hover:bg-white/5 transition-colors"
           >
-            <svg className="w-4 h-4" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M4 10a6 6 0 1011.47-2.47" />
-              <path d="M15 3v5h-5" />
+            <svg className="w-4 h-4" viewBox="0 0 20 20" fill="currentColor">
+              <path d="M6 4l10 6-10 6V4z" />
             </svg>
             Relancer la demo
           </button>
