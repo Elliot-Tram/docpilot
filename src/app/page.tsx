@@ -40,6 +40,17 @@ function IconSlackBot({ className }: { className?: string }) {
   );
 }
 
+function IconCompetitor({ className }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 32 32" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <circle cx="10" cy="10" r="6" />
+      <circle cx="22" cy="10" r="6" />
+      <circle cx="16" cy="22" r="6" />
+      <path d="M14.5 7.5l3 0M13 16l-1.5 3M19 16l1.5 3" />
+    </svg>
+  );
+}
+
 function IconShield({ className }: { className?: string }) {
   return (
     <svg className={className} viewBox="0 0 32 32" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
@@ -312,6 +323,71 @@ export default function Home() {
                 </p>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ───── Veille concurrentielle ───── */}
+      <section className="py-28 px-8 bg-depth">
+        <div className="max-w-[1200px] mx-auto">
+          <div className="grid md:grid-cols-2 gap-16 items-center">
+            <div>
+              <span className="font-mono text-sm text-accent-purple bg-orchid/15 px-4 py-1.5 rounded-full">
+                Veille concurrentielle
+              </span>
+              <h2 className="text-4xl md:text-[48px] font-normal tracking-[-1.5px] mt-6 mb-6">
+                Vos concurrents l&apos;ont documenté.
+                <br />
+                <span className="text-accent-purple">Vos clients le cherchent.</span>
+              </h2>
+              <p className="text-dark/55 text-lg font-light leading-relaxed mb-6">
+                Docpilot analyse les help centers de vos concurrents et identifie
+                les articles qu&apos;ils ont publiés et qui manquent chez vous.
+              </p>
+              <p className="text-dark/55 text-lg font-light leading-relaxed mb-8">
+                La logique est simple&nbsp;: si vos concurrents ont jugé un sujet
+                suffisamment important pour le documenter, c&apos;est que leurs
+                clients le demandent. Et les vôtres aussi — ou le feront bientôt.
+                <span className="text-dark font-medium"> Ne les laissez pas
+                chercher la réponse chez un concurrent.</span>
+              </p>
+              <a
+                href="#waitlist"
+                className="inline-flex items-center gap-2 bg-dark text-light px-6 py-3 rounded-lg font-medium hover:bg-accent-purple transition-colors duration-300"
+              >
+                Rejoindre la waitlist
+                <IconArrowRight className="w-4 h-4" />
+              </a>
+            </div>
+            <div className="bg-lift rounded-[20px] p-8 shadow-[0_4px_80px_rgba(0,0,0,0.04)]">
+              <div className="flex items-center gap-3 mb-6">
+                <div className="w-10 h-10 rounded-xl bg-orchid/20 flex items-center justify-center">
+                  <IconCompetitor className="w-5 h-5 text-accent-purple" />
+                </div>
+                <span className="font-medium text-dark/70">Analyse concurrentielle</span>
+              </div>
+              <div className="space-y-4">
+                {[
+                  { status: "missing", label: "Configurer l'authentification SSO", source: "Vu chez 3 concurrents" },
+                  { status: "missing", label: "Migrer depuis un autre outil", source: "Vu chez 4 concurrents" },
+                  { status: "missing", label: "Limites et quotas de l'API", source: "Vu chez 2 concurrents" },
+                  { status: "draft", label: "Paramètres de facturation", source: "Brouillon généré" },
+                ].map((item) => (
+                  <div key={item.label} className="flex items-center justify-between p-3 rounded-xl bg-depth border border-dark/6">
+                    <div className="flex items-center gap-3">
+                      <span className={`w-2 h-2 rounded-full shrink-0 ${item.status === "missing" ? "bg-coral" : "bg-orchid"}`} />
+                      <span className="text-sm font-medium text-dark/80">{item.label}</span>
+                    </div>
+                    <span className={`text-xs font-medium px-2.5 py-1 rounded-full ${item.status === "missing" ? "bg-coral/10 text-coral" : "bg-orchid/15 text-accent-purple"}`}>
+                      {item.source}
+                    </span>
+                  </div>
+                ))}
+              </div>
+              <p className="text-xs text-dark/30 mt-4 text-center">
+                Exemple de rapport de veille documentaire
+              </p>
+            </div>
           </div>
         </div>
       </section>
