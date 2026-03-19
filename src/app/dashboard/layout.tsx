@@ -119,9 +119,8 @@ export default function DashboardLayout({
         <div className="px-3 py-4 border-t border-white/10 space-y-3">
           <button
             onClick={() => {
-              sessionStorage.removeItem("docpilot-onboarding-dismissed");
-              sessionStorage.removeItem("docpilot-onboarding-step");
-              setShowOnboarding(true);
+              sessionStorage.clear();
+              window.location.href = "/dashboard";
             }}
             className="flex items-center gap-2 px-3 py-2 w-full rounded-lg text-sm text-light/30 hover:text-light/60 hover:bg-white/5 transition-colors"
           >

@@ -15,6 +15,14 @@ const steps = [
   },
   {
     number: 2,
+    title: "Decouvrez vos suggestions d'articles",
+    description:
+      "Docpilot a analyse vos tickets et genere des articles prets a publier sur votre help center.",
+    cta: "Voir les suggestions",
+    href: "/dashboard/suggestions",
+  },
+  {
+    number: 3,
     title: "Analysez un concurrent",
     description:
       "Comparez votre couverture avec celle d'un concurrent et identifiez les opportunites.",
@@ -23,20 +31,11 @@ const steps = [
     prefillKey: "docpilot-competitor-url",
     prefillValue: "https://support.aircall.io",
   },
-  {
-    number: 3,
-    title: "Decouvrez vos suggestions d'articles",
-    description:
-      "Docpilot a analyse vos tickets et genere des articles prets a publier sur votre help center.",
-    cta: "Voir les suggestions",
-    href: "/dashboard/suggestions",
-  },
 ];
 
-// Map pathname to which step should be marked done
-function getStepFromPath(pathname: string): number {
-  if (pathname.startsWith("/dashboard/suggestions")) return 3;
-  if (pathname.startsWith("/dashboard/competitors")) return 2;
+function getCompletedFromPath(pathname: string): number {
+  if (pathname.startsWith("/dashboard/competitors")) return 3;
+  if (pathname.startsWith("/dashboard/suggestions")) return 2;
   if (pathname.startsWith("/dashboard/knowledge")) return 1;
   return 0;
 }
@@ -49,24 +48,19 @@ export default function Onboarding({
   const router = useRouter();
   const pathname = usePathname();
 
-  // Determine current step based on progress stored + current page
-  const completedRaw = sessionStorage.getItem("docpilot-onboarding-step");
-  const completedFromStorage = completedRaw ? parseInt(completedRaw, 10) : 0;
-  const completedFromPath = getStepFromPath(pathname);
+  const storedStep = sessionStorage.getItem("docpilot-onboarding-step");
+  const completedFromStorage = storedStep ? parseInt(storedStep, 10) : 0;
+  const completedFromPath = getCompletedFromPath(pathname);
   const completed = Math.max(completedFromStorage, completedFromPath);
-
-  // The current active step is the next one to do
   const currentStep = Math.min(completed, steps.length - 1);
 
   function handleStepClick(stepIndex: number) {
     const step = steps[stepIndex];
 
-    // Store prefill value for the target page to pick up
     if (step.prefillKey && step.prefillValue) {
       sessionStorage.setItem(step.prefillKey, step.prefillValue);
     }
 
-    // Mark this step as the current progress
     sessionStorage.setItem(
       "docpilot-onboarding-step",
       String(stepIndex + 1)
@@ -96,7 +90,6 @@ export default function Onboarding({
         </button>
       </div>
 
-      {/* Steps */}
       <div className="grid md:grid-cols-3 gap-4">
         {steps.map((step, i) => {
           const isDone = i < currentStep;
