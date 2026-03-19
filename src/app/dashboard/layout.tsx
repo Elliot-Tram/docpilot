@@ -38,6 +38,16 @@ const navItems = [
       </svg>
     ),
   },
+  {
+    label: "Base de connaissances",
+    href: "/dashboard/knowledge",
+    icon: (
+      <svg className="w-5 h-5" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M4 4h5l2 2h5a1 1 0 011 1v8a1 1 0 01-1 1H4a1 1 0 01-1-1V5a1 1 0 011-1z" />
+        <path d="M8 11h4M8 14h2" />
+      </svg>
+    ),
+  },
 ];
 
 export default function DashboardLayout({
