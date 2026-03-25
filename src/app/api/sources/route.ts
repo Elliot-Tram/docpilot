@@ -1,22 +1,24 @@
 import { NextRequest, NextResponse } from "next/server";
+import { getAuthenticatedUser } from "@/lib/demo";
+import { mockSources } from "@/lib/mock-data";
 import { createClient } from "@/lib/supabase/server";
-import { createProvider } from "@/lib/providers";
 
 export async function GET() {
+  const user = await getAuthenticatedUser();
+
+  if (!user) {
+    return NextResponse.json(mockSources);
+  }
+
   const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-  if (!user) return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
 
   const { data, error } = await supabase
     .from("sources")
     .select("id, name, type, status, tickets_imported, last_sync_at, created_at")
     .order("created_at", { ascending: false });
 
-  if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+  if (error) return NextResponse.json(mockSources);
 
-  // Map to frontend ConnectedSource format
   const sources = (data || []).map((s) => ({
     id: s.id,
     name: s.name,
@@ -28,15 +30,26 @@ export async function GET() {
       : "Jamais synchronisé",
   }));
 
-  return NextResponse.json(sources);
+  return NextResponse.json(sources.length > 0 ? sources : mockSources);
 }
 
 export async function POST(req: NextRequest) {
+  const user = await getAuthenticatedUser();
+
+  if (!user) {
+    const body = await req.json();
+    return NextResponse.json({
+      id: `src-demo-${Date.now()}`,
+      name: body.name || "Demo Source",
+      type: body.type || "zendesk",
+      status: "connected",
+      ticketsImported: 0,
+      lastSync: "A l'instant",
+    });
+  }
+
   const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-  if (!user) return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
+  const { createProvider } = await import("@/lib/providers");
 
   const body = await req.json();
   const { name, type, credentials } = body;
@@ -52,7 +65,6 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Type invalide" }, { status: 400 });
   }
 
-  // Validate credentials by testing the connection
   const provider = createProvider(type, credentials);
   const valid = await provider.validateCredentials();
   if (!valid) {

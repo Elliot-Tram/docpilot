@@ -1,12 +1,16 @@
 import { NextResponse } from "next/server";
+import { getAuthenticatedUser } from "@/lib/demo";
+import { mockStats } from "@/lib/mock-data";
 import { createClient } from "@/lib/supabase/server";
 
 export async function GET() {
+  const user = await getAuthenticatedUser();
+
+  if (!user) {
+    return NextResponse.json(mockStats);
+  }
+
   const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-  if (!user) return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
 
   // Count tickets across all user's sources
   const { data: sources } = await supabase
@@ -38,6 +42,6 @@ export async function GET() {
     ticketsAnalyzed,
     articlesGenerated: articlesGenerated || 0,
     gapsDetected: gapsDetected || 0,
-    ticketsDeflected: (published || 0) * 30, // rough estimate
+    ticketsDeflected: (published || 0) * 30,
   });
 }

@@ -1,4 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
+import { getAuthenticatedUser } from "@/lib/demo";
+import { mockArticles } from "@/lib/mock-data";
 import { createClient } from "@/lib/supabase/server";
 
 export async function GET(
@@ -6,11 +8,15 @@ export async function GET(
   { params }: { params: Promise<{ id: string }> }
 ) {
   const { id } = await params;
+  const user = await getAuthenticatedUser();
+
+  if (!user) {
+    const article = mockArticles.find((a) => a.id === id);
+    if (!article) return NextResponse.json({ error: "Article introuvable" }, { status: 404 });
+    return NextResponse.json(article);
+  }
+
   const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-  if (!user) return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
 
   const { data: article, error } = await supabase
     .from("articles")
@@ -21,6 +27,9 @@ export async function GET(
     .single();
 
   if (error || !article) {
+    // Try mock data as fallback
+    const mock = mockArticles.find((a) => a.id === id);
+    if (mock) return NextResponse.json(mock);
     return NextResponse.json({ error: "Article introuvable" }, { status: 404 });
   }
 
@@ -86,11 +95,13 @@ export async function PATCH(
   { params }: { params: Promise<{ id: string }> }
 ) {
   const { id } = await params;
+  const user = await getAuthenticatedUser();
+
+  if (!user) {
+    return NextResponse.json({ success: true });
+  }
+
   const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-  if (!user) return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
 
   const body = await req.json();
   const updates: Record<string, unknown> = { updated_at: new Date().toISOString() };

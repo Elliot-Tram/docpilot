@@ -1,19 +1,21 @@
 import { NextRequest, NextResponse } from "next/server";
+import { getAuthenticatedUser } from "@/lib/demo";
 import { createClient } from "@/lib/supabase/server";
-import { enqueueJob } from "@/lib/jobs/queue";
 
 export async function POST(
   _req: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
   const { id } = await params;
-  const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-  if (!user) return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
+  const user = await getAuthenticatedUser();
 
-  // Verify source exists and belongs to user
+  if (!user) {
+    return NextResponse.json({ success: true, message: "Synchronisation lancée" });
+  }
+
+  const supabase = await createClient();
+  const { enqueueJob } = await import("@/lib/jobs/queue");
+
   const { data: source, error: sourceError } = await supabase
     .from("sources")
     .select("id, status")
@@ -31,20 +33,17 @@ export async function POST(
     );
   }
 
-  // Update status to syncing
   await supabase
     .from("sources")
     .update({ status: "syncing" })
     .eq("id", id);
 
-  // Create sync log
   const { data: syncLog } = await supabase
     .from("sync_logs")
     .insert({ source_id: id, status: "running" })
     .select("id")
     .single();
 
-  // Enqueue import job
   await enqueueJob("import-tickets", {
     sourceId: id,
     userId: user.id,

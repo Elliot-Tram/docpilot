@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { getAuthenticatedUser } from "@/lib/demo";
 import { createClient } from "@/lib/supabase/server";
 
 export async function DELETE(
@@ -6,11 +7,13 @@ export async function DELETE(
   { params }: { params: Promise<{ id: string }> }
 ) {
   const { id } = await params;
+  const user = await getAuthenticatedUser();
+
+  if (!user) {
+    return NextResponse.json({ success: true });
+  }
+
   const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-  if (!user) return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
 
   const { error } = await supabase.from("sources").delete().eq("id", id);
 

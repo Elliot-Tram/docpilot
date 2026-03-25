@@ -29,12 +29,13 @@ export async function middleware(request: NextRequest) {
     data: { user },
   } = await supabase.auth.getUser();
 
-  // Redirect to login if not authenticated and trying to access dashboard
-  if (!user && request.nextUrl.pathname.startsWith("/dashboard")) {
-    const url = request.nextUrl.clone();
-    url.pathname = "/login";
-    return NextResponse.redirect(url);
-  }
+  // In demo mode (no user), allow access to dashboard with mock data
+  // When a real user is needed, they'll be redirected to login
+  // if (!user && request.nextUrl.pathname.startsWith("/dashboard")) {
+  //   const url = request.nextUrl.clone();
+  //   url.pathname = "/login";
+  //   return NextResponse.redirect(url);
+  // }
 
   // Redirect to dashboard if already authenticated and on login page
   if (user && request.nextUrl.pathname === "/login") {

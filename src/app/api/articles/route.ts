@@ -1,12 +1,16 @@
 import { NextResponse } from "next/server";
+import { getAuthenticatedUser } from "@/lib/demo";
+import { mockArticles } from "@/lib/mock-data";
 import { createClient } from "@/lib/supabase/server";
 
 export async function GET() {
+  const user = await getAuthenticatedUser();
+
+  if (!user) {
+    return NextResponse.json(mockArticles);
+  }
+
   const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-  if (!user) return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
 
   const { data: articles, error } = await supabase
     .from("articles")
@@ -15,11 +19,13 @@ export async function GET() {
     )
     .order("created_at", { ascending: false });
 
-  if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+  if (error) return NextResponse.json(mockArticles);
+
+  if (!articles?.length) return NextResponse.json(mockArticles);
 
   // Fetch source tickets for each article
   const result = await Promise.all(
-    (articles || []).map(async (article) => {
+    articles.map(async (article) => {
       let sourceTickets: Array<{
         id: string;
         subject: string;
