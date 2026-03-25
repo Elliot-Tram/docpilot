@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Plus_Jakarta_Sans, JetBrains_Mono } from "next/font/google";
+import { GoogleTagManager } from "@next/third-parties/google";
 import "./globals.css";
 
 const jakarta = Plus_Jakarta_Sans({
@@ -37,6 +38,7 @@ export default function RootLayout({
       <body
         className={`${jakarta.variable} ${jetbrains.variable} font-sans antialiased`}
       >
+        <GoogleTagManager gtmId="GTM-PQ53F8RB" />
         {children}
       </body>
     </html>
