@@ -6,10 +6,37 @@ import type { ConnectedSource } from "@/lib/mock-data";
 
 const fetcher = (url: string) => fetch(url).then((r) => r.json());
 
+const sourceSvgs: Record<string, React.ReactNode> = {
+  zendesk: (
+    <svg viewBox="0 0 32 32" className="w-7 h-7" fill="none">
+      <path d="M15 7v14.4L4 27V12.6L15 7z" fill="#03363D"/>
+      <circle cx="9.5" cy="9" r="3.5" fill="#03363D"/>
+      <path d="M17 27V12.6L28 7v14.4L17 27z" fill="#03363D"/>
+      <circle cx="22.5" cy="25" r="3.5" fill="#03363D"/>
+    </svg>
+  ),
+  intercom: (
+    <svg viewBox="0 0 32 32" className="w-7 h-7" fill="none">
+      <rect x="4" y="4" width="24" height="24" rx="6" fill="#1F8DED"/>
+      <rect x="9" y="10" width="2" height="10" rx="1" fill="white"/>
+      <rect x="13" y="8" width="2" height="14" rx="1" fill="white"/>
+      <rect x="17" y="8" width="2" height="14" rx="1" fill="white"/>
+      <rect x="21" y="10" width="2" height="10" rx="1" fill="white"/>
+      <path d="M9 23c2 1.5 5 2.5 7 2.5s5-1 7-2.5" stroke="white" strokeWidth="1.5" strokeLinecap="round"/>
+    </svg>
+  ),
+  freshdesk: (
+    <svg viewBox="0 0 32 32" className="w-7 h-7" fill="none">
+      <rect x="4" y="4" width="24" height="24" rx="6" fill="#2AB67B"/>
+      <path d="M12 12h8M12 16h6M12 20h4" stroke="white" strokeWidth="2" strokeLinecap="round"/>
+    </svg>
+  ),
+};
+
 const sourceLogos: Record<string, { label: string; color: string }> = {
-  zendesk: { label: "Zendesk", color: "bg-sand" },
-  intercom: { label: "Intercom", color: "bg-sky/30" },
-  freshdesk: { label: "Freshdesk", color: "bg-mint/30" },
+  zendesk: { label: "Zendesk", color: "bg-white" },
+  intercom: { label: "Intercom", color: "bg-white" },
+  freshdesk: { label: "Freshdesk", color: "bg-white" },
 };
 
 const statusConfig: Record<string, { label: string; color: string }> = {
@@ -138,11 +165,13 @@ export default function SourcesPage() {
                 className="border border-dark/8 rounded-xl p-5 text-left hover:border-orchid/40 transition-all duration-200 hover:scale-[1.02]"
               >
                 <div
-                  className={`w-10 h-10 rounded-xl ${source.color} flex items-center justify-center mb-3`}
+                  className="w-10 h-10 rounded-xl bg-white border border-dark/5 flex items-center justify-center mb-3"
                 >
-                  <span className="text-sm font-semibold">
-                    {source.name[0]}
-                  </span>
+                  {sourceSvgs[source.type] || (
+                    <span className="text-sm font-semibold">
+                      {source.name[0]}
+                    </span>
+                  )}
                 </div>
                 <h3 className="text-sm font-medium mb-1">{source.name}</h3>
                 <p className="text-xs text-dark/40 font-light">
@@ -231,13 +260,13 @@ export default function SourcesPage() {
             className="bg-lift rounded-2xl shadow-[0_2px_20px_rgba(0,0,0,0.03)] p-6 flex items-center gap-6"
           >
             <div
-              className={`w-12 h-12 rounded-xl ${
-                sourceLogos[source.type]?.color || "bg-dark/5"
-              } flex items-center justify-center shrink-0`}
+              className="w-12 h-12 rounded-xl bg-white border border-dark/5 flex items-center justify-center shrink-0"
             >
-              <span className="text-lg font-semibold">
-                {sourceLogos[source.type]?.label[0] || "?"}
-              </span>
+              {sourceSvgs[source.type] || (
+                <span className="text-lg font-semibold">
+                  {sourceLogos[source.type]?.label[0] || "?"}
+                </span>
+              )}
             </div>
             <div className="flex-1 min-w-0">
               <div className="flex items-center gap-3 mb-1">
