@@ -134,6 +134,9 @@ export default function DashboardOverview() {
                     Tickets
                   </th>
                   <th className="text-left text-xs font-medium text-dark/55 uppercase tracking-wider px-6 py-3">
+                    Confiance
+                  </th>
+                  <th className="text-left text-xs font-medium text-dark/55 uppercase tracking-wider px-6 py-3">
                     Source
                   </th>
                   <th className="text-left text-xs font-medium text-dark/55 uppercase tracking-wider px-6 py-3">
@@ -164,6 +167,19 @@ export default function DashboardOverview() {
                       <span className="text-sm font-medium">
                         {article.ticketCount}
                       </span>
+                    </td>
+                    <td className="px-6 py-4">
+                      <div className="flex items-center gap-2">
+                        <div className="w-16 h-1.5 rounded-full bg-dark/10 overflow-hidden">
+                          <div
+                            className="h-full rounded-full bg-accent-purple"
+                            style={{ width: `${article.confidence}%` }}
+                          />
+                        </div>
+                        <span className="text-xs font-medium text-dark/70">
+                          {article.confidence}%
+                        </span>
+                      </div>
                     </td>
                     <td className="px-6 py-4">
                       {article.origin && (
