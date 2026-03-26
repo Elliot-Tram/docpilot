@@ -348,7 +348,7 @@ export default function CompetitorsPage() {
                 <p className="text-2xl font-semibold tracking-tight">
                   {selectedCompetitor.score}%
                 </p>
-                <p className="text-sm text-dark/30 mb-0.5">vs eux</p>
+                <p className="text-sm text-dark/30 mb-0.5">de leurs sujets</p>
               </div>
             </div>
           </div>
