@@ -514,6 +514,15 @@ Contacte le support avec ton numero de facture. Les remboursements sont traites 
     createdAt: "19 mars 2026",
     confidence: 88,
     origin: "tickets",
+    collaboration: {
+      channel: "#support-produit",
+      docpilotMessage: "Nouvel article suggere : \"Comprendre sa facture et changer de forfait\" (27 tickets). @hugo.billing peux-tu verifier les infos sur le prelevement SEPA et le changement de forfait au prorata ?",
+      expert: { name: "Hugo B.", role: "Responsable Facturation", avatar: "HB" },
+      expertResponse: null,
+      aiIntegrated: false,
+      techValidated: false,
+      csmValidated: false,
+    },
   },
   {
     id: "art-8",
@@ -565,6 +574,15 @@ L'utilisateur perd immediatement l'acces. Son numero peut etre reassigne a un au
     createdAt: "17 mars 2026",
     confidence: 86,
     origin: "tickets",
+    collaboration: {
+      channel: "#support-produit",
+      docpilotMessage: "Article suggere : \"Ajouter et gerer les utilisateurs\" (22 tickets). Draft genere et valide.",
+      expert: { name: "Marie L.", role: "Product Manager Telephonie", avatar: "ML" },
+      expertResponse: "C'est bon, juste preciser que le role Viewer ne peut pas exporter les stats.",
+      aiIntegrated: true,
+      techValidated: true,
+      csmValidated: true,
+    },
   },
   {
     id: "art-9",
@@ -618,6 +636,15 @@ L'app mobile Allo te permet de passer et recevoir des appels professionnels depu
     createdAt: "16 mars 2026",
     confidence: 85,
     origin: "both",
+    collaboration: {
+      channel: "#support-produit",
+      docpilotMessage: "Article suggere : \"Utiliser l'application mobile Allo\" (19 tickets + gap Aircall). Draft valide.",
+      expert: { name: "Thomas M.", role: "Ingenieur VoIP", avatar: "TM" },
+      expertResponse: "OK pour le contenu. J'ai ajoute la partie sur le mode economie de donnees.",
+      aiIntegrated: true,
+      techValidated: true,
+      csmValidated: true,
+    },
   },
   {
     id: "art-10",
@@ -679,6 +706,15 @@ Chaque requete webhook inclut un header \`X-Allo-Signature\` que tu peux verifie
     createdAt: "15 mars 2026",
     confidence: 90,
     origin: "tickets",
+    collaboration: {
+      channel: "#support-produit",
+      docpilotMessage: "Article suggere : \"Configurer les webhooks et l'API\" (16 tickets). Draft valide par l'equipe dev.",
+      expert: { name: "Camille D.", role: "Lead Integrations", avatar: "CD" },
+      expertResponse: "Tout est bon, j'ai verifie les endpoints et les limites de rate. Bien penser a mentionner le header X-Allo-Signature.",
+      aiIntegrated: true,
+      techValidated: true,
+      csmValidated: true,
+    },
   },
   {
     id: "art-11",

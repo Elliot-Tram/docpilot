@@ -33,10 +33,10 @@ const statusColor: Record<string, string> = {
 };
 
 const pipelineSteps = [
-  { key: "detected", label: "Detectes", color: "bg-sand" },
-  { key: "draft", label: "Drafts generes", color: "bg-orchid/20" },
-  { key: "expert", label: "Review expert", color: "bg-sky/20" },
-  { key: "validated", label: "Valides", color: "bg-mint/30" },
+  { key: "new", label: "Nouveaux drafts", color: "bg-sand" },
+  { key: "waiting", label: "Attente expert", color: "bg-orchid/20" },
+  { key: "responded", label: "Expert a repondu", color: "bg-sky/20" },
+  { key: "approved", label: "Approuves", color: "bg-mint/30" },
   { key: "published", label: "Publies", color: "bg-mint" },
 ];
 
@@ -44,21 +44,24 @@ export default function DashboardOverview() {
   const { data: articlesData } = useSWR<SuggestedArticle[]>("/api/articles", fetcher);
   const articles = Array.isArray(articlesData) ? articlesData : [];
 
-  const drafts = articles.filter((a) => a.status === "draft");
   const approved = articles.filter((a) => a.status === "approved");
   const published = articles.filter((a) => a.status === "published");
   const withCollabWaiting = articles.filter(
-    (a) => a.collaboration && !a.collaboration.expertResponse
+    (a) => a.status === "draft" && a.collaboration && !a.collaboration.expertResponse
   );
-  const withCollabDone = articles.filter(
-    (a) => a.collaboration && a.collaboration.expertResponse
+  const withCollabResponded = articles.filter(
+    (a) => a.status === "draft" && a.collaboration && a.collaboration.expertResponse
+  );
+  const draftsNoCollab = articles.filter(
+    (a) => a.status === "draft" && !a.collaboration
   );
 
+  // Pipeline: each article is in exactly ONE stage
   const pipeline = [
-    { count: articles.length, label: "Detectes" },
-    { count: drafts.length + approved.length + published.length, label: "Drafts generes" },
-    { count: withCollabWaiting.length + withCollabDone.length, label: "Review expert" },
-    { count: approved.length + published.length, label: "Valides" },
+    { count: draftsNoCollab.length, label: "Nouveaux drafts" },
+    { count: withCollabWaiting.length, label: "Attente expert" },
+    { count: withCollabResponded.length, label: "Expert a repondu" },
+    { count: approved.length, label: "Approuves" },
     { count: published.length, label: "Publies" },
   ];
 
@@ -85,7 +88,7 @@ export default function DashboardOverview() {
         <div className="bg-lift rounded-2xl p-6 shadow-[0_2px_20px_rgba(0,0,0,0.03)]">
           <p className="text-sm text-dark/70 font-medium mb-2">En attente d&apos;expert</p>
           <p className="text-3xl font-semibold tracking-tight">{withCollabWaiting.length}</p>
-          <p className="text-xs text-dark/65 mt-1">{withCollabDone.length} experts ont repondu</p>
+          <p className="text-xs text-dark/65 mt-1">{withCollabResponded.length} experts ont repondu</p>
         </div>
         <div className="bg-lift rounded-2xl p-6 shadow-[0_2px_20px_rgba(0,0,0,0.03)]">
           <p className="text-sm text-dark/70 font-medium mb-2">Valides et publies</p>
