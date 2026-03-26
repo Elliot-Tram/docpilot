@@ -25,7 +25,7 @@ const navItems = [
         <circle cx="10" cy="10" r="4" />
       </svg>
     ),
-    badge: 5,
+    badge: 7,
   },
   {
     label: "Sources",

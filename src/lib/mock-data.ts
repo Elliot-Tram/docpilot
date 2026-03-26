@@ -17,6 +17,8 @@ export interface SlackThread {
   csmValidated: boolean;
 }
 
+export type ArticleSource = "tickets" | "veille" | "both";
+
 export interface SuggestedArticle {
   id: string;
   title: string;
@@ -29,6 +31,7 @@ export interface SuggestedArticle {
   createdAt: string;
   confidence: number;
   collaboration?: SlackThread;
+  origin: ArticleSource;
 }
 
 export type SourceType = "zendesk" | "intercom" | "freshdesk" | "hubspot" | "claap" | "slack";
@@ -130,6 +133,7 @@ Si tu utilises un SVI (Serveur Vocal Interactif), le transfert s'applique apres 
     ],
     createdAt: "23 mars 2026",
     confidence: 96,
+    origin: "tickets",
     collaboration: {
       channel: "#support-produit",
       docpilotMessage: "Nouvel article suggere : \"Configurer le transfert d'appel vers un mobile\" (63 tickets ce mois). Draft genere. @thomas.music peux-tu valider la partie technique sur les transferts vers numeros courts ?",
@@ -204,6 +208,7 @@ Si le souci persiste apres ces verifications, contacte le support avec :
     ],
     createdAt: "22 mars 2026",
     confidence: 93,
+    origin: "both",
     collaboration: {
       channel: "#support-produit",
       docpilotMessage: "Nouvel article suggere : \"Resoudre les problemes de qualite audio\" (51 tickets). Draft genere. @alex.infra peux-tu confirmer les ports UDP et les recommandations QoS ?",
@@ -268,6 +273,7 @@ Quand un contact HubSpot t'appelle, Allo affiche automatiquement sa fiche :
     ],
     createdAt: "21 mars 2026",
     confidence: 91,
+    origin: "tickets",
     collaboration: {
       channel: "#support-produit",
       docpilotMessage: "Nouvel article suggere : \"Connecter Allo a HubSpot CRM\" (45 tickets). Draft genere. @camille.integ peux-tu verifier les etapes de configuration OAuth et le mapping des proprietes ?",
@@ -331,6 +337,7 @@ Va dans **SVI > Horaires** pour configurer les plages.`,
     ],
     createdAt: "19 mars 2026",
     confidence: 89,
+    origin: "tickets",
     collaboration: {
       channel: "#support-produit",
       docpilotMessage: "Article suggere : \"Parametrer le SVI\" (38 tickets). Draft genere et valide par l'equipe technique.",
@@ -399,6 +406,7 @@ Non, la portabilite est gratuite chez Allo.`,
     ],
     createdAt: "20 mars 2026",
     confidence: 92,
+    origin: "tickets",
   },
   {
     id: "art-6",
@@ -454,6 +462,7 @@ Configure vers qui la Receptionniste transfere selon le sujet :
     ],
     createdAt: "18 mars 2026",
     confidence: 94,
+    origin: "tickets",
   },
   {
     id: "art-7",
@@ -504,6 +513,7 @@ Contacte le support avec ton numero de facture. Les remboursements sont traites 
     ],
     createdAt: "19 mars 2026",
     confidence: 88,
+    origin: "tickets",
   },
   {
     id: "art-8",
@@ -554,6 +564,7 @@ L'utilisateur perd immediatement l'acces. Son numero peut etre reassigne a un au
     ],
     createdAt: "17 mars 2026",
     confidence: 86,
+    origin: "tickets",
   },
   {
     id: "art-9",
@@ -606,6 +617,7 @@ L'app mobile Allo te permet de passer et recevoir des appels professionnels depu
     ],
     createdAt: "16 mars 2026",
     confidence: 85,
+    origin: "both",
   },
   {
     id: "art-10",
@@ -666,12 +678,117 @@ Chaque requete webhook inclut un header \`X-Allo-Signature\` que tu peux verifie
     ],
     createdAt: "15 mars 2026",
     confidence: 90,
+    origin: "tickets",
+  },
+  {
+    id: "art-11",
+    title: "Conformite RGPD et securite des donnees",
+    summary:
+      "Gap detecte via veille concurrentielle : Aircall couvre la conformite RGPD avec 9 articles dedies. Allo n'a aucun contenu sur le sujet.",
+    content: `## Conformite RGPD et securite des donnees
+
+### Ou sont stockees vos donnees ?
+
+Toutes les donnees Allo sont hebergees dans l'Union Europeenne (France et Allemagne). Aucun transfert de donnees hors EU n'est effectue.
+
+### Enregistrement des appels
+
+Les enregistrements d'appels sont :
+- Chiffres au repos (AES-256) et en transit (TLS 1.3)
+- Conserves pendant la duree que tu configures (par defaut : 12 mois)
+- Supprimables a tout moment depuis Parametres > Enregistrements
+- Accessibles uniquement aux utilisateurs avec le role Admin ou Manager
+
+### Droits des personnes (RGPD)
+
+En tant que responsable de traitement, tu dois informer tes correspondants que les appels peuvent etre enregistres. Allo fournit :
+- Un message automatique de consentement en debut d'appel (configurable)
+- Un export de toutes les donnees d'un contact sur demande
+- La suppression definitive des donnees d'un contact
+
+### Sous-traitants et DPA
+
+Allo met a disposition un Data Processing Agreement (DPA) sur demande. Nos sous-traitants principaux :
+- Hebergement : Scaleway (France)
+- Base de donnees : PostgreSQL heberge EU
+- Monitoring : Datadog (region EU)
+
+### Certifications
+
+- RGPD : conforme depuis le lancement
+- SOC 2 Type II : en cours (prevu T3 2026)
+- ISO 27001 : sur la roadmap 2027`,
+    status: "draft",
+    category: "Securite",
+    ticketCount: 0,
+    sourceTickets: [],
+    createdAt: "24 mars 2026",
+    confidence: 82,
+    origin: "veille",
+  },
+  {
+    id: "art-12",
+    title: "Guide de migration depuis Aircall",
+    summary:
+      "Opportunite detectee via veille concurrentielle : Aircall propose des guides de migration. Creer un guide inverse pour capter leurs clients insatisfaits.",
+    content: `## Migrer d'Aircall vers Allo
+
+Tu utilises Aircall et tu veux passer chez Allo ? Ce guide couvre tout ce qu'il faut savoir pour une migration sans interruption de service.
+
+### Avant de commencer
+
+- Exporte tes contacts depuis Aircall (Parametres > Export)
+- Note tes numeros de telephone actuels (ils seront portes)
+- Liste tes integrations actives (CRM, helpdesk, etc.)
+
+### Etape 1 : Creer ton compte Allo
+
+1. Inscris-toi sur Allo et choisis ton forfait
+2. Configure ton equipe (invite tes utilisateurs)
+3. Importe tes contacts via CSV
+
+### Etape 2 : Porter tes numeros
+
+La portabilite depuis Aircall prend en moyenne 7 jours ouvrables :
+1. Va dans Parametres > Numeros > Portabilite
+2. Indique tes numeros Aircall et fournis le RIO
+3. Allo gere le reste avec l'operateur
+
+### Etape 3 : Reconfigurer tes integrations
+
+Les integrations Allo couvrent les memes outils qu'Aircall :
+- HubSpot, Salesforce, Pipedrive
+- Zendesk, Intercom, Freshdesk
+- Slack, Zapier, Make
+
+### Etape 4 : Former ton equipe
+
+L'interface Allo est intuitive. La plupart des utilisateurs sont operationnels en moins d'une heure. On fournit :
+- Un onboarding personnalise (appel de 30 min avec un CSM)
+- Des guides video par fonctionnalite
+- Un support chat disponible 7j/7
+
+### Differences cles avec Aircall
+
+| Fonctionnalite | Aircall | Allo |
+|----------------|---------|------|
+| Receptionniste IA | Non | Oui |
+| Hebergement donnees | US + EU | EU uniquement |
+| Transcription temps reel | Payant | Inclus des le plan Pro |
+| Support | Email + chat | Chat + telephone 7j/7 |`,
+    status: "draft",
+    category: "Migration",
+    ticketCount: 0,
+    sourceTickets: [],
+    createdAt: "24 mars 2026",
+    confidence: 78,
+    origin: "veille",
   },
 ];
 
 export const mockStats = {
   ticketsAnalyzed: 4050,
-  articlesGenerated: 10,
+  articlesGenerated: 12,
   gapsDetected: 6,
   ticketsDeflected: 482,
 };

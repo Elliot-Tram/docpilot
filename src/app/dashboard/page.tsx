@@ -2,9 +2,21 @@
 
 import useSWR from "swr";
 import Link from "next/link";
-import type { SuggestedArticle } from "@/lib/mock-data";
+import type { SuggestedArticle, ArticleSource } from "@/lib/mock-data";
 
 const fetcher = (url: string) => fetch(url).then((r) => r.json());
+
+const originLabel: Record<string, string> = {
+  tickets: "Tickets",
+  veille: "Veille",
+  both: "Tickets + Veille",
+};
+
+const originColor: Record<string, string> = {
+  tickets: "bg-sky/10 text-sky",
+  veille: "bg-orchid/10 text-accent-purple",
+  both: "bg-mint/10 text-dark/60",
+};
 
 const statusLabel: Record<string, string> = {
   draft: "Brouillon",
@@ -122,7 +134,7 @@ export default function DashboardOverview() {
                     Tickets
                   </th>
                   <th className="text-left text-xs font-medium text-dark/40 uppercase tracking-wider px-6 py-3">
-                    Confiance
+                    Source
                   </th>
                   <th className="text-left text-xs font-medium text-dark/40 uppercase tracking-wider px-6 py-3">
                     Statut
@@ -154,17 +166,15 @@ export default function DashboardOverview() {
                       </span>
                     </td>
                     <td className="px-6 py-4">
-                      <div className="flex items-center gap-2">
-                        <div className="w-16 h-1.5 rounded-full bg-dark/10 overflow-hidden">
-                          <div
-                            className="h-full rounded-full bg-accent-purple"
-                            style={{ width: `${article.confidence}%` }}
-                          />
-                        </div>
-                        <span className="text-xs text-dark/40">
-                          {article.confidence}%
+                      {article.origin && (
+                        <span
+                          className={`text-[10px] font-medium px-2 py-0.5 rounded-full ${
+                            originColor[article.origin] || "bg-dark/5 text-dark/40"
+                          }`}
+                        >
+                          {originLabel[article.origin] || article.origin}
                         </span>
-                      </div>
+                      )}
                     </td>
                     <td className="px-6 py-4">
                       <span

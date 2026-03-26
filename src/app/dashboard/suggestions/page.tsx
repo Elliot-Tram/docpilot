@@ -3,7 +3,19 @@
 import { useState } from "react";
 import useSWR from "swr";
 import Link from "next/link";
-import type { SuggestedArticle, ArticleStatus } from "@/lib/mock-data";
+import type { SuggestedArticle, ArticleStatus, ArticleSource } from "@/lib/mock-data";
+
+const originLabel: Record<ArticleSource, string> = {
+  tickets: "Tickets",
+  veille: "Veille concurrentielle",
+  both: "Tickets + Veille",
+};
+
+const originColor: Record<ArticleSource, string> = {
+  tickets: "bg-sky/10 text-sky",
+  veille: "bg-orchid/10 text-accent-purple",
+  both: "bg-mint/10 text-dark/60",
+};
 
 const fetcher = (url: string) => fetch(url).then((r) => r.json());
 
@@ -92,13 +104,24 @@ export default function SuggestionsPage() {
             className="bg-lift rounded-2xl p-6 shadow-[0_2px_20px_rgba(0,0,0,0.03)] hover:scale-[1.015] transition-transform duration-200 block"
           >
             <div className="flex items-start justify-between mb-3">
-              <span
-                className={`text-xs font-medium px-2.5 py-1 rounded-full ${
-                  statusColor[article.status]
-                }`}
-              >
-                {statusLabel[article.status]}
-              </span>
+              <div className="flex items-center gap-1.5">
+                <span
+                  className={`text-xs font-medium px-2.5 py-1 rounded-full ${
+                    statusColor[article.status]
+                  }`}
+                >
+                  {statusLabel[article.status]}
+                </span>
+                {article.origin && (
+                  <span
+                    className={`text-[10px] font-medium px-2 py-0.5 rounded-full ${
+                      originColor[article.origin as ArticleSource]
+                    }`}
+                  >
+                    {originLabel[article.origin as ArticleSource]}
+                  </span>
+                )}
+              </div>
               <span className="font-mono text-xs text-dark/30">
                 {article.createdAt}
               </span>
