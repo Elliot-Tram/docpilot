@@ -73,21 +73,7 @@ export default function KnowledgePage() {
   const sectionRefs = useRef<(HTMLDivElement | null)[]>([]);
   const [activeSection, setActiveSection] = useState(-1);
 
-  // Auto-scroll through results then navigate to competitors
-  useEffect(() => {
-    if (!profile || activeSection < 0) return;
-    if (activeSection >= sectionRefs.current.length) {
-      return;
-    }
-    const el = sectionRefs.current[activeSection];
-    if (el) {
-      el.scrollIntoView({ behavior: "smooth", block: "center" });
-    }
-    const timer = setTimeout(() => {
-      setActiveSection((s) => s + 1);
-    }, 2000);
-    return () => clearTimeout(timer);
-  }, [profile, activeSection]);
+  // No auto-scroll, user scrolls manually
 
   const runScan = useCallback(() => {
     setScanning(true);
@@ -100,8 +86,6 @@ export default function KnowledgePage() {
         setTimeout(() => {
           setScanning(false);
           setProfile(mockProfile);
-          // Start auto-scroll after a short pause
-          setTimeout(() => setActiveSection(0), 800);
         }, 800);
         return;
       }
