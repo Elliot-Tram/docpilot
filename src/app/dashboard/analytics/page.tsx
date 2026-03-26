@@ -6,42 +6,114 @@ export default function AnalyticsPage() {
       <div className="mb-8">
         <h1 className="text-2xl font-medium tracking-[-0.5px]">Analytics</h1>
         <p className="text-dark/85 mt-1">
-          Impact de votre help center sur le volume de tickets
+          Temps gagne et impact sur votre equipe
         </p>
       </div>
 
-      {/* Key metrics */}
+      {/* Key metrics - time focused */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
         <div className="bg-lift rounded-2xl p-5 shadow-[0_2px_20px_rgba(0,0,0,0.03)]">
-          <p className="text-sm text-dark/80 font-medium mb-1">Tickets analyses</p>
-          <p className="text-2xl font-semibold tracking-tight">4 050</p>
-          <p className="text-xs text-dark/80 mt-1">depuis 2 sources</p>
+          <p className="text-sm text-dark/80 font-medium mb-1">Temps par article (manuel)</p>
+          <p className="text-2xl font-semibold tracking-tight">~3h</p>
+          <p className="text-xs text-dark/80 mt-1">recherche + redaction + review</p>
         </div>
         <div className="bg-lift rounded-2xl p-5 shadow-[0_2px_20px_rgba(0,0,0,0.03)]">
-          <p className="text-sm text-dark/80 font-medium mb-1">Taux de deflection</p>
-          <p className="text-2xl font-semibold tracking-tight">11.9%</p>
-          <p className="text-xs text-dark/80 mt-1">482 / 4 050 tickets</p>
+          <p className="text-sm text-dark/80 font-medium mb-1">Temps avec Docpilot</p>
+          <p className="text-2xl font-semibold tracking-tight text-emerald-600">~15 min</p>
+          <p className="text-xs text-dark/80 mt-1">relecture + validation</p>
         </div>
         <div className="bg-lift rounded-2xl p-5 shadow-[0_2px_20px_rgba(0,0,0,0.03)]">
-          <p className="text-sm text-dark/80 font-medium mb-1">Cout / ticket</p>
-          <p className="text-2xl font-semibold tracking-tight">15 EUR</p>
-          <p className="text-xs text-dark/80 mt-1">moyenne secteur</p>
+          <p className="text-sm text-dark/80 font-medium mb-1">Gain par article</p>
+          <p className="text-2xl font-semibold tracking-tight text-emerald-600">2h45</p>
+          <p className="text-xs text-dark/80 mt-1">soit 92% du temps economise</p>
         </div>
         <div className="bg-lift rounded-2xl p-5 shadow-[0_2px_20px_rgba(0,0,0,0.03)]">
-          <p className="text-sm text-dark/80 font-medium mb-1">ROI mensuel</p>
-          <p className="text-2xl font-semibold tracking-tight text-emerald-600">x29</p>
-          <p className="text-xs text-dark/80 mt-1">7 200 EUR / 249 EUR abo</p>
+          <p className="text-sm text-dark/80 font-medium mb-1">Temps economise (12 articles)</p>
+          <p className="text-2xl font-semibold tracking-tight text-emerald-600">33h</p>
+          <p className="text-xs text-dark/80 mt-1">~4 jours de travail</p>
         </div>
       </div>
 
-      {/* Top deflecting articles */}
+      {/* Time comparison visual */}
       <div className="bg-lift rounded-2xl shadow-[0_2px_20px_rgba(0,0,0,0.03)] p-6 mb-6">
-        <h3 className="text-base font-medium mb-4">Articles les plus performants</h3>
+        <h3 className="text-base font-medium mb-5">Comparaison du temps par article</h3>
+        <div className="space-y-4">
+          <div>
+            <div className="flex items-center justify-between mb-1.5">
+              <span className="text-sm text-dark/85">Sans Docpilot (manuellement)</span>
+              <span className="text-sm font-semibold text-dark/90">~3h00</span>
+            </div>
+            <div className="w-full h-8 rounded-lg bg-dark/5 overflow-hidden flex">
+              <div className="bg-dark/15 h-full flex items-center px-3" style={{ width: "30%" }}>
+                <span className="text-[10px] text-dark/80 font-medium">Recherche tickets</span>
+              </div>
+              <div className="bg-dark/10 h-full flex items-center px-3" style={{ width: "40%" }}>
+                <span className="text-[10px] text-dark/80 font-medium">Redaction</span>
+              </div>
+              <div className="bg-dark/15 h-full flex items-center px-3" style={{ width: "20%" }}>
+                <span className="text-[10px] text-dark/80 font-medium">Review</span>
+              </div>
+              <div className="bg-dark/10 h-full flex items-center px-2" style={{ width: "10%" }}>
+                <span className="text-[10px] text-dark/80 font-medium">Publi.</span>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div className="flex items-center justify-between mb-1.5">
+              <span className="text-sm text-dark/85">Avec Docpilot</span>
+              <span className="text-sm font-semibold text-emerald-600">~15 min</span>
+            </div>
+            <div className="w-full h-8 rounded-lg bg-dark/5 overflow-hidden flex">
+              <div className="bg-emerald-200 h-full flex items-center px-3 rounded-lg" style={{ width: "8.3%" }}>
+                <span className="text-[10px] text-emerald-800 font-medium whitespace-nowrap">Relire + valider</span>
+              </div>
+            </div>
+            <p className="text-xs text-dark/80 mt-1.5">L&apos;IA fait la recherche, la redaction, la mise en forme et la publication. Vous relisez.</p>
+          </div>
+        </div>
+      </div>
+
+      {/* What the team does vs what Docpilot does */}
+      <div className="bg-lift rounded-2xl shadow-[0_2px_20px_rgba(0,0,0,0.03)] p-6 mb-6">
+        <h3 className="text-base font-medium mb-4">Qui fait quoi</h3>
+        <div className="overflow-hidden rounded-xl border border-dark/5">
+          <table className="w-full">
+            <thead>
+              <tr className="bg-dark/[0.02]">
+                <th className="text-left text-xs font-medium text-dark/80 uppercase tracking-wider px-4 py-2.5">Etape</th>
+                <th className="text-center text-xs font-medium text-dark/80 uppercase tracking-wider px-4 py-2.5">Sans Docpilot</th>
+                <th className="text-center text-xs font-medium text-dark/80 uppercase tracking-wider px-4 py-2.5">Avec Docpilot</th>
+              </tr>
+            </thead>
+            <tbody>
+              {[
+                { step: "Detecter les sujets manquants", without: "Agent CS (manuel)", with: "Docpilot (auto)" },
+                { step: "Chercher les tickets pertinents", without: "Agent CS (~45 min)", with: "Docpilot (auto)" },
+                { step: "Rediger le brouillon", without: "Agent CS (~1h30)", with: "Docpilot (auto)" },
+                { step: "Obtenir les infos techniques", without: "Slack / email (~1-3 jours)", with: "Docpilot ping Slack (auto)" },
+                { step: "Integrer les corrections", without: "Agent CS (~30 min)", with: "Docpilot (auto)" },
+                { step: "Relire et valider", without: "Lead CS (~15 min)", with: "Lead CS (~15 min)" },
+                { step: "Publier", without: "Agent CS (~10 min)", with: "1 clic" },
+              ].map((row, i) => (
+                <tr key={i} className="border-t border-dark/5">
+                  <td className="px-4 py-2.5 text-sm text-dark/90 font-medium">{row.step}</td>
+                  <td className="px-4 py-2.5 text-center text-sm text-dark/80">{row.without}</td>
+                  <td className="px-4 py-2.5 text-center text-sm font-medium text-emerald-600">{row.with}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      {/* Articles performance */}
+      <div className="bg-lift rounded-2xl shadow-[0_2px_20px_rgba(0,0,0,0.03)] p-6 mb-6">
+        <h3 className="text-base font-medium mb-4">Articles publies</h3>
         <div className="space-y-3">
           {[
-            { title: "Configurer la Receptionniste IA", views: 1240, deflected: 186, trend: "+12%" },
-            { title: "Utiliser l'application mobile Allo", views: 890, deflected: 156, trend: "+8%" },
-            { title: "Configurer les webhooks et l'API Allo", views: 720, deflected: 140, trend: "+23%" },
+            { title: "Configurer la Receptionniste IA", views: 1240, tickets: 482, time: "12 min" },
+            { title: "Utiliser l'application mobile Allo", views: 890, tickets: 156, time: "18 min" },
+            { title: "Configurer les webhooks et l'API Allo", views: 720, tickets: 140, time: "8 min" },
           ].map((article) => (
             <div key={article.title} className="flex items-center gap-4 p-3 rounded-xl hover:bg-dark/[0.02] transition-colors">
               <div className="flex-1 min-w-0">
@@ -49,95 +121,50 @@ export default function AnalyticsPage() {
               </div>
               <div className="text-right shrink-0">
                 <p className="text-sm font-semibold text-dark/90">{article.views.toLocaleString("fr-FR")} vues</p>
-                <p className="text-xs text-dark/80">{article.deflected} tickets devies</p>
+                <p className="text-xs text-dark/80">{article.tickets} tickets evites</p>
               </div>
-              <span className="text-xs font-medium text-emerald-600 bg-emerald-100 px-2 py-0.5 rounded-full shrink-0">
-                {article.trend}
+              <span className="text-xs font-medium text-emerald-700 bg-emerald-100 px-2.5 py-1 rounded-full shrink-0">
+                {article.time} de travail
               </span>
             </div>
           ))}
         </div>
       </div>
 
-      {/* Monthly trend */}
-      <div className="bg-lift rounded-2xl shadow-[0_2px_20px_rgba(0,0,0,0.03)] p-6">
-        <h3 className="text-base font-medium mb-4">Evolution mensuelle</h3>
-        <div className="space-y-3">
-          {[
-            { month: "Janvier 2026", tickets: 4820, deflected: 0, articles: 0 },
-            { month: "Fevrier 2026", tickets: 4650, deflected: 124, articles: 1 },
-            { month: "Mars 2026", tickets: 4050, deflected: 482, articles: 3 },
-          ].map((m) => (
-            <div key={m.month} className="flex items-center gap-4">
-              <span className="text-sm text-dark/85 w-32 shrink-0">{m.month}</span>
-              <div className="flex-1">
-                <div className="flex gap-1 h-6">
-                  <div
-                    className="bg-dark/10 rounded-l-md"
-                    style={{ width: `${((m.tickets - m.deflected) / 5000) * 100}%` }}
-                  />
-                  {m.deflected > 0 && (
-                    <div
-                      className="bg-mint rounded-r-md"
-                      style={{ width: `${(m.deflected / 5000) * 100}%` }}
-                    />
-                  )}
-                </div>
-              </div>
-              <div className="text-right shrink-0 w-28">
-                <span className="text-sm font-medium text-dark/90">{m.tickets.toLocaleString("fr-FR")}</span>
-                {m.deflected > 0 && (
-                  <span className="text-xs text-emerald-600 ml-2">-{m.deflected}</span>
-                )}
-              </div>
-            </div>
-          ))}
-        </div>
-        <div className="flex items-center gap-4 mt-4 text-xs text-dark/80">
-          <div className="flex items-center gap-1.5">
-            <div className="w-3 h-3 rounded bg-dark/10" />
-            Tickets traites
-          </div>
-          <div className="flex items-center gap-1.5">
-            <div className="w-3 h-3 rounded bg-mint" />
-            Tickets devies par le help center
-          </div>
-        </div>
-      </div>
-      {/* ROI estimation */}
-      <div className="bg-lift rounded-2xl shadow-[0_2px_20px_rgba(0,0,0,0.03)] mt-6 overflow-hidden">
+      {/* Time saved projection */}
+      <div className="bg-lift rounded-2xl shadow-[0_2px_20px_rgba(0,0,0,0.03)] overflow-hidden">
         <div className="grid lg:grid-cols-2">
           <div className="bg-emerald-50 p-6">
-            <h3 className="text-sm font-medium text-dark/85 mb-4">Impact actuel</h3>
+            <h3 className="text-sm font-medium text-dark/85 mb-4">Temps gagne ce mois-ci</h3>
             <p className="text-dark/90 font-semibold mb-2">3 articles publies</p>
             <div className="space-y-1.5 ml-1">
               <p className="text-dark/85 text-sm">
                 <span className="text-dark/85 mr-1">&rarr;</span>
-                <span className="text-xl font-semibold text-dark/90">~482</span>{" "}
-                <span className="text-dark/80">tickets devies / mois</span>
+                <span className="text-xl font-semibold text-dark/90">8h15</span>{" "}
+                <span className="text-dark/80">de redaction economisees</span>
               </p>
               <p className="text-dark/85 text-sm">
                 <span className="text-dark/85 mr-1">&rarr;</span>
-                <span className="text-xl font-semibold text-dark/90">~7 200 EUR</span>{" "}
-                <span className="text-dark/80">/ mois economises</span>
+                <span className="text-xl font-semibold text-dark/90">38 min</span>{" "}
+                <span className="text-dark/80">de travail effectif (relecture)</span>
               </p>
             </div>
             <p className="text-xs text-dark/85 mt-4">
-              Base sur un cout moyen de 15 EUR par ticket
+              3 articles x 2h45 de gain = 8h15 economisees
             </p>
           </div>
           <div className="bg-orchid/5 p-6">
             <h3 className="text-sm font-medium text-dark/85 mb-4">
-              Projection si les 12 articles sont publies
+              Projection mensuelle (12 articles/mois)
             </h3>
             <div className="space-y-1.5 mb-5">
               <p className="text-dark/90">
-                <span className="text-2xl font-semibold">~1 930</span>{" "}
-                <span className="text-sm text-dark/80">tickets devies / mois</span>
+                <span className="text-2xl font-semibold">33 heures</span>{" "}
+                <span className="text-sm text-dark/80">economisees / mois</span>
               </p>
               <p className="text-dark/90">
-                <span className="text-2xl font-semibold">~28 950 EUR</span>{" "}
-                <span className="text-sm text-dark/80">/ mois economises</span>
+                <span className="text-2xl font-semibold">~4 jours</span>{" "}
+                <span className="text-sm text-dark/80">de travail / mois</span>
               </p>
             </div>
             <div>
