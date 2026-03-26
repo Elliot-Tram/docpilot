@@ -8,44 +8,50 @@ const fetcher = (url: string) => fetch(url).then((r) => r.json());
 
 const sourceSvgs: Record<string, React.ReactNode> = {
   zendesk: (
-    <svg viewBox="0 0 32 32" className="w-7 h-7" fill="none">
-      <path d="M15 7v14.4L4 27V12.6L15 7z" fill="#03363D"/>
-      <circle cx="9.5" cy="9" r="3.5" fill="#03363D"/>
-      <path d="M17 27V12.6L28 7v14.4L17 27z" fill="#03363D"/>
-      <circle cx="22.5" cy="25" r="3.5" fill="#03363D"/>
+    <svg viewBox="0 0 48 48" className="w-full h-full" fill="none">
+      <rect width="48" height="48" rx="12" fill="#03363D"/>
+      <path d="M23 14v14.4L12 34V19.6L23 14z" fill="white"/>
+      <circle cx="17.5" cy="16" r="3.5" fill="white"/>
+      <path d="M25 34V19.6L36 14v14.4L25 34z" fill="white"/>
+      <circle cx="30.5" cy="32" r="3.5" fill="white"/>
     </svg>
   ),
   intercom: (
-    <svg viewBox="0 0 32 32" className="w-7 h-7" fill="none">
-      <rect x="4" y="4" width="24" height="24" rx="6" fill="#1F8DED"/>
-      <rect x="9" y="10" width="2" height="10" rx="1" fill="white"/>
-      <rect x="13" y="8" width="2" height="14" rx="1" fill="white"/>
-      <rect x="17" y="8" width="2" height="14" rx="1" fill="white"/>
-      <rect x="21" y="10" width="2" height="10" rx="1" fill="white"/>
-      <path d="M9 23c2 1.5 5 2.5 7 2.5s5-1 7-2.5" stroke="white" strokeWidth="1.5" strokeLinecap="round"/>
+    <svg viewBox="0 0 48 48" className="w-full h-full" fill="none">
+      <rect width="48" height="48" rx="12" fill="#1F8DED"/>
+      <rect x="13" y="15" width="2.5" height="12" rx="1.25" fill="white"/>
+      <rect x="18" y="12" width="2.5" height="16" rx="1.25" fill="white"/>
+      <rect x="23" y="12" width="2.5" height="16" rx="1.25" fill="white"/>
+      <rect x="28" y="12" width="2.5" height="16" rx="1.25" fill="white"/>
+      <rect x="33" y="15" width="2.5" height="12" rx="1.25" fill="white"/>
+      <path d="M13 30c3 2 6.5 3.5 11 3.5s8-1.5 11-3.5" stroke="white" strokeWidth="2" strokeLinecap="round"/>
     </svg>
   ),
   freshdesk: (
-    <svg viewBox="0 0 32 32" className="w-7 h-7" fill="none">
-      <rect x="4" y="4" width="24" height="24" rx="6" fill="#2AB67B"/>
-      <path d="M12 12h8M12 16h6M12 20h4" stroke="white" strokeWidth="2" strokeLinecap="round"/>
+    <svg viewBox="0 0 48 48" className="w-full h-full" fill="none">
+      <rect width="48" height="48" rx="12" fill="#2AB67B"/>
+      <path d="M16 16h16M16 22h12M16 28h8" stroke="white" strokeWidth="2.5" strokeLinecap="round"/>
     </svg>
   ),
   hubspot: (
-    <svg viewBox="0 0 32 32" className="w-7 h-7" fill="none">
-      <circle cx="20" cy="12" r="2.5" stroke="#FF7A59" strokeWidth="1.5"/>
-      <circle cx="12" cy="16" r="2.5" stroke="#FF7A59" strokeWidth="1.5"/>
-      <circle cx="20" cy="20" r="2.5" stroke="#FF7A59" strokeWidth="1.5"/>
-      <circle cx="24" cy="8" r="1.5" fill="#FF7A59"/>
-      <path d="M14.5 15L17.5 12.5M14.5 17L17.5 19.5M22.5 12V8M22 10.5L24 8" stroke="#FF7A59" strokeWidth="1.2" strokeLinecap="round"/>
+    <svg viewBox="0 0 48 48" className="w-full h-full" fill="none">
+      <rect width="48" height="48" rx="12" fill="#FF7A59"/>
+      <circle cx="24" cy="24" r="5" stroke="white" strokeWidth="2"/>
+      <circle cx="24" cy="24" r="2" fill="white"/>
+      <path d="M24 19V14" stroke="white" strokeWidth="2" strokeLinecap="round"/>
+      <circle cx="24" cy="12.5" r="2" fill="white"/>
+      <path d="M28.5 21.5L32 18" stroke="white" strokeWidth="2" strokeLinecap="round"/>
+      <path d="M19.5 26.5L16 30" stroke="white" strokeWidth="2" strokeLinecap="round"/>
+      <circle cx="34" cy="16.5" r="2" fill="white"/>
+      <circle cx="14" cy="31.5" r="2" fill="white"/>
     </svg>
   ),
   claap: (
-    <svg viewBox="0 0 32 32" className="w-7 h-7" fill="none">
-      <rect x="4" y="4" width="24" height="24" rx="6" fill="#6C5CE7"/>
-      <circle cx="16" cy="14" r="4" stroke="white" strokeWidth="1.5"/>
-      <path d="M16 18v3M13 22h6" stroke="white" strokeWidth="1.5" strokeLinecap="round"/>
-      <circle cx="16" cy="14" r="1.5" fill="white"/>
+    <svg viewBox="0 0 48 48" className="w-full h-full" fill="none">
+      <rect width="48" height="48" rx="12" fill="#6C5CE7"/>
+      <circle cx="24" cy="20" r="6" stroke="white" strokeWidth="2"/>
+      <circle cx="24" cy="20" r="2.5" fill="white"/>
+      <path d="M24 26v5M20 33h8" stroke="white" strokeWidth="2" strokeLinecap="round"/>
     </svg>
   ),
 };
@@ -181,13 +187,13 @@ export default function SourcesPage() {
                 onClick={() => setSelectedType(source)}
                 className="border border-dark/8 rounded-xl p-5 text-left hover:border-orchid/40 transition-all duration-200 hover:scale-[1.02]"
               >
-                <div
-                  className="w-10 h-10 rounded-xl bg-white border border-dark/5 flex items-center justify-center mb-3"
-                >
+                <div className="w-10 h-10 rounded-xl overflow-hidden mb-3">
                   {sourceSvgs[source.type] || (
-                    <span className="text-sm font-semibold">
-                      {source.name[0]}
-                    </span>
+                    <div className="w-full h-full bg-dark/5 flex items-center justify-center">
+                      <span className="text-sm font-semibold">
+                        {source.name[0]}
+                      </span>
+                    </div>
                   )}
                 </div>
                 <h3 className="text-sm font-medium mb-1">{source.name}</h3>
@@ -276,13 +282,13 @@ export default function SourcesPage() {
             key={source.id}
             className="bg-lift rounded-2xl shadow-[0_2px_20px_rgba(0,0,0,0.03)] p-6 flex items-center gap-6"
           >
-            <div
-              className="w-12 h-12 rounded-xl bg-white border border-dark/5 flex items-center justify-center shrink-0"
-            >
+            <div className="w-12 h-12 rounded-xl overflow-hidden shrink-0">
               {sourceSvgs[source.type] || (
-                <span className="text-lg font-semibold">
-                  {sourceLogos[source.type]?.label[0] || "?"}
-                </span>
+                <div className="w-full h-full bg-dark/5 flex items-center justify-center">
+                  <span className="text-lg font-semibold">
+                    {sourceLogos[source.type]?.label[0] || "?"}
+                  </span>
+                </div>
               )}
             </div>
             <div className="flex-1 min-w-0">
