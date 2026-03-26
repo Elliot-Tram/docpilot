@@ -32,31 +32,37 @@ const statusColor: Record<string, string> = {
   rejected: "bg-coral/20 text-coral",
 };
 
-interface Stats {
-  ticketsAnalyzed: number;
-  articlesGenerated: number;
-  gapsDetected: number;
-  ticketsDeflected: number;
-}
+const pipelineSteps = [
+  { key: "detected", label: "Detectes", color: "bg-sand" },
+  { key: "draft", label: "Drafts generes", color: "bg-orchid/20" },
+  { key: "expert", label: "Review expert", color: "bg-sky/20" },
+  { key: "validated", label: "Valides", color: "bg-mint/30" },
+  { key: "published", label: "Publies", color: "bg-mint" },
+];
 
 export default function DashboardOverview() {
-  const { data: stats } = useSWR<Stats>("/api/stats", fetcher);
   const { data: articlesData } = useSWR<SuggestedArticle[]>("/api/articles", fetcher);
   const articles = Array.isArray(articlesData) ? articlesData : [];
 
-  const statCards = stats
-    ? [
-        {
-          label: "Tickets analysés",
-          value: stats.ticketsAnalyzed.toLocaleString("fr-FR"),
-        },
-        { label: "Articles générés", value: stats.articlesGenerated },
-        { label: "Gaps détectés", value: stats.gapsDetected },
-        { label: "Tickets déviés", value: stats.ticketsDeflected },
-      ]
-    : [];
+  const drafts = articles.filter((a) => a.status === "draft");
+  const approved = articles.filter((a) => a.status === "approved");
+  const published = articles.filter((a) => a.status === "published");
+  const withCollabWaiting = articles.filter(
+    (a) => a.collaboration && !a.collaboration.expertResponse
+  );
+  const withCollabDone = articles.filter(
+    (a) => a.collaboration && a.collaboration.expertResponse
+  );
 
-  const recentArticles = articles.slice(0, 4);
+  const pipeline = [
+    { count: articles.length, label: "Detectes" },
+    { count: drafts.length + approved.length + published.length, label: "Drafts generes" },
+    { count: withCollabWaiting.length + withCollabDone.length, label: "Review expert" },
+    { count: approved.length + published.length, label: "Valides" },
+    { count: published.length, label: "Publies" },
+  ];
+
+  const recentArticles = articles.slice(0, 6);
 
   return (
     <div>
@@ -65,32 +71,55 @@ export default function DashboardOverview() {
           Vue d&apos;ensemble
         </h1>
         <p className="text-dark/75 mt-1">
-          Activite de votre help center automatise
+          Pipeline de votre help center automatise
         </p>
       </div>
 
-      {/* Stats cards */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-10">
-        {statCards.length > 0
-          ? statCards.map((s) => (
-              <div
-                key={s.label}
-                className="bg-lift rounded-2xl p-6 shadow-[0_2px_20px_rgba(0,0,0,0.03)]"
-              >
-                <p className="text-sm text-dark/70 font-medium mb-2">{s.label}</p>
-                <p className="text-3xl font-semibold tracking-tight">{s.value}</p>
-              </div>
-            ))
-          : [0, 1, 2, 3].map((i) => (
-              <div
-                key={i}
-                className="bg-lift rounded-2xl p-6 shadow-[0_2px_20px_rgba(0,0,0,0.03)] animate-pulse"
-              >
-                <div className="h-4 w-24 bg-dark/5 rounded mb-3" />
-                <div className="h-8 w-16 bg-dark/5 rounded" />
+      {/* Stats cards - workflow oriented */}
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+        <div className="bg-lift rounded-2xl p-6 shadow-[0_2px_20px_rgba(0,0,0,0.03)]">
+          <p className="text-sm text-dark/70 font-medium mb-2">Articles generes</p>
+          <p className="text-3xl font-semibold tracking-tight">{articles.length}</p>
+          <p className="text-xs text-dark/65 mt-1">{articles.filter(a => a.origin === "veille").length} via veille concurrentielle</p>
+        </div>
+        <div className="bg-lift rounded-2xl p-6 shadow-[0_2px_20px_rgba(0,0,0,0.03)]">
+          <p className="text-sm text-dark/70 font-medium mb-2">En attente d&apos;expert</p>
+          <p className="text-3xl font-semibold tracking-tight">{withCollabWaiting.length}</p>
+          <p className="text-xs text-dark/65 mt-1">{withCollabDone.length} experts ont repondu</p>
+        </div>
+        <div className="bg-lift rounded-2xl p-6 shadow-[0_2px_20px_rgba(0,0,0,0.03)]">
+          <p className="text-sm text-dark/70 font-medium mb-2">Valides et publies</p>
+          <p className="text-3xl font-semibold tracking-tight text-mint">{approved.length + published.length}</p>
+          <p className="text-xs text-dark/65 mt-1">{published.length} en ligne sur le help center</p>
+        </div>
+        <div className="bg-lift rounded-2xl p-6 shadow-[0_2px_20px_rgba(0,0,0,0.03)]">
+          <p className="text-sm text-dark/70 font-medium mb-2">Tickets devies (est.)</p>
+          <p className="text-3xl font-semibold tracking-tight">482</p>
+          <p className="text-xs text-dark/65 mt-1">~7 200 EUR/mois economises</p>
+        </div>
+      </div>
+
+      {/* Pipeline visualization */}
+      {articles.length > 0 && (
+        <div className="bg-lift rounded-2xl shadow-[0_2px_20px_rgba(0,0,0,0.03)] p-6 mb-8">
+          <h2 className="text-sm font-medium text-dark/70 mb-5">Pipeline de creation</h2>
+          <div className="flex items-center gap-2">
+            {pipeline.map((step, i) => (
+              <div key={step.label} className="flex-1 flex items-center">
+                <div className={`flex-1 rounded-xl ${pipelineSteps[i].color} p-4 text-center`}>
+                  <p className="text-2xl font-semibold tracking-tight">{step.count}</p>
+                  <p className="text-xs text-dark/70 font-medium mt-0.5">{step.label}</p>
+                </div>
+                {i < pipeline.length - 1 && (
+                  <svg className="w-5 h-5 text-dark/20 shrink-0 mx-1" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M7 4l6 6-6 6" />
+                  </svg>
+                )}
               </div>
             ))}
-      </div>
+          </div>
+        </div>
+      )}
 
       {/* Empty state */}
       {articles.length === 0 && (
@@ -112,12 +141,12 @@ export default function DashboardOverview() {
       {recentArticles.length > 0 && (
         <>
           <div className="flex items-center justify-between mb-4">
-            <h2 className="text-lg font-medium">Suggestions récentes</h2>
+            <h2 className="text-lg font-medium">Suggestions recentes</h2>
             <Link
               href="/dashboard/suggestions"
               className="text-sm text-accent-purple hover:underline"
             >
-              Voir toutes
+              Voir les {articles.length} articles
             </Link>
           </div>
           <div className="bg-lift rounded-2xl shadow-[0_2px_20px_rgba(0,0,0,0.03)] overflow-hidden">
@@ -128,7 +157,7 @@ export default function DashboardOverview() {
                     Article
                   </th>
                   <th className="text-left text-xs font-medium text-dark/70 uppercase tracking-wider px-6 py-3">
-                    Catégorie
+                    Categorie
                   </th>
                   <th className="text-left text-xs font-medium text-dark/70 uppercase tracking-wider px-6 py-3">
                     Tickets
@@ -164,9 +193,15 @@ export default function DashboardOverview() {
                       </span>
                     </td>
                     <td className="px-6 py-4">
-                      <span className="text-sm font-medium">
-                        {article.ticketCount}
-                      </span>
+                      {article.ticketCount > 0 ? (
+                        <span className="text-sm font-medium">
+                          {article.ticketCount}
+                        </span>
+                      ) : (
+                        <span className="text-xs text-accent-purple font-medium">
+                          via Aircall
+                        </span>
+                      )}
                     </td>
                     <td className="px-6 py-4">
                       <div className="flex items-center gap-2">

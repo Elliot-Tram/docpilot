@@ -119,8 +119,7 @@ export default function ArticleDetailPage() {
             </span>
           </div>
           <p className="text-dark/70 text-sm mt-1">
-            Généré le {article.createdAt} · {article.ticketCount} tickets
-            associés · Confiance {article.confidence}%
+            Genere le {article.createdAt} · {article.ticketCount > 0 ? `${article.ticketCount} tickets associes` : "Detecte via veille concurrentielle"} · Confiance {article.confidence}%
           </p>
         </div>
       </div>
@@ -323,29 +322,40 @@ export default function ArticleDetailPage() {
             </div>
           )}
 
-          <div className="bg-lift rounded-2xl shadow-[0_2px_20px_rgba(0,0,0,0.03)] p-6">
-            <h3 className="text-sm font-medium text-dark/75 mb-4">
-              Tickets source ({article.sourceTickets.length})
-            </h3>
-            <div className="space-y-3">
-              {article.sourceTickets.map((ticket) => (
-                <div
-                  key={ticket.id}
-                  className="border border-dark/5 rounded-xl p-3"
-                >
-                  <p className="text-sm font-medium mb-1">{ticket.subject}</p>
-                  <div className="flex items-center justify-between">
-                    <span className="text-xs text-dark/70">
-                      {ticket.customer}
-                    </span>
-                    <span className="font-mono text-xs text-dark/65">
-                      {ticket.date}
-                    </span>
+          {article.sourceTickets.length > 0 ? (
+            <div className="bg-lift rounded-2xl shadow-[0_2px_20px_rgba(0,0,0,0.03)] p-6">
+              <h3 className="text-sm font-medium text-dark/75 mb-4">
+                Tickets source ({article.sourceTickets.length})
+              </h3>
+              <div className="space-y-3">
+                {article.sourceTickets.map((ticket) => (
+                  <div
+                    key={ticket.id}
+                    className="border border-dark/5 rounded-xl p-3"
+                  >
+                    <p className="text-sm font-medium mb-1">{ticket.subject}</p>
+                    <div className="flex items-center justify-between">
+                      <span className="text-xs text-dark/70">
+                        {ticket.customer}
+                      </span>
+                      <span className="font-mono text-xs text-dark/65">
+                        {ticket.date}
+                      </span>
+                    </div>
                   </div>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
-          </div>
+          ) : (
+            <div className="bg-orchid/5 border border-orchid/15 rounded-2xl p-6">
+              <h3 className="text-sm font-medium text-accent-purple mb-2">
+                Detecte via veille concurrentielle
+              </h3>
+              <p className="text-sm text-dark/75 leading-relaxed">
+                Cet article a ete suggere parce qu&apos;Aircall couvre ce sujet dans son help center et pas vous. Aucun ticket associe.
+              </p>
+            </div>
+          )}
 
           <div className="bg-lift rounded-2xl shadow-[0_2px_20px_rgba(0,0,0,0.03)] p-6">
             <h3 className="text-sm font-medium text-dark/75 mb-3">Détails</h3>

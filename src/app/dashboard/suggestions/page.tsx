@@ -138,7 +138,7 @@ export default function SuggestionsPage() {
                   {article.category}
                 </span>
                 <span className="text-xs text-dark/70">
-                  {article.ticketCount} tickets
+                  {article.ticketCount > 0 ? `${article.ticketCount} tickets` : "via Aircall"}
                 </span>
               </div>
               <div className="flex items-center gap-2">
