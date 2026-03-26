@@ -225,7 +225,7 @@ export default function CompetitorsPage() {
         <h1 className="text-2xl font-medium tracking-[-0.5px]">
           Veille concurrentielle
         </h1>
-        <p className="text-dark/50 mt-1">
+        <p className="text-dark/60 mt-1">
           Analysez les help centers de vos concurrents et identifiez vos
           opportunites
         </p>
@@ -236,7 +236,7 @@ export default function CompetitorsPage() {
         scanPromptActive ? "relative z-50 ring-2 ring-orchid shadow-[0_0_40px_rgba(168,85,247,0.25)]" : ""
       }`}>
         <h2 className="text-lg font-medium mb-1">Analyser un concurrent</h2>
-        <p className="text-sm text-dark/40 mb-5">
+        <p className="text-sm text-dark/55 mb-5">
           Entrez l&apos;URL du help center d&apos;un concurrent. Docpilot va
           comparer sa couverture avec la votre.
         </p>
@@ -246,7 +246,7 @@ export default function CompetitorsPage() {
             value={url}
             onChange={(e) => setUrl(e.target.value)}
             placeholder="https://support.concurrent.com"
-            className="flex-1 px-4 py-2.5 rounded-lg border border-dark/10 bg-white text-dark placeholder:text-dark/30 focus:outline-none focus:ring-2 focus:ring-orchid transition-all"
+            className="flex-1 px-4 py-2.5 rounded-lg border border-dark/10 bg-white text-dark placeholder:text-dark/45 focus:outline-none focus:ring-2 focus:ring-orchid transition-all"
             disabled={scanning}
           />
           <button
@@ -291,7 +291,7 @@ export default function CompetitorsPage() {
                 )}
                 <span
                   className={`text-sm ${
-                    i <= scanStep ? "text-dark/70" : "text-dark/20"
+                    i <= scanStep ? "text-dark/70" : "text-dark/40"
                   }`}
                 >
                   {step}
@@ -312,7 +312,7 @@ export default function CompetitorsPage() {
               className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200 ${
                 selectedCompetitor?.name === c.name
                   ? "bg-dark text-light"
-                  : "bg-dark/5 text-dark/50 hover:bg-dark/10"
+                  : "bg-dark/5 text-dark/60 hover:bg-dark/10"
               }`}
             >
               {c.name}
@@ -327,7 +327,7 @@ export default function CompetitorsPage() {
           {/* Score overview */}
           <div className="grid grid-cols-3 gap-4">
             <div className="bg-lift rounded-2xl p-5 shadow-[0_2px_20px_rgba(0,0,0,0.03)]">
-              <p className="text-sm text-dark/40 font-medium mb-1">
+              <p className="text-sm text-dark/55 font-medium mb-1">
                 Leurs articles
               </p>
               <p className="text-2xl font-semibold tracking-tight">
@@ -335,20 +335,20 @@ export default function CompetitorsPage() {
               </p>
             </div>
             <div className="bg-lift rounded-2xl p-5 shadow-[0_2px_20px_rgba(0,0,0,0.03)]">
-              <p className="text-sm text-dark/40 font-medium mb-1">
+              <p className="text-sm text-dark/55 font-medium mb-1">
                 Vos articles
               </p>
               <p className="text-2xl font-semibold tracking-tight">34</p>
             </div>
             <div className="bg-lift rounded-2xl p-5 shadow-[0_2px_20px_rgba(0,0,0,0.03)]">
-              <p className="text-sm text-dark/40 font-medium mb-1">
+              <p className="text-sm text-dark/55 font-medium mb-1">
                 Score de couverture
               </p>
               <div className="flex items-end gap-2">
                 <p className="text-2xl font-semibold tracking-tight">
                   {selectedCompetitor.score}%
                 </p>
-                <p className="text-sm text-dark/30 mb-0.5">de leurs sujets</p>
+                <p className="text-sm text-dark/45 mb-0.5">de leurs sujets</p>
               </div>
             </div>
           </div>
@@ -359,7 +359,7 @@ export default function CompetitorsPage() {
               <span className="w-2 h-2 rounded-full bg-orchid" />
               Couverture par theme
             </h3>
-            <div className="flex items-center gap-6 mb-4 text-xs text-dark/40">
+            <div className="flex items-center gap-6 mb-4 text-xs text-dark/55">
               <div className="flex items-center gap-2">
                 <div className="w-3 h-3 rounded bg-orchid/70" />
                 {selectedCompetitor.name}
@@ -374,7 +374,7 @@ export default function CompetitorsPage() {
                 <div key={topic.label}>
                   <div className="flex items-center justify-between mb-1">
                     <span className="text-sm text-dark/60">{topic.label}</span>
-                    <span className="text-xs text-dark/30 font-mono">
+                    <span className="text-xs text-dark/45 font-mono">
                       {topic.them} vs {topic.you}
                     </span>
                   </div>
@@ -409,16 +409,16 @@ export default function CompetitorsPage() {
               <table className="w-full">
                 <thead>
                   <tr className="bg-dark/[0.02]">
-                    <th className="text-left text-xs font-medium text-dark/40 uppercase tracking-wider px-4 py-2.5">
+                    <th className="text-left text-xs font-medium text-dark/55 uppercase tracking-wider px-4 py-2.5">
                       Sujet
                     </th>
-                    <th className="text-center text-xs font-medium text-dark/40 uppercase tracking-wider px-4 py-2.5">
+                    <th className="text-center text-xs font-medium text-dark/55 uppercase tracking-wider px-4 py-2.5">
                       {selectedCompetitor.name}
                     </th>
-                    <th className="text-center text-xs font-medium text-dark/40 uppercase tracking-wider px-4 py-2.5">
+                    <th className="text-center text-xs font-medium text-dark/55 uppercase tracking-wider px-4 py-2.5">
                       Vous
                     </th>
-                    <th className="text-center text-xs font-medium text-dark/40 uppercase tracking-wider px-4 py-2.5">
+                    <th className="text-center text-xs font-medium text-dark/55 uppercase tracking-wider px-4 py-2.5">
                       Statut
                     </th>
                   </tr>
@@ -436,7 +436,7 @@ export default function CompetitorsPage() {
                     const statusConfig = {
                       couvert: {
                         label: "Couvert",
-                        class: "bg-mint/20 text-dark/50",
+                        class: "bg-mint/20 text-dark/60",
                       },
                       gap: {
                         label: "Gap a combler",
@@ -448,7 +448,7 @@ export default function CompetitorsPage() {
                       },
                       absent: {
                         label: "Opportunite",
-                        class: "bg-sand text-dark/50",
+                        class: "bg-sand text-dark/60",
                       },
                     };
                     return (
@@ -462,7 +462,7 @@ export default function CompetitorsPage() {
                         <td className="px-4 py-2.5 text-center">
                           {row.them ? (
                             <svg
-                              className="w-4 h-4 text-dark/30 mx-auto"
+                              className="w-4 h-4 text-dark/45 mx-auto"
                               viewBox="0 0 20 20"
                               fill="none"
                               stroke="currentColor"
@@ -572,10 +572,10 @@ export default function CompetitorsPage() {
       {/* Empty state */}
       {competitors.length === 0 && !scanning && (
         <div className="bg-lift rounded-2xl shadow-[0_2px_20px_rgba(0,0,0,0.03)] p-12 text-center">
-          <p className="text-dark/40 mb-2">
+          <p className="text-dark/55 mb-2">
             Aucun concurrent analyse pour le moment
           </p>
-          <p className="text-sm text-dark/30">
+          <p className="text-sm text-dark/45">
             Ajoutez l&apos;URL d&apos;un help center concurrent pour voir la
             comparaison.
           </p>

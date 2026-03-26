@@ -59,7 +59,7 @@ export default function SuggestionsPage() {
           <h1 className="text-2xl font-medium tracking-[-0.5px]">
             Suggestions d&apos;articles
           </h1>
-          <p className="text-dark/50 mt-1">
+          <p className="text-dark/60 mt-1">
             Articles générés automatiquement depuis vos tickets support
           </p>
         </div>
@@ -77,7 +77,7 @@ export default function SuggestionsPage() {
             className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200 ${
               activeFilter === f.value
                 ? "bg-dark text-light"
-                : "bg-dark/5 text-dark/50 hover:bg-dark/10"
+                : "bg-dark/5 text-dark/60 hover:bg-dark/10"
             }`}
           >
             {f.label}
@@ -88,8 +88,8 @@ export default function SuggestionsPage() {
       {/* Empty state */}
       {articles.length === 0 && (
         <div className="bg-lift rounded-2xl shadow-[0_2px_20px_rgba(0,0,0,0.03)] p-12 text-center">
-          <p className="text-dark/40 mb-2">Aucune suggestion pour le moment</p>
-          <p className="text-sm text-dark/30">
+          <p className="text-dark/55 mb-2">Aucune suggestion pour le moment</p>
+          <p className="text-sm text-dark/45">
             Les articles seront générés automatiquement après l&apos;import de vos tickets.
           </p>
         </div>
@@ -122,22 +122,22 @@ export default function SuggestionsPage() {
                   </span>
                 )}
               </div>
-              <span className="font-mono text-xs text-dark/30">
+              <span className="font-mono text-xs text-dark/45">
                 {article.createdAt}
               </span>
             </div>
             <h3 className="text-base font-medium tracking-[-0.3px] mb-2">
               {article.title}
             </h3>
-            <p className="text-sm text-dark/50 font-light leading-relaxed mb-4">
+            <p className="text-sm text-dark/60 font-light leading-relaxed mb-4">
               {article.summary}
             </p>
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
-                <span className="font-mono text-xs bg-dark/5 text-dark/50 px-2.5 py-1 rounded-md">
+                <span className="font-mono text-xs bg-dark/5 text-dark/60 px-2.5 py-1 rounded-md">
                   {article.category}
                 </span>
-                <span className="text-xs text-dark/40">
+                <span className="text-xs text-dark/55">
                   {article.ticketCount} tickets
                 </span>
               </div>
@@ -148,7 +148,7 @@ export default function SuggestionsPage() {
                     style={{ width: `${article.confidence}%` }}
                   />
                 </div>
-                <span className="text-xs text-dark/40">
+                <span className="text-xs text-dark/55">
                   {article.confidence}%
                 </span>
               </div>

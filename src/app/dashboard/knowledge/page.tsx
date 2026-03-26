@@ -157,7 +157,7 @@ export default function KnowledgePage() {
         demoStep === "scan" && !scanning && !profile ? "relative z-50 ring-2 ring-orchid shadow-[0_0_40px_rgba(168,85,247,0.25)]" : ""
       }`}>
         <h2 className="text-lg font-medium mb-1">Help center existant</h2>
-        <p className="text-sm text-dark/40 mb-5">
+        <p className="text-sm text-dark/55 mb-5">
           Entrez l&apos;URL de votre help center. Docpilot va scanner vos
           articles pour en extraire le ton, le vocabulaire et la structure.
         </p>
@@ -212,7 +212,7 @@ export default function KnowledgePage() {
                 )}
                 <span
                   className={`text-sm ${
-                    i <= scanStep ? "text-dark/70" : "text-dark/20"
+                    i <= scanStep ? "text-dark/70" : "text-dark/40"
                   }`}
                 >
                   {step}
@@ -229,7 +229,7 @@ export default function KnowledgePage() {
           {/* Stats bar */}
           <div ref={(el) => { sectionRefs.current[0] = el; }} className={`grid grid-cols-3 gap-4 transition-all duration-500 ${activeSection === 0 ? "ring-2 ring-orchid/30 rounded-2xl" : ""}`}>
             <div className="bg-lift rounded-2xl p-5 shadow-[0_2px_20px_rgba(0,0,0,0.03)]">
-              <p className="text-sm text-dark/40 font-medium mb-1">
+              <p className="text-sm text-dark/55 font-medium mb-1">
                 Articles scannes
               </p>
               <p className="text-2xl font-semibold tracking-tight">
@@ -237,7 +237,7 @@ export default function KnowledgePage() {
               </p>
             </div>
             <div className="bg-lift rounded-2xl p-5 shadow-[0_2px_20px_rgba(0,0,0,0.03)]">
-              <p className="text-sm text-dark/40 font-medium mb-1">
+              <p className="text-sm text-dark/55 font-medium mb-1">
                 Categories detectees
               </p>
               <p className="text-2xl font-semibold tracking-tight">
@@ -245,7 +245,7 @@ export default function KnowledgePage() {
               </p>
             </div>
             <div className="bg-lift rounded-2xl p-5 shadow-[0_2px_20px_rgba(0,0,0,0.03)]">
-              <p className="text-sm text-dark/40 font-medium mb-1">
+              <p className="text-sm text-dark/55 font-medium mb-1">
                 Profil pret
               </p>
               <p className="text-2xl font-semibold tracking-tight text-mint">
@@ -299,7 +299,7 @@ export default function KnowledgePage() {
             <ol className="space-y-2">
               {profile.structure.map((s, i) => (
                 <li key={i} className="text-sm text-dark/60 flex gap-3">
-                  <span className="text-dark/20 font-mono text-xs mt-0.5">
+                  <span className="text-dark/40 font-mono text-xs mt-0.5">
                     {String(i + 1).padStart(2, "0")}
                   </span>
                   {s}
