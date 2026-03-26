@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useCallback } from "react";
+import Link from "next/link";
 import useSWR from "swr";
 import type { ConnectedSource } from "@/lib/mock-data";
 
@@ -102,6 +103,26 @@ const availableSources = [
   },
 ];
 
+const analysisScanSteps = [
+  "Import de 2 847 tickets depuis Intercom...",
+  "Import de 1 203 tickets depuis Zendesk...",
+  "Analyse des sujets recurrents...",
+  "12 clusters identifies...",
+  null, // placeholder for cluster list
+  "Generation des articles en cours...",
+  "12 articles generes avec succes !",
+];
+
+const analysisStepDelays = [1200, 1000, 1400, 1000, 2000, 1400, 0];
+
+const discoveredClusters = [
+  { name: "Transfert d'appel", count: 63 },
+  { name: "Qualite audio", count: 51 },
+  { name: "Integration HubSpot", count: 45 },
+  { name: "Configuration SVI", count: 38 },
+  { name: "Portabilite", count: 34 },
+];
+
 export default function SourcesPage() {
   const { data: sourcesData, mutate } = useSWR<ConnectedSource[]>("/api/sources", fetcher);
   const sources = Array.isArray(sourcesData) ? sourcesData : [];
@@ -111,6 +132,35 @@ export default function SourcesPage() {
   const [formName, setFormName] = useState("");
   const [formError, setFormError] = useState("");
   const [formLoading, setFormLoading] = useState(false);
+
+  // Ticket analysis animation state
+  const [analysisScanning, setAnalysisScanning] = useState(false);
+  const [analysisScanStep, setAnalysisScanStep] = useState(0);
+  const [analysisComplete, setAnalysisComplete] = useState(false);
+
+  const runAnalysis = useCallback(() => {
+    setAnalysisScanning(true);
+    setAnalysisScanStep(0);
+    setAnalysisComplete(false);
+
+    let step = 0;
+    function nextStep() {
+      if (step >= analysisScanSteps.length - 1) {
+        setTimeout(() => {
+          setAnalysisScanning(false);
+          setAnalysisComplete(true);
+        }, 800);
+        return;
+      }
+      const delay = analysisStepDelays[step] + Math.random() * 400 - 200;
+      setTimeout(() => {
+        step++;
+        setAnalysisScanStep(step);
+        nextStep();
+      }, delay);
+    }
+    nextStep();
+  }, []);
 
   async function handleConnect(e: React.FormEvent) {
     e.preventDefault();
@@ -265,6 +315,182 @@ export default function SourcesPage() {
           </form>
         </div>
       )}
+
+      {/* Ticket analysis section */}
+      <div className="bg-lift rounded-2xl shadow-[0_2px_20px_rgba(0,0,0,0.03)] p-6 mb-6">
+        {!analysisScanning && !analysisComplete && (
+          <>
+            <div className="flex items-start gap-4">
+              <div className="w-12 h-12 rounded-xl bg-orchid/10 flex items-center justify-center shrink-0">
+                <svg className="w-6 h-6 text-orchid" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2" />
+                  <rect x="9" y="3" width="6" height="4" rx="1" />
+                  <path d="M9 14l2 2 4-4" />
+                </svg>
+              </div>
+              <div className="flex-1">
+                <h2 className="text-lg font-medium mb-1">Analyser vos tickets</h2>
+                <p className="text-sm text-dark/70 mb-5">
+                  Lancez l&apos;analyse IA pour detecter les sujets recurrents et generer des articles
+                </p>
+              </div>
+            </div>
+            <button
+              onClick={runAnalysis}
+              className="w-full bg-dark text-light py-3.5 rounded-xl text-sm font-semibold hover:bg-accent-purple transition-colors duration-300 mt-2"
+            >
+              Lancer l&apos;analyse
+            </button>
+          </>
+        )}
+
+        {/* Analysis scan progress */}
+        {analysisScanning && (
+          <div>
+            <div className="flex items-center gap-3 mb-5">
+              <div className="w-10 h-10 rounded-xl bg-orchid/10 flex items-center justify-center shrink-0">
+                <div className="w-4 h-4 rounded-full bg-orchid animate-pulse" />
+              </div>
+              <div>
+                <h2 className="text-lg font-medium">Analyse en cours...</h2>
+                <p className="text-sm text-dark/50">Cela prend quelques instants</p>
+              </div>
+            </div>
+            <div className="space-y-3">
+              {analysisScanSteps.map((step, i) => {
+                if (step === null) {
+                  // Cluster list step
+                  return (
+                    <div
+                      key={i}
+                      className={`transition-all duration-500 ${
+                        i <= analysisScanStep ? "opacity-100 max-h-96" : "opacity-0 max-h-0 overflow-hidden"
+                      }`}
+                    >
+                      <div className="ml-8 mt-1 mb-2 space-y-1.5">
+                        {discoveredClusters.map((cluster, ci) => (
+                          <div
+                            key={ci}
+                            className="flex items-center gap-2 text-sm text-dark/70 bg-orchid/5 rounded-lg px-3 py-2"
+                            style={{
+                              transitionDelay: `${ci * 150}ms`,
+                              opacity: i <= analysisScanStep ? 1 : 0,
+                              transition: "opacity 300ms ease",
+                            }}
+                          >
+                            <span className="w-1.5 h-1.5 rounded-full bg-orchid shrink-0" />
+                            <span className="font-medium">{cluster.name}</span>
+                            <span className="text-dark/50 text-xs">({cluster.count} tickets)</span>
+                          </div>
+                        ))}
+                        <div className="flex items-center gap-2 text-sm text-dark/40 px-3 py-1">
+                          <span>...</span>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                }
+                return (
+                  <div
+                    key={i}
+                    className={`flex items-center gap-3 transition-all duration-300 ${
+                      i <= analysisScanStep ? "opacity-100" : "opacity-0"
+                    }`}
+                  >
+                    {i < analysisScanStep ? (
+                      <svg
+                        className="w-5 h-5 text-mint shrink-0"
+                        viewBox="0 0 20 20"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      >
+                        <path d="M5 10l4 4 6-7" />
+                      </svg>
+                    ) : i === analysisScanStep ? (
+                      <div className="w-5 h-5 shrink-0 flex items-center justify-center">
+                        <div className="w-3 h-3 rounded-full bg-orchid animate-pulse" />
+                      </div>
+                    ) : (
+                      <div className="w-5 h-5 shrink-0" />
+                    )}
+                    <span
+                      className={`text-sm ${
+                        i <= analysisScanStep ? "text-dark/70" : "text-dark/65"
+                      } ${i === analysisScanSteps.length - 1 && i <= analysisScanStep ? "font-medium text-mint" : ""}`}
+                    >
+                      {step}
+                    </span>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        )}
+
+        {/* Analysis complete / success state */}
+        {analysisComplete && (
+          <div>
+            <div className="flex items-center gap-3 mb-5">
+              <div className="w-10 h-10 rounded-xl bg-mint/15 flex items-center justify-center shrink-0">
+                <svg className="w-5 h-5 text-mint" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M5 10l4 4 6-7" />
+                </svg>
+              </div>
+              <div>
+                <h2 className="text-lg font-medium">Analyse terminee</h2>
+                <p className="text-sm text-dark/50">12 articles generes a partir de 4 050 tickets</p>
+              </div>
+            </div>
+
+            {/* Stats bar */}
+            <div className="grid grid-cols-3 gap-3 mb-5">
+              <div className="bg-dark/[0.02] rounded-xl p-4 text-center">
+                <p className="text-2xl font-semibold tracking-tight">4 050</p>
+                <p className="text-xs text-dark/50 mt-1">Tickets analyses</p>
+              </div>
+              <div className="bg-dark/[0.02] rounded-xl p-4 text-center">
+                <p className="text-2xl font-semibold tracking-tight">12</p>
+                <p className="text-xs text-dark/50 mt-1">Clusters identifies</p>
+              </div>
+              <div className="bg-dark/[0.02] rounded-xl p-4 text-center">
+                <p className="text-2xl font-semibold tracking-tight text-mint">12</p>
+                <p className="text-xs text-dark/50 mt-1">Articles generes</p>
+              </div>
+            </div>
+
+            {/* Cluster results */}
+            <div className="mb-5">
+              <h3 className="text-sm font-medium text-dark/70 mb-3">Sujets identifies</h3>
+              <div className="space-y-1.5">
+                {discoveredClusters.map((cluster, i) => (
+                  <div
+                    key={i}
+                    className="flex items-center justify-between text-sm bg-orchid/5 rounded-lg px-4 py-2.5"
+                  >
+                    <div className="flex items-center gap-2">
+                      <span className="w-1.5 h-1.5 rounded-full bg-orchid shrink-0" />
+                      <span className="text-dark/75 font-medium">{cluster.name}</span>
+                    </div>
+                    <span className="text-dark/50 text-xs">{cluster.count} tickets</span>
+                  </div>
+                ))}
+                <div className="text-sm text-dark/40 px-4 py-1">+ 7 autres sujets</div>
+              </div>
+            </div>
+
+            {/* CTA */}
+            <Link
+              href="/dashboard/suggestions"
+              className="block w-full bg-dark text-light py-3.5 rounded-xl text-sm font-semibold hover:bg-accent-purple transition-colors duration-300 text-center"
+            >
+              Voir les articles generes
+            </Link>
+          </div>
+        )}
+      </div>
 
       {/* Connected sources */}
       {sources.length === 0 && !showConnect && (

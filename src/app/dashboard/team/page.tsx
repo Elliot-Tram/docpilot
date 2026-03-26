@@ -62,34 +62,52 @@ const recentMessages = [
   {
     from: "Docpilot",
     to: "Thomas M.",
+    toAvatar: "TM",
+    toColor: "bg-sky/60",
     channel: "#support-produit",
     message: "Nouvel article suggere : \"Configurer le transfert d'appel vers un mobile\" (63 tickets ce mois). Draft genere. @thomas.music peux-tu valider la partie technique sur les transferts vers numeros courts ?",
-    time: "Il y a 2h",
+    time: "14:32",
     status: "responded" as const,
+    reply: {
+      text: "Le draft est correct. Juste preciser que le transfert ne fonctionne pas vers les numeros courts (3xxx) ni les numeros surtaxes (08xx).",
+      time: "14:51",
+    },
   },
   {
     from: "Docpilot",
     to: "Alex R.",
+    toAvatar: "AR",
+    toColor: "bg-mint/60",
     channel: "#support-produit",
     message: "Nouvel article suggere : \"Resoudre les problemes de qualite audio\" (51 tickets). @alex.infra peux-tu confirmer les ports UDP et les recommandations QoS ?",
-    time: "Il y a 5h",
+    time: "11:08",
     status: "waiting" as const,
+    reply: null,
   },
   {
     from: "Docpilot",
     to: "Camille D.",
+    toAvatar: "CD",
+    toColor: "bg-orchid/60",
     channel: "#support-produit",
     message: "Article \"Connecter Allo a HubSpot CRM\" mis a jour avec ta correction sur le mapping custom. Peux-tu valider la nouvelle version ?",
-    time: "Il y a 1j",
+    time: "Hier, 16:45",
     status: "responded" as const,
+    reply: {
+      text: "C'est bon mais il faut ajouter que le mapping custom des proprietes n'est dispo que sur le plan Pro HubSpot.",
+      time: "Hier, 17:12",
+    },
   },
   {
     from: "Docpilot",
     to: "Hugo B.",
+    toAvatar: "HB",
+    toColor: "bg-coral/40",
     channel: "#support-produit",
     message: "Nouvel article suggere : \"Comprendre sa facture et changer de forfait\" (27 tickets). @hugo.billing peux-tu verifier les infos sur le prelevement SEPA et le changement de forfait au prorata ?",
-    time: "Il y a 1j",
+    time: "Hier, 10:22",
     status: "waiting" as const,
+    reply: null,
   },
 ];
 
@@ -185,30 +203,63 @@ export default function TeamPage() {
 
       {/* Recent Slack messages */}
       <h2 className="text-lg font-medium mb-4">Messages Slack recents</h2>
-      <div className="space-y-3">
-        {recentMessages.map((msg, i) => (
-          <div
-            key={i}
-            className="bg-lift rounded-2xl shadow-[0_2px_20px_rgba(0,0,0,0.03)] p-5"
-          >
-            <div className="flex items-center justify-between mb-3">
-              <div className="flex items-center gap-2">
-                <svg className="w-4 h-4" viewBox="0 0 20 20" fill="none">
-                  <path d="M7.5 2a2 2 0 00-2 2v1H4a2 2 0 100 4h1.5v3H4a2 2 0 100 4h1.5v1a2 2 0 104 0v-1H12v1a2 2 0 104 0v-1h1.5a2 2 0 100-4H16V9h1.5a2 2 0 100-4H16V4a2 2 0 10-4 0v1H9.5V4a2 2 0 00-2-2zM9.5 9V7H12v2H9.5zm0 2v2H12v-2H9.5z" fill="#E01E5A"/>
-                </svg>
-                <span className="text-sm font-medium">{msg.channel}</span>
-                <span className="text-xs text-dark/65">Docpilot → {msg.to}</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <span className={`text-[10px] font-medium px-2 py-0.5 rounded-full ${messageStatusConfig[msg.status].color}`}>
-                  {messageStatusConfig[msg.status].label}
-                </span>
-                <span className="text-xs text-dark/65">{msg.time}</span>
+      <div className="bg-lift rounded-2xl shadow-[0_2px_20px_rgba(0,0,0,0.03)] overflow-hidden">
+        {/* Channel header */}
+        <div className="flex items-center gap-2 px-5 py-3 border-b border-dark/8">
+          <span className="text-base font-bold text-dark/90">#</span>
+          <span className="text-base font-bold text-dark/90">support-produit</span>
+          <span className="text-xs text-dark/50 ml-2">Canal pour la collaboration sur les articles</span>
+        </div>
+
+        {/* Messages list */}
+        <div className="divide-y divide-dark/5">
+          {recentMessages.map((msg, i) => (
+            <div key={i} className="group">
+              {/* Main message from Docpilot */}
+              <div className="flex gap-3 px-5 py-4 hover:bg-dark/[0.02] transition-colors">
+                {/* Docpilot avatar */}
+                <div className="w-9 h-9 rounded-lg bg-accent-purple flex items-center justify-center text-[11px] font-bold text-lift shrink-0 mt-0.5">
+                  dp
+                </div>
+                {/* Message content */}
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-baseline gap-2">
+                    <span className="text-[15px] font-bold text-dark/90">Docpilot</span>
+                    <span className="text-xs text-dark/50">APP</span>
+                    <span className="text-xs text-dark/50 ml-auto shrink-0">{msg.time}</span>
+                  </div>
+                  <p className="text-[15px] text-dark/85 leading-[1.65] mt-0.5">{msg.message}</p>
+
+                  {/* Thread reply indicator or reply content */}
+                  {msg.reply ? (
+                    <div className="mt-3 border-l-2 border-orchid/30 pl-3">
+                      <div className="flex gap-2.5 py-2 rounded-lg">
+                        <div className={`w-7 h-7 rounded-md ${msg.toColor} flex items-center justify-center text-[10px] font-bold text-dark/80 shrink-0`}>
+                          {msg.toAvatar}
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-baseline gap-2">
+                            <span className="text-[13px] font-bold text-dark/90">{msg.to}</span>
+                            <span className="text-[11px] text-dark/50">{msg.reply.time}</span>
+                          </div>
+                          <p className="text-[13px] text-dark/80 leading-[1.6] mt-0.5">{msg.reply.text}</p>
+                        </div>
+                      </div>
+                    </div>
+                  ) : null}
+
+                  {/* Status badge */}
+                  <div className="mt-2.5">
+                    <span className={`inline-flex items-center gap-1.5 text-[11px] font-medium px-2.5 py-1 rounded-full ${messageStatusConfig[msg.status].color}`}>
+                      <span className={`w-1.5 h-1.5 rounded-full ${msg.status === "responded" ? "bg-dark/40" : "bg-dark/40"}`} />
+                      {messageStatusConfig[msg.status].label}
+                    </span>
+                  </div>
+                </div>
               </div>
             </div>
-            <p className="text-sm text-dark/80 leading-relaxed">{msg.message}</p>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </div>
   );
