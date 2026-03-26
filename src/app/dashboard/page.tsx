@@ -102,61 +102,6 @@ export default function DashboardOverview() {
         </div>
       </div>
 
-      {/* ROI estimation */}
-      <div className="bg-lift rounded-2xl shadow-[0_2px_20px_rgba(0,0,0,0.03)] mb-8 overflow-hidden">
-        <div className="grid lg:grid-cols-2">
-          {/* Left: current impact */}
-          <div className="bg-mint/5 p-6">
-            <h3 className="text-sm font-medium text-dark/75 mb-4">Impact estime</h3>
-            <p className="text-dark/90 font-semibold mb-2">3 articles publies</p>
-            <div className="space-y-1.5 ml-1">
-              <p className="text-dark/85 text-sm">
-                <span className="text-dark/75 mr-1">&rarr;</span>
-                <span className="text-xl font-semibold text-dark/90">~482</span>{" "}
-                <span className="text-dark/80">tickets devies / mois</span>
-              </p>
-              <p className="text-dark/85 text-sm">
-                <span className="text-dark/75 mr-1">&rarr;</span>
-                <span className="text-xl font-semibold text-dark/90">~7 200 EUR</span>{" "}
-                <span className="text-dark/80">/ mois economises</span>
-              </p>
-            </div>
-            <p className="text-xs text-dark/75 mt-4">
-              Base sur un cout moyen de 15 EUR par ticket
-            </p>
-          </div>
-
-          {/* Right: projection */}
-          <div className="bg-orchid/5 p-6">
-            <h3 className="text-sm font-medium text-dark/75 mb-4">
-              Projection si les 12 articles sont publies
-            </h3>
-            <div className="space-y-1.5 mb-5">
-              <p className="text-dark/90">
-                <span className="text-2xl font-semibold">~1 930</span>{" "}
-                <span className="text-sm text-dark/80">tickets devies / mois</span>
-              </p>
-              <p className="text-dark/90">
-                <span className="text-2xl font-semibold">~28 950 EUR</span>{" "}
-                <span className="text-sm text-dark/80">/ mois economises</span>
-              </p>
-            </div>
-            <div>
-              <div className="flex items-center justify-between text-xs text-dark/75 mb-1.5">
-                <span>3 / 12 articles publies</span>
-                <span className="font-medium">25%</span>
-              </div>
-              <div className="w-full h-2 rounded-full bg-dark/10 overflow-hidden">
-                <div
-                  className="h-full rounded-full bg-orchid/40"
-                  style={{ width: "25%" }}
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
       {/* Pipeline visualization */}
       {articles.length > 0 && (
         <div className="bg-lift rounded-2xl shadow-[0_2px_20px_rgba(0,0,0,0.03)] p-6 mb-8">
