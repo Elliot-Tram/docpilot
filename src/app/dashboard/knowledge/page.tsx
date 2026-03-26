@@ -69,7 +69,7 @@ export default function KnowledgePage() {
   const [scanning, setScanning] = useState(false);
   const [scanStep, setScanStep] = useState(0);
   const [profile, setProfile] = useState<BrandProfile | null>(null);
-  const [demoStep, setDemoStep] = useState<"welcome" | "scan" | "done">("welcome");
+  const [demoStep, setDemoStep] = useState<"welcome" | "scan" | "done">("scan");
   const sectionRefs = useRef<(HTMLDivElement | null)[]>([]);
   const [activeSection, setActiveSection] = useState(-1);
 

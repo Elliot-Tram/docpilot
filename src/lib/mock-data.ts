@@ -7,6 +7,16 @@ export interface SourceTicket {
   date: string;
 }
 
+export interface SlackThread {
+  channel: string;
+  docpilotMessage: string;
+  expert: { name: string; role: string; avatar: string };
+  expertResponse: string | null;
+  aiIntegrated: boolean;
+  techValidated: boolean;
+  csmValidated: boolean;
+}
+
 export interface SuggestedArticle {
   id: string;
   title: string;
@@ -18,15 +28,19 @@ export interface SuggestedArticle {
   sourceTickets: SourceTicket[];
   createdAt: string;
   confidence: number;
+  collaboration?: SlackThread;
 }
+
+export type SourceType = "zendesk" | "intercom" | "freshdesk" | "hubspot" | "claap" | "slack";
 
 export interface ConnectedSource {
   id: string;
   name: string;
-  type: "zendesk" | "intercom" | "freshdesk";
+  type: SourceType;
   status: "connected" | "syncing" | "disconnected";
   ticketsImported: number;
   lastSync: string;
+  metricLabel?: string;
 }
 
 export const mockSources: ConnectedSource[] = [
@@ -45,6 +59,24 @@ export const mockSources: ConnectedSource[] = [
     status: "connected",
     ticketsImported: 1203,
     lastSync: "Il y a 6 heures",
+  },
+  {
+    id: "src-3",
+    name: "HubSpot CRM",
+    type: "hubspot",
+    status: "connected",
+    ticketsImported: 12450,
+    lastSync: "Il y a 1 heure",
+    metricLabel: "contacts synchronises",
+  },
+  {
+    id: "src-4",
+    name: "Claap — Appels support",
+    type: "claap",
+    status: "connected",
+    ticketsImported: 342,
+    lastSync: "Il y a 3 heures",
+    metricLabel: "appels analyses",
   },
 ];
 
@@ -98,6 +130,15 @@ Si tu utilises un SVI (Serveur Vocal Interactif), le transfert s'applique apres 
     ],
     createdAt: "23 mars 2026",
     confidence: 96,
+    collaboration: {
+      channel: "#support-produit",
+      docpilotMessage: "Nouvel article suggere : \"Configurer le transfert d'appel vers un mobile\" (63 tickets ce mois). Draft genere. @thomas.music peux-tu valider la partie technique sur les transferts vers numeros courts ?",
+      expert: { name: "Thomas M.", role: "Ingenieur VoIP", avatar: "TM" },
+      expertResponse: "Le draft est correct. Juste preciser que le transfert ne fonctionne pas vers les numeros courts (3xxx) ni les numeros surtaxes (08xx). Et le delai par defaut c'est 25s, pas 20s.",
+      aiIntegrated: true,
+      techValidated: true,
+      csmValidated: false,
+    },
   },
   {
     id: "art-2",
@@ -163,6 +204,15 @@ Si le souci persiste apres ces verifications, contacte le support avec :
     ],
     createdAt: "22 mars 2026",
     confidence: 93,
+    collaboration: {
+      channel: "#support-produit",
+      docpilotMessage: "Nouvel article suggere : \"Resoudre les problemes de qualite audio\" (51 tickets). Draft genere. @alex.infra peux-tu confirmer les ports UDP et les recommandations QoS ?",
+      expert: { name: "Alex R.", role: "Ingenieur Infrastructure", avatar: "AR" },
+      expertResponse: null,
+      aiIntegrated: false,
+      techValidated: false,
+      csmValidated: false,
+    },
   },
   {
     id: "art-3",
@@ -218,6 +268,15 @@ Quand un contact HubSpot t'appelle, Allo affiche automatiquement sa fiche :
     ],
     createdAt: "21 mars 2026",
     confidence: 91,
+    collaboration: {
+      channel: "#support-produit",
+      docpilotMessage: "Nouvel article suggere : \"Connecter Allo a HubSpot CRM\" (45 tickets). Draft genere. @camille.integ peux-tu verifier les etapes de configuration OAuth et le mapping des proprietes ?",
+      expert: { name: "Camille D.", role: "Lead Integrations", avatar: "CD" },
+      expertResponse: "C'est bon mais il faut ajouter que le mapping custom des proprietes n'est dispo que sur le plan Pro HubSpot. Et les enregistrements d'appel necessitent l'option \"Sales Hub\" activee.",
+      aiIntegrated: true,
+      techValidated: false,
+      csmValidated: false,
+    },
   },
   {
     id: "art-4",
@@ -272,6 +331,15 @@ Va dans **SVI > Horaires** pour configurer les plages.`,
     ],
     createdAt: "19 mars 2026",
     confidence: 89,
+    collaboration: {
+      channel: "#support-produit",
+      docpilotMessage: "Article suggere : \"Parametrer le SVI\" (38 tickets). Draft genere et valide par l'equipe technique.",
+      expert: { name: "Marie L.", role: "Product Manager Telephonie", avatar: "ML" },
+      expertResponse: "Tout est bon, j'ai juste reformule la partie sur les horaires d'ouverture pour que ce soit plus clair.",
+      aiIntegrated: true,
+      techValidated: true,
+      csmValidated: true,
+    },
   },
   {
     id: "art-5",

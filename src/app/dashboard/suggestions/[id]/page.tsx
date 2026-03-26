@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import useSWR from "swr";
 import { useParams, useRouter } from "next/navigation";
-import type { SuggestedArticle, ArticleStatus } from "@/lib/mock-data";
+import type { SuggestedArticle, ArticleStatus, SlackThread } from "@/lib/mock-data";
 
 const fetcher = (url: string) => fetch(url).then((r) => {
   if (!r.ok) throw new Error("Not found");
@@ -231,6 +231,97 @@ export default function ArticleDetailPage() {
               {article.summary}
             </p>
           </div>
+
+          {/* Collaboration Slack */}
+          {article.collaboration && (
+            <div className="bg-lift rounded-2xl shadow-[0_2px_20px_rgba(0,0,0,0.03)] p-6">
+              <h3 className="text-sm font-medium text-dark/60 mb-4 flex items-center gap-2">
+                <svg className="w-4 h-4" viewBox="0 0 20 20" fill="none">
+                  <path d="M7.5 2a2 2 0 00-2 2v1H4a2 2 0 100 4h1.5v3H4a2 2 0 100 4h1.5v1a2 2 0 104 0v-1H12v1a2 2 0 104 0v-1h1.5a2 2 0 100-4H16V9h1.5a2 2 0 100-4H16V4a2 2 0 10-4 0v1H9.5V4a2 2 0 00-2-2zM9.5 9V7H12v2H9.5zm0 2v2H12v-2H9.5z" fill="#E01E5A"/>
+                </svg>
+                Collaboration {(article.collaboration as SlackThread).channel}
+              </h3>
+              <div className="space-y-3">
+                {/* Docpilot message */}
+                <div className="bg-orchid/5 rounded-lg px-3 py-2.5 border-l-2 border-orchid/40">
+                  <div className="flex items-center gap-2 mb-1.5">
+                    <span className="w-5 h-5 rounded bg-orchid/20 flex items-center justify-center text-[10px] font-bold text-accent-purple">dp</span>
+                    <span className="text-xs font-medium text-dark/70">Docpilot</span>
+                  </div>
+                  <p className="text-xs text-dark/60 leading-relaxed">
+                    {(article.collaboration as SlackThread).docpilotMessage}
+                  </p>
+                </div>
+
+                {/* Expert response */}
+                {(article.collaboration as SlackThread).expertResponse ? (
+                  <div className="bg-sky/5 rounded-lg px-3 py-2.5 border-l-2 border-sky/40">
+                    <div className="flex items-center gap-2 mb-1.5">
+                      <span className="w-5 h-5 rounded bg-sky/20 flex items-center justify-center text-[10px] font-bold text-dark/50">
+                        {(article.collaboration as SlackThread).expert.avatar}
+                      </span>
+                      <span className="text-xs font-medium text-dark/70">
+                        {(article.collaboration as SlackThread).expert.name}
+                      </span>
+                      <span className="text-[10px] text-dark/30">
+                        {(article.collaboration as SlackThread).expert.role}
+                      </span>
+                    </div>
+                    <p className="text-xs text-dark/60 leading-relaxed">
+                      {(article.collaboration as SlackThread).expertResponse}
+                    </p>
+                  </div>
+                ) : (
+                  <div className="bg-sand/30 rounded-lg px-3 py-2.5 border-l-2 border-sand">
+                    <div className="flex items-center gap-2">
+                      <span className="w-5 h-5 rounded bg-sand/50 flex items-center justify-center text-[10px] font-bold text-dark/40">
+                        {(article.collaboration as SlackThread).expert.avatar}
+                      </span>
+                      <span className="text-xs text-dark/40">
+                        En attente de {(article.collaboration as SlackThread).expert.name} ({(article.collaboration as SlackThread).expert.role})...
+                      </span>
+                    </div>
+                  </div>
+                )}
+
+                {/* Status checklist */}
+                <div className="pt-2 space-y-1.5">
+                  <div className="flex items-center gap-2 text-xs">
+                    {(article.collaboration as SlackThread).expertResponse ? (
+                      <svg className="w-3.5 h-3.5 text-mint" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 10l4 4 6-7"/></svg>
+                    ) : (
+                      <div className="w-3.5 h-3.5 rounded-full border border-dark/20" />
+                    )}
+                    <span className={`${(article.collaboration as SlackThread).expertResponse ? "text-dark/60" : "text-dark/30"}`}>Reponse de l&apos;expert</span>
+                  </div>
+                  <div className="flex items-center gap-2 text-xs">
+                    {(article.collaboration as SlackThread).aiIntegrated ? (
+                      <svg className="w-3.5 h-3.5 text-mint" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 10l4 4 6-7"/></svg>
+                    ) : (
+                      <div className="w-3.5 h-3.5 rounded-full border border-dark/20" />
+                    )}
+                    <span className={`${(article.collaboration as SlackThread).aiIntegrated ? "text-dark/60" : "text-dark/30"}`}>Correction integree par l&apos;IA</span>
+                  </div>
+                  <div className="flex items-center gap-2 text-xs">
+                    {(article.collaboration as SlackThread).techValidated ? (
+                      <svg className="w-3.5 h-3.5 text-mint" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 10l4 4 6-7"/></svg>
+                    ) : (
+                      <div className="w-3.5 h-3.5 rounded-full border border-dark/20" />
+                    )}
+                    <span className={`${(article.collaboration as SlackThread).techValidated ? "text-dark/60" : "text-dark/30"}`}>Validation technique</span>
+                  </div>
+                  <div className="flex items-center gap-2 text-xs">
+                    {(article.collaboration as SlackThread).csmValidated ? (
+                      <svg className="w-3.5 h-3.5 text-mint" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 10l4 4 6-7"/></svg>
+                    ) : (
+                      <div className="w-3.5 h-3.5 rounded-full border border-dark/20" />
+                    )}
+                    <span className={`${(article.collaboration as SlackThread).csmValidated ? "text-dark/60" : "text-dark/30"}`}>Review CSM</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
 
           <div className="bg-lift rounded-2xl shadow-[0_2px_20px_rgba(0,0,0,0.03)] p-6">
             <h3 className="text-sm font-medium text-dark/60 mb-4">

@@ -135,7 +135,7 @@ export default function CompetitorsPage() {
   const [url, setUrl] = useState("https://support.aircall.io");
   const [scanning, setScanning] = useState(false);
   const [scanStep, setScanStep] = useState(0);
-  const [demoStep, setDemoStep] = useState<"intro" | "scan" | "done">("intro");
+  const [demoStep, setDemoStep] = useState<"intro" | "scan" | "done">("scan");
   const [selectedCompetitor, setSelectedCompetitor] =
     useState<CompetitorAnalysis | null>(null);
 

@@ -31,6 +31,23 @@ const sourceSvgs: Record<string, React.ReactNode> = {
       <path d="M12 12h8M12 16h6M12 20h4" stroke="white" strokeWidth="2" strokeLinecap="round"/>
     </svg>
   ),
+  hubspot: (
+    <svg viewBox="0 0 32 32" className="w-7 h-7" fill="none">
+      <circle cx="20" cy="12" r="2.5" stroke="#FF7A59" strokeWidth="1.5"/>
+      <circle cx="12" cy="16" r="2.5" stroke="#FF7A59" strokeWidth="1.5"/>
+      <circle cx="20" cy="20" r="2.5" stroke="#FF7A59" strokeWidth="1.5"/>
+      <circle cx="24" cy="8" r="1.5" fill="#FF7A59"/>
+      <path d="M14.5 15L17.5 12.5M14.5 17L17.5 19.5M22.5 12V8M22 10.5L24 8" stroke="#FF7A59" strokeWidth="1.2" strokeLinecap="round"/>
+    </svg>
+  ),
+  claap: (
+    <svg viewBox="0 0 32 32" className="w-7 h-7" fill="none">
+      <rect x="4" y="4" width="24" height="24" rx="6" fill="#6C5CE7"/>
+      <circle cx="16" cy="14" r="4" stroke="white" strokeWidth="1.5"/>
+      <path d="M16 18v3M13 22h6" stroke="white" strokeWidth="1.5" strokeLinecap="round"/>
+      <circle cx="16" cy="14" r="1.5" fill="white"/>
+    </svg>
+  ),
 };
 
 const sourceLogos: Record<string, { label: string; color: string }> = {
@@ -281,7 +298,7 @@ export default function SourcesPage() {
               </div>
               <div className="flex items-center gap-4 text-sm text-dark/40">
                 <span>
-                  {source.ticketsImported.toLocaleString("fr-FR")} tickets importés
+                  {source.ticketsImported.toLocaleString("fr-FR")} {source.metricLabel || "tickets importés"}
                 </span>
                 <span>·</span>
                 <span>Dernière sync : {source.lastSync}</span>
