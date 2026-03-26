@@ -15,7 +15,7 @@ const originLabel: Record<string, string> = {
 const originColor: Record<string, string> = {
   tickets: "bg-sky/10 text-sky",
   veille: "bg-orchid/10 text-accent-purple",
-  both: "bg-mint/10 text-dark/75",
+  both: "bg-mint/10 text-dark/85",
 };
 
 const statusLabel: Record<string, string> = {
@@ -26,9 +26,9 @@ const statusLabel: Record<string, string> = {
 };
 
 const statusColor: Record<string, string> = {
-  draft: "bg-sand text-dark/70",
-  approved: "bg-mint text-dark/70",
-  published: "bg-sky text-dark/70",
+  draft: "bg-sand text-dark/80",
+  approved: "bg-mint text-dark/80",
+  published: "bg-sky text-dark/80",
   rejected: "bg-coral/20 text-coral",
 };
 
@@ -73,7 +73,7 @@ export default function DashboardOverview() {
         <h1 className="text-2xl font-medium tracking-[-0.5px]">
           Vue d&apos;ensemble
         </h1>
-        <p className="text-dark/75 mt-1">
+        <p className="text-dark/85 mt-1">
           Pipeline de votre help center automatise
         </p>
       </div>
@@ -81,37 +81,37 @@ export default function DashboardOverview() {
       {/* Stats cards - workflow oriented */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
         <div className="bg-lift rounded-2xl p-6 shadow-[0_2px_20px_rgba(0,0,0,0.03)]">
-          <p className="text-sm text-dark/70 font-medium mb-2">Articles generes</p>
+          <p className="text-sm text-dark/80 font-medium mb-2">Articles generes</p>
           <p className="text-3xl font-semibold tracking-tight">{articles.length}</p>
-          <p className="text-xs text-dark/65 mt-1">{articles.filter(a => a.origin === "veille").length} via veille concurrentielle</p>
+          <p className="text-xs text-dark/80 mt-1">{articles.filter(a => a.origin === "veille").length} via veille concurrentielle</p>
         </div>
         <div className="bg-lift rounded-2xl p-6 shadow-[0_2px_20px_rgba(0,0,0,0.03)]">
-          <p className="text-sm text-dark/70 font-medium mb-2">En attente d&apos;expert</p>
+          <p className="text-sm text-dark/80 font-medium mb-2">En attente d&apos;expert</p>
           <p className="text-3xl font-semibold tracking-tight">{withCollabWaiting.length}</p>
-          <p className="text-xs text-dark/65 mt-1">{withCollabResponded.length} experts ont repondu</p>
+          <p className="text-xs text-dark/80 mt-1">{withCollabResponded.length} experts ont repondu</p>
         </div>
         <div className="bg-lift rounded-2xl p-6 shadow-[0_2px_20px_rgba(0,0,0,0.03)]">
-          <p className="text-sm text-dark/70 font-medium mb-2">Valides et publies</p>
+          <p className="text-sm text-dark/80 font-medium mb-2">Valides et publies</p>
           <p className="text-3xl font-semibold tracking-tight text-mint">{approved.length + published.length}</p>
-          <p className="text-xs text-dark/65 mt-1">{published.length} en ligne sur le help center</p>
+          <p className="text-xs text-dark/80 mt-1">{published.length} en ligne sur le help center</p>
         </div>
         <div className="bg-lift rounded-2xl p-6 shadow-[0_2px_20px_rgba(0,0,0,0.03)]">
-          <p className="text-sm text-dark/70 font-medium mb-2">Tickets devies (est.)</p>
+          <p className="text-sm text-dark/80 font-medium mb-2">Tickets devies (est.)</p>
           <p className="text-3xl font-semibold tracking-tight">482</p>
-          <p className="text-xs text-dark/65 mt-1">~7 200 EUR/mois economises</p>
+          <p className="text-xs text-dark/80 mt-1">~7 200 EUR/mois economises</p>
         </div>
       </div>
 
       {/* Pipeline visualization */}
       {articles.length > 0 && (
         <div className="bg-lift rounded-2xl shadow-[0_2px_20px_rgba(0,0,0,0.03)] p-6 mb-8">
-          <h2 className="text-sm font-medium text-dark/70 mb-5">Pipeline de creation</h2>
+          <h2 className="text-sm font-medium text-dark/80 mb-5">Pipeline de creation</h2>
           <div className="flex items-center gap-2">
             {pipeline.map((step, i) => (
               <div key={step.label} className="flex-1 flex items-center">
                 <div className={`flex-1 rounded-xl ${pipelineSteps[i].color} p-4 text-center`}>
                   <p className="text-2xl font-semibold tracking-tight">{step.count}</p>
-                  <p className="text-xs text-dark/70 font-medium mt-0.5">{step.label}</p>
+                  <p className="text-xs text-dark/80 font-medium mt-0.5">{step.label}</p>
                 </div>
                 {i < pipeline.length - 1 && (
                   <svg className="w-5 h-5 text-dark/20 shrink-0 mx-1" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -127,8 +127,8 @@ export default function DashboardOverview() {
       {/* Empty state */}
       {articles.length === 0 && (
         <div className="bg-lift rounded-2xl shadow-[0_2px_20px_rgba(0,0,0,0.03)] p-12 text-center">
-          <p className="text-dark/70 mb-2">Aucun article pour le moment</p>
-          <p className="text-sm text-dark/65">
+          <p className="text-dark/80 mb-2">Aucun article pour le moment</p>
+          <p className="text-sm text-dark/80">
             Connectez une source de tickets pour commencer.
           </p>
           <Link
@@ -156,22 +156,22 @@ export default function DashboardOverview() {
             <table className="w-full">
               <thead>
                 <tr className="border-b border-dark/5">
-                  <th className="text-left text-xs font-medium text-dark/70 uppercase tracking-wider px-6 py-3">
+                  <th className="text-left text-xs font-medium text-dark/80 uppercase tracking-wider px-6 py-3">
                     Article
                   </th>
-                  <th className="text-left text-xs font-medium text-dark/70 uppercase tracking-wider px-6 py-3">
+                  <th className="text-left text-xs font-medium text-dark/80 uppercase tracking-wider px-6 py-3">
                     Categorie
                   </th>
-                  <th className="text-left text-xs font-medium text-dark/70 uppercase tracking-wider px-6 py-3">
+                  <th className="text-left text-xs font-medium text-dark/80 uppercase tracking-wider px-6 py-3">
                     Tickets
                   </th>
-                  <th className="text-left text-xs font-medium text-dark/70 uppercase tracking-wider px-6 py-3">
+                  <th className="text-left text-xs font-medium text-dark/80 uppercase tracking-wider px-6 py-3">
                     Confiance
                   </th>
-                  <th className="text-left text-xs font-medium text-dark/70 uppercase tracking-wider px-6 py-3">
+                  <th className="text-left text-xs font-medium text-dark/80 uppercase tracking-wider px-6 py-3">
                     Source
                   </th>
-                  <th className="text-left text-xs font-medium text-dark/70 uppercase tracking-wider px-6 py-3">
+                  <th className="text-left text-xs font-medium text-dark/80 uppercase tracking-wider px-6 py-3">
                     Statut
                   </th>
                 </tr>
@@ -191,7 +191,7 @@ export default function DashboardOverview() {
                       </Link>
                     </td>
                     <td className="px-6 py-4">
-                      <span className="font-mono text-xs text-dark/75">
+                      <span className="font-mono text-xs text-dark/85">
                         {article.category}
                       </span>
                     </td>
@@ -214,7 +214,7 @@ export default function DashboardOverview() {
                             style={{ width: `${article.confidence}%` }}
                           />
                         </div>
-                        <span className="text-xs font-medium text-dark/70">
+                        <span className="text-xs font-medium text-dark/80">
                           {article.confidence}%
                         </span>
                       </div>
@@ -223,7 +223,7 @@ export default function DashboardOverview() {
                       {article.origin && (
                         <span
                           className={`text-[10px] font-medium px-2 py-0.5 rounded-full ${
-                            originColor[article.origin] || "bg-dark/5 text-dark/70"
+                            originColor[article.origin] || "bg-dark/5 text-dark/80"
                           }`}
                         >
                           {originLabel[article.origin] || article.origin}

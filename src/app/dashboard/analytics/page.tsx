@@ -5,7 +5,7 @@ export default function AnalyticsPage() {
     <div>
       <div className="mb-8">
         <h1 className="text-2xl font-medium tracking-[-0.5px]">Analytics</h1>
-        <p className="text-dark/75 mt-1">
+        <p className="text-dark/85 mt-1">
           Impact de votre help center sur le volume de tickets
         </p>
       </div>
@@ -14,26 +14,26 @@ export default function AnalyticsPage() {
       <div className="bg-lift rounded-2xl shadow-[0_2px_20px_rgba(0,0,0,0.03)] mb-6 overflow-hidden">
         <div className="grid lg:grid-cols-2">
           <div className="bg-mint/5 p-6">
-            <h3 className="text-sm font-medium text-dark/75 mb-4">Impact actuel</h3>
+            <h3 className="text-sm font-medium text-dark/85 mb-4">Impact actuel</h3>
             <p className="text-dark/90 font-semibold mb-2">3 articles publies</p>
             <div className="space-y-1.5 ml-1">
               <p className="text-dark/85 text-sm">
-                <span className="text-dark/75 mr-1">&rarr;</span>
+                <span className="text-dark/85 mr-1">&rarr;</span>
                 <span className="text-xl font-semibold text-dark/90">~482</span>{" "}
                 <span className="text-dark/80">tickets devies / mois</span>
               </p>
               <p className="text-dark/85 text-sm">
-                <span className="text-dark/75 mr-1">&rarr;</span>
+                <span className="text-dark/85 mr-1">&rarr;</span>
                 <span className="text-xl font-semibold text-dark/90">~7 200 EUR</span>{" "}
                 <span className="text-dark/80">/ mois economises</span>
               </p>
             </div>
-            <p className="text-xs text-dark/75 mt-4">
+            <p className="text-xs text-dark/85 mt-4">
               Base sur un cout moyen de 15 EUR par ticket
             </p>
           </div>
           <div className="bg-orchid/5 p-6">
-            <h3 className="text-sm font-medium text-dark/75 mb-4">
+            <h3 className="text-sm font-medium text-dark/85 mb-4">
               Projection si les 12 articles sont publies
             </h3>
             <div className="space-y-1.5 mb-5">
@@ -47,7 +47,7 @@ export default function AnalyticsPage() {
               </p>
             </div>
             <div>
-              <div className="flex items-center justify-between text-xs text-dark/75 mb-1.5">
+              <div className="flex items-center justify-between text-xs text-dark/85 mb-1.5">
                 <span>3 / 12 articles publies</span>
                 <span className="font-medium">25%</span>
               </div>
@@ -65,24 +65,24 @@ export default function AnalyticsPage() {
       {/* Key metrics */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
         <div className="bg-lift rounded-2xl p-5 shadow-[0_2px_20px_rgba(0,0,0,0.03)]">
-          <p className="text-sm text-dark/70 font-medium mb-1">Tickets analyses</p>
+          <p className="text-sm text-dark/80 font-medium mb-1">Tickets analyses</p>
           <p className="text-2xl font-semibold tracking-tight">4 050</p>
-          <p className="text-xs text-dark/65 mt-1">depuis 2 sources</p>
+          <p className="text-xs text-dark/80 mt-1">depuis 2 sources</p>
         </div>
         <div className="bg-lift rounded-2xl p-5 shadow-[0_2px_20px_rgba(0,0,0,0.03)]">
-          <p className="text-sm text-dark/70 font-medium mb-1">Taux de deflection</p>
+          <p className="text-sm text-dark/80 font-medium mb-1">Taux de deflection</p>
           <p className="text-2xl font-semibold tracking-tight">11.9%</p>
-          <p className="text-xs text-dark/65 mt-1">482 / 4 050 tickets</p>
+          <p className="text-xs text-dark/80 mt-1">482 / 4 050 tickets</p>
         </div>
         <div className="bg-lift rounded-2xl p-5 shadow-[0_2px_20px_rgba(0,0,0,0.03)]">
-          <p className="text-sm text-dark/70 font-medium mb-1">Cout / ticket</p>
+          <p className="text-sm text-dark/80 font-medium mb-1">Cout / ticket</p>
           <p className="text-2xl font-semibold tracking-tight">15 EUR</p>
-          <p className="text-xs text-dark/65 mt-1">moyenne secteur</p>
+          <p className="text-xs text-dark/80 mt-1">moyenne secteur</p>
         </div>
         <div className="bg-lift rounded-2xl p-5 shadow-[0_2px_20px_rgba(0,0,0,0.03)]">
-          <p className="text-sm text-dark/70 font-medium mb-1">ROI mensuel</p>
+          <p className="text-sm text-dark/80 font-medium mb-1">ROI mensuel</p>
           <p className="text-2xl font-semibold tracking-tight text-mint">x29</p>
-          <p className="text-xs text-dark/65 mt-1">7 200 EUR / 249 EUR abo</p>
+          <p className="text-xs text-dark/80 mt-1">7 200 EUR / 249 EUR abo</p>
         </div>
       </div>
 
@@ -101,7 +101,7 @@ export default function AnalyticsPage() {
               </div>
               <div className="text-right shrink-0">
                 <p className="text-sm font-semibold text-dark/90">{article.views.toLocaleString("fr-FR")} vues</p>
-                <p className="text-xs text-dark/65">{article.deflected} tickets devies</p>
+                <p className="text-xs text-dark/80">{article.deflected} tickets devies</p>
               </div>
               <span className="text-xs font-medium text-mint bg-mint/10 px-2 py-0.5 rounded-full shrink-0">
                 {article.trend}
@@ -121,7 +121,7 @@ export default function AnalyticsPage() {
             { month: "Mars 2026", tickets: 4050, deflected: 482, articles: 3 },
           ].map((m) => (
             <div key={m.month} className="flex items-center gap-4">
-              <span className="text-sm text-dark/75 w-32 shrink-0">{m.month}</span>
+              <span className="text-sm text-dark/85 w-32 shrink-0">{m.month}</span>
               <div className="flex-1">
                 <div className="flex gap-1 h-6">
                   <div
@@ -145,7 +145,7 @@ export default function AnalyticsPage() {
             </div>
           ))}
         </div>
-        <div className="flex items-center gap-4 mt-4 text-xs text-dark/65">
+        <div className="flex items-center gap-4 mt-4 text-xs text-dark/80">
           <div className="flex items-center gap-1.5">
             <div className="w-3 h-3 rounded bg-dark/10" />
             Tickets traites

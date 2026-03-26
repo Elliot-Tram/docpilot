@@ -133,7 +133,7 @@ export default function TeamPage() {
         <h1 className="text-2xl font-medium tracking-[-0.5px]">
           Equipe & Collaboration
         </h1>
-        <p className="text-dark/75 mt-1">
+        <p className="text-dark/85 mt-1">
           Experts internes et attribution automatique des sujets via Slack
         </p>
       </div>
@@ -180,11 +180,11 @@ export default function TeamPage() {
                     {statusLabel[expert.status]}
                   </span>
                 </div>
-                <p className="text-xs text-dark/70">{expert.role}</p>
+                <p className="text-xs text-dark/80">{expert.role}</p>
               </div>
             </div>
             <div className="mb-3">
-              <p className="text-xs font-medium text-dark/70 mb-1.5">Sujets de reference</p>
+              <p className="text-xs font-medium text-dark/80 mb-1.5">Sujets de reference</p>
               <div className="flex flex-wrap gap-1">
                 {expert.topics.map((topic) => (
                   <span key={topic} className="text-[10px] bg-dark/5 text-dark/80 px-2 py-0.5 rounded-md">
@@ -194,7 +194,7 @@ export default function TeamPage() {
               </div>
             </div>
             <div className="flex items-center justify-between text-xs pt-3 border-t border-dark/5">
-              <span className="text-dark/70">Slack : <span className="font-mono">{expert.slackHandle}</span></span>
+              <span className="text-dark/80">Slack : <span className="font-mono">{expert.slackHandle}</span></span>
               <span className="text-dark/80 font-medium">{expert.articlesCompleted}/{expert.articlesAssigned} articles</span>
             </div>
           </div>
@@ -208,7 +208,7 @@ export default function TeamPage() {
         <div className="flex items-center gap-2 px-5 py-3 border-b border-dark/8">
           <span className="text-base font-bold text-dark/90">#</span>
           <span className="text-base font-bold text-dark/90">support-produit</span>
-          <span className="text-xs text-dark/50 ml-2">Canal pour la collaboration sur les articles</span>
+          <span className="text-xs text-dark/80 ml-2">Canal pour la collaboration sur les articles</span>
         </div>
 
         {/* Messages list */}
@@ -225,8 +225,8 @@ export default function TeamPage() {
                 <div className="flex-1 min-w-0">
                   <div className="flex items-baseline gap-2">
                     <span className="text-[15px] font-bold text-dark/90">Docpilot</span>
-                    <span className="text-xs text-dark/50">APP</span>
-                    <span className="text-xs text-dark/50 ml-auto shrink-0">{msg.time}</span>
+                    <span className="text-xs text-dark/80">APP</span>
+                    <span className="text-xs text-dark/80 ml-auto shrink-0">{msg.time}</span>
                   </div>
                   <p className="text-[15px] text-dark/85 leading-[1.65] mt-0.5">{msg.message}</p>
 
@@ -240,7 +240,7 @@ export default function TeamPage() {
                         <div className="flex-1 min-w-0">
                           <div className="flex items-baseline gap-2">
                             <span className="text-[13px] font-bold text-dark/90">{msg.to}</span>
-                            <span className="text-[11px] text-dark/50">{msg.reply.time}</span>
+                            <span className="text-[11px] text-dark/80">{msg.reply.time}</span>
                           </div>
                           <p className="text-[13px] text-dark/80 leading-[1.6] mt-0.5">{msg.reply.text}</p>
                         </div>

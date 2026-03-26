@@ -18,9 +18,9 @@ const statusLabel: Record<string, string> = {
 };
 
 const statusColor: Record<string, string> = {
-  draft: "bg-sand text-dark/70",
-  approved: "bg-mint text-dark/70",
-  published: "bg-sky text-dark/70",
+  draft: "bg-sand text-dark/80",
+  approved: "bg-mint text-dark/80",
+  published: "bg-sky text-dark/80",
   rejected: "bg-coral/20 text-coral",
 };
 
@@ -68,7 +68,7 @@ export default function ArticleDetailPage() {
   if (error) {
     return (
       <div className="text-center py-20">
-        <p className="text-dark/70">Article introuvable.</p>
+        <p className="text-dark/80">Article introuvable.</p>
       </div>
     );
   }
@@ -93,7 +93,7 @@ export default function ArticleDetailPage() {
       <div className="flex items-center gap-3 mb-8">
         <button
           onClick={() => router.push("/dashboard/suggestions")}
-          className="text-dark/70 hover:text-dark transition-colors"
+          className="text-dark/80 hover:text-dark transition-colors"
         >
           <svg
             className="w-5 h-5"
@@ -118,7 +118,7 @@ export default function ArticleDetailPage() {
               {statusLabel[status]}
             </span>
           </div>
-          <p className="text-dark/70 text-sm mt-1">
+          <p className="text-dark/80 text-sm mt-1">
             Genere le {article.createdAt} · {article.ticketCount > 0 ? `${article.ticketCount} tickets associes` : "Detecte via veille concurrentielle"} · Confiance {article.confidence}%
           </p>
         </div>
@@ -136,11 +136,11 @@ export default function ArticleDetailPage() {
         <div className="lg:col-span-2">
           <div className="bg-lift rounded-2xl shadow-[0_2px_20px_rgba(0,0,0,0.03)] overflow-hidden">
             <div className="px-6 py-4 border-b border-dark/5 flex items-center justify-between">
-              <h2 className="text-sm font-medium text-dark/75">
+              <h2 className="text-sm font-medium text-dark/85">
                 Contenu de l&apos;article
               </h2>
               <div className="flex items-center gap-2">
-                <span className="font-mono text-xs text-dark/65">Markdown</span>
+                <span className="font-mono text-xs text-dark/80">Markdown</span>
                 {content !== article.content && (
                   <button
                     onClick={handleSave}
@@ -172,7 +172,7 @@ export default function ArticleDetailPage() {
                 </button>
                 <button
                   onClick={() => handleAction("rejected", "Article rejeté.")}
-                  className="bg-dark/5 text-dark/75 px-5 py-2.5 rounded-lg text-sm font-medium hover:bg-dark/10 transition-colors duration-300"
+                  className="bg-dark/5 text-dark/85 px-5 py-2.5 rounded-lg text-sm font-medium hover:bg-dark/10 transition-colors duration-300"
                 >
                   Rejeter
                 </button>
@@ -192,7 +192,7 @@ export default function ArticleDetailPage() {
               </button>
             )}
             {status === "published" && (
-              <span className="text-sm text-dark/70 flex items-center gap-2">
+              <span className="text-sm text-dark/80 flex items-center gap-2">
                 <svg
                   className="w-4 h-4 text-mint"
                   viewBox="0 0 20 20"
@@ -212,7 +212,7 @@ export default function ArticleDetailPage() {
                 onClick={() =>
                   handleAction("draft", "Article remis en brouillon.")
                 }
-                className="bg-dark/5 text-dark/75 px-5 py-2.5 rounded-lg text-sm font-medium hover:bg-dark/10 transition-colors duration-300"
+                className="bg-dark/5 text-dark/85 px-5 py-2.5 rounded-lg text-sm font-medium hover:bg-dark/10 transition-colors duration-300"
               >
                 Remettre en brouillon
               </button>
@@ -223,10 +223,10 @@ export default function ArticleDetailPage() {
         {/* Sidebar */}
         <div className="space-y-4">
           <div className="bg-lift rounded-2xl shadow-[0_2px_20px_rgba(0,0,0,0.03)] p-6">
-            <h3 className="text-sm font-medium text-dark/75 mb-4">
+            <h3 className="text-sm font-medium text-dark/85 mb-4">
               Résumé IA
             </h3>
-            <p className="text-sm text-dark/75 font-light leading-relaxed">
+            <p className="text-sm text-dark/85 font-light leading-relaxed">
               {article.summary}
             </p>
           </div>
@@ -234,7 +234,7 @@ export default function ArticleDetailPage() {
           {/* Collaboration Slack */}
           {article.collaboration && (
             <div className="bg-lift rounded-2xl shadow-[0_2px_20px_rgba(0,0,0,0.03)] p-6">
-              <h3 className="text-sm font-medium text-dark/75 mb-4 flex items-center gap-2">
+              <h3 className="text-sm font-medium text-dark/85 mb-4 flex items-center gap-2">
                 <svg className="w-4 h-4" viewBox="0 0 20 20" fill="none">
                   <path d="M7.5 2a2 2 0 00-2 2v1H4a2 2 0 100 4h1.5v3H4a2 2 0 100 4h1.5v1a2 2 0 104 0v-1H12v1a2 2 0 104 0v-1h1.5a2 2 0 100-4H16V9h1.5a2 2 0 100-4H16V4a2 2 0 10-4 0v1H9.5V4a2 2 0 00-2-2zM9.5 9V7H12v2H9.5zm0 2v2H12v-2H9.5z" fill="#E01E5A"/>
                 </svg>
@@ -245,9 +245,9 @@ export default function ArticleDetailPage() {
                 <div className="bg-orchid/5 rounded-lg px-3 py-2.5 border-l-2 border-orchid/40">
                   <div className="flex items-center gap-2 mb-1.5">
                     <span className="w-5 h-5 rounded bg-orchid/20 flex items-center justify-center text-[10px] font-bold text-accent-purple">dp</span>
-                    <span className="text-xs font-medium text-dark/70">Docpilot</span>
+                    <span className="text-xs font-medium text-dark/80">Docpilot</span>
                   </div>
-                  <p className="text-xs text-dark/75 leading-relaxed">
+                  <p className="text-xs text-dark/85 leading-relaxed">
                     {(article.collaboration as SlackThread).docpilotMessage}
                   </p>
                 </div>
@@ -256,27 +256,27 @@ export default function ArticleDetailPage() {
                 {(article.collaboration as SlackThread).expertResponse ? (
                   <div className="bg-sky/5 rounded-lg px-3 py-2.5 border-l-2 border-sky/40">
                     <div className="flex items-center gap-2 mb-1.5">
-                      <span className="w-5 h-5 rounded bg-sky/20 flex items-center justify-center text-[10px] font-bold text-dark/75">
+                      <span className="w-5 h-5 rounded bg-sky/20 flex items-center justify-center text-[10px] font-bold text-dark/85">
                         {(article.collaboration as SlackThread).expert.avatar}
                       </span>
-                      <span className="text-xs font-medium text-dark/70">
+                      <span className="text-xs font-medium text-dark/80">
                         {(article.collaboration as SlackThread).expert.name}
                       </span>
-                      <span className="text-[10px] text-dark/65">
+                      <span className="text-[10px] text-dark/80">
                         {(article.collaboration as SlackThread).expert.role}
                       </span>
                     </div>
-                    <p className="text-xs text-dark/75 leading-relaxed">
+                    <p className="text-xs text-dark/85 leading-relaxed">
                       {(article.collaboration as SlackThread).expertResponse}
                     </p>
                   </div>
                 ) : (
                   <div className="bg-sand/30 rounded-lg px-3 py-2.5 border-l-2 border-sand">
                     <div className="flex items-center gap-2">
-                      <span className="w-5 h-5 rounded bg-sand/50 flex items-center justify-center text-[10px] font-bold text-dark/70">
+                      <span className="w-5 h-5 rounded bg-sand/50 flex items-center justify-center text-[10px] font-bold text-dark/80">
                         {(article.collaboration as SlackThread).expert.avatar}
                       </span>
-                      <span className="text-xs text-dark/70">
+                      <span className="text-xs text-dark/80">
                         En attente de {(article.collaboration as SlackThread).expert.name} ({(article.collaboration as SlackThread).expert.role})...
                       </span>
                     </div>
@@ -291,7 +291,7 @@ export default function ArticleDetailPage() {
                     ) : (
                       <div className="w-3.5 h-3.5 rounded-full border border-dark/20" />
                     )}
-                    <span className={`${(article.collaboration as SlackThread).expertResponse ? "text-dark/75" : "text-dark/65"}`}>Reponse de l&apos;expert</span>
+                    <span className={`${(article.collaboration as SlackThread).expertResponse ? "text-dark/85" : "text-dark/80"}`}>Reponse de l&apos;expert</span>
                   </div>
                   <div className="flex items-center gap-2 text-xs">
                     {(article.collaboration as SlackThread).aiIntegrated ? (
@@ -299,7 +299,7 @@ export default function ArticleDetailPage() {
                     ) : (
                       <div className="w-3.5 h-3.5 rounded-full border border-dark/20" />
                     )}
-                    <span className={`${(article.collaboration as SlackThread).aiIntegrated ? "text-dark/75" : "text-dark/65"}`}>Correction integree par l&apos;IA</span>
+                    <span className={`${(article.collaboration as SlackThread).aiIntegrated ? "text-dark/85" : "text-dark/80"}`}>Correction integree par l&apos;IA</span>
                   </div>
                   <div className="flex items-center gap-2 text-xs">
                     {(article.collaboration as SlackThread).techValidated ? (
@@ -307,7 +307,7 @@ export default function ArticleDetailPage() {
                     ) : (
                       <div className="w-3.5 h-3.5 rounded-full border border-dark/20" />
                     )}
-                    <span className={`${(article.collaboration as SlackThread).techValidated ? "text-dark/75" : "text-dark/65"}`}>Validation technique</span>
+                    <span className={`${(article.collaboration as SlackThread).techValidated ? "text-dark/85" : "text-dark/80"}`}>Validation technique</span>
                   </div>
                   <div className="flex items-center gap-2 text-xs">
                     {(article.collaboration as SlackThread).csmValidated ? (
@@ -315,7 +315,7 @@ export default function ArticleDetailPage() {
                     ) : (
                       <div className="w-3.5 h-3.5 rounded-full border border-dark/20" />
                     )}
-                    <span className={`${(article.collaboration as SlackThread).csmValidated ? "text-dark/75" : "text-dark/65"}`}>Review CSM</span>
+                    <span className={`${(article.collaboration as SlackThread).csmValidated ? "text-dark/85" : "text-dark/80"}`}>Review CSM</span>
                   </div>
                 </div>
               </div>
@@ -324,7 +324,7 @@ export default function ArticleDetailPage() {
 
           {article.sourceTickets.length > 0 ? (
             <div className="bg-lift rounded-2xl shadow-[0_2px_20px_rgba(0,0,0,0.03)] p-6">
-              <h3 className="text-sm font-medium text-dark/75 mb-4">
+              <h3 className="text-sm font-medium text-dark/85 mb-4">
                 Tickets source ({article.sourceTickets.length})
               </h3>
               <div className="space-y-3">
@@ -335,10 +335,10 @@ export default function ArticleDetailPage() {
                   >
                     <p className="text-sm font-medium mb-1">{ticket.subject}</p>
                     <div className="flex items-center justify-between">
-                      <span className="text-xs text-dark/70">
+                      <span className="text-xs text-dark/80">
                         {ticket.customer}
                       </span>
-                      <span className="font-mono text-xs text-dark/65">
+                      <span className="font-mono text-xs text-dark/80">
                         {ticket.date}
                       </span>
                     </div>
@@ -351,32 +351,32 @@ export default function ArticleDetailPage() {
               <h3 className="text-sm font-medium text-accent-purple mb-2">
                 Detecte via veille concurrentielle
               </h3>
-              <p className="text-sm text-dark/75 leading-relaxed">
+              <p className="text-sm text-dark/85 leading-relaxed">
                 Cet article a ete suggere parce qu&apos;Aircall couvre ce sujet dans son help center et pas vous. Aucun ticket associe.
               </p>
             </div>
           )}
 
           <div className="bg-lift rounded-2xl shadow-[0_2px_20px_rgba(0,0,0,0.03)] p-6">
-            <h3 className="text-sm font-medium text-dark/75 mb-3">Détails</h3>
+            <h3 className="text-sm font-medium text-dark/85 mb-3">Détails</h3>
             <dl className="space-y-2 text-sm">
               <div className="flex justify-between">
-                <dt className="text-dark/70">Catégorie</dt>
+                <dt className="text-dark/80">Catégorie</dt>
                 <dd className="font-mono text-xs bg-dark/5 px-2 py-0.5 rounded">
                   {article.category}
                 </dd>
               </div>
               <div className="flex justify-between">
-                <dt className="text-dark/70">Tickets associés</dt>
+                <dt className="text-dark/80">Tickets associés</dt>
                 <dd className="font-medium">{article.ticketCount}</dd>
               </div>
               <div className="flex justify-between">
-                <dt className="text-dark/70">Confiance IA</dt>
+                <dt className="text-dark/80">Confiance IA</dt>
                 <dd className="font-medium">{article.confidence}%</dd>
               </div>
               <div className="flex justify-between">
-                <dt className="text-dark/70">Créé le</dt>
-                <dd className="text-dark/75">{article.createdAt}</dd>
+                <dt className="text-dark/80">Créé le</dt>
+                <dd className="text-dark/85">{article.createdAt}</dd>
               </div>
             </dl>
           </div>

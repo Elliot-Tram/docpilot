@@ -80,13 +80,13 @@ export default function Onboarding({
       <div className="flex items-center justify-between mb-5">
         <div>
           <h2 className="text-lg font-medium">Bienvenue sur Docpilot</h2>
-          <p className="text-sm text-dark/60 mt-0.5">
+          <p className="text-sm text-dark/80 mt-0.5">
             Decouvrez la plateforme en {steps.length} etapes
           </p>
         </div>
         <button
           onClick={onDismiss}
-          className="text-dark/20 hover:text-dark/50 transition-colors text-sm"
+          className="text-dark/20 hover:text-dark/80 transition-colors text-sm"
         >
           Passer
         </button>
@@ -118,7 +118,7 @@ export default function Onboarding({
             <h3 className="font-medium text-sm">
               {steps[currentStep].title}
             </h3>
-            <p className="text-sm text-dark/60 mt-0.5">
+            <p className="text-sm text-dark/80 mt-0.5">
               {steps[currentStep].description}
             </p>
           </div>

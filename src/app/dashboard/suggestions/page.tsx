@@ -14,7 +14,7 @@ const originLabel: Record<ArticleSource, string> = {
 const originColor: Record<ArticleSource, string> = {
   tickets: "bg-sky/10 text-sky",
   veille: "bg-orchid/10 text-accent-purple",
-  both: "bg-mint/10 text-dark/75",
+  both: "bg-mint/10 text-dark/85",
 };
 
 const fetcher = (url: string) => fetch(url).then((r) => r.json());
@@ -27,9 +27,9 @@ const statusLabel: Record<string, string> = {
 };
 
 const statusColor: Record<string, string> = {
-  draft: "bg-sand text-dark/70",
-  approved: "bg-mint text-dark/70",
-  published: "bg-sky text-dark/70",
+  draft: "bg-sand text-dark/80",
+  approved: "bg-mint text-dark/80",
+  published: "bg-sky text-dark/80",
   rejected: "bg-coral/20 text-coral",
 };
 
@@ -59,7 +59,7 @@ export default function SuggestionsPage() {
           <h1 className="text-2xl font-medium tracking-[-0.5px]">
             Suggestions d&apos;articles
           </h1>
-          <p className="text-dark/75 mt-1">
+          <p className="text-dark/85 mt-1">
             Articles générés automatiquement depuis vos tickets support
           </p>
         </div>
@@ -77,7 +77,7 @@ export default function SuggestionsPage() {
             className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200 ${
               activeFilter === f.value
                 ? "bg-dark text-light"
-                : "bg-dark/5 text-dark/75 hover:bg-dark/10"
+                : "bg-dark/5 text-dark/85 hover:bg-dark/10"
             }`}
           >
             {f.label}
@@ -88,8 +88,8 @@ export default function SuggestionsPage() {
       {/* Empty state */}
       {articles.length === 0 && (
         <div className="bg-lift rounded-2xl shadow-[0_2px_20px_rgba(0,0,0,0.03)] p-12 text-center">
-          <p className="text-dark/70 mb-2">Aucune suggestion pour le moment</p>
-          <p className="text-sm text-dark/65">
+          <p className="text-dark/80 mb-2">Aucune suggestion pour le moment</p>
+          <p className="text-sm text-dark/80">
             Les articles seront générés automatiquement après l&apos;import de vos tickets.
           </p>
         </div>
@@ -122,22 +122,22 @@ export default function SuggestionsPage() {
                   </span>
                 )}
               </div>
-              <span className="font-mono text-xs text-dark/65">
+              <span className="font-mono text-xs text-dark/80">
                 {article.createdAt}
               </span>
             </div>
             <h3 className="text-base font-medium tracking-[-0.3px] mb-2">
               {article.title}
             </h3>
-            <p className="text-sm text-dark/75 font-light leading-relaxed mb-4">
+            <p className="text-sm text-dark/85 font-light leading-relaxed mb-4">
               {article.summary}
             </p>
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
-                <span className="font-mono text-xs bg-dark/5 text-dark/75 px-2.5 py-1 rounded-md">
+                <span className="font-mono text-xs bg-dark/5 text-dark/85 px-2.5 py-1 rounded-md">
                   {article.category}
                 </span>
-                <span className="text-xs text-dark/70">
+                <span className="text-xs text-dark/80">
                   {article.ticketCount > 0 ? `${article.ticketCount} tickets` : "via Aircall"}
                 </span>
               </div>
@@ -148,7 +148,7 @@ export default function SuggestionsPage() {
                     style={{ width: `${article.confidence}%` }}
                   />
                 </div>
-                <span className="text-xs text-dark/70">
+                <span className="text-xs text-dark/80">
                   {article.confidence}%
                 </span>
               </div>

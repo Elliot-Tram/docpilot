@@ -64,9 +64,9 @@ const sourceLogos: Record<string, { label: string; color: string }> = {
 };
 
 const statusConfig: Record<string, { label: string; color: string }> = {
-  connected: { label: "Connecté", color: "bg-mint text-dark/70" },
-  syncing: { label: "Synchronisation...", color: "bg-sand text-dark/70" },
-  disconnected: { label: "Déconnecté", color: "bg-dark/10 text-dark/70" },
+  connected: { label: "Connecté", color: "bg-mint text-dark/80" },
+  syncing: { label: "Synchronisation...", color: "bg-sand text-dark/80" },
+  disconnected: { label: "Déconnecté", color: "bg-dark/10 text-dark/80" },
   error: { label: "Erreur", color: "bg-coral/20 text-coral" },
 };
 
@@ -212,7 +212,7 @@ export default function SourcesPage() {
       <div className="flex items-center justify-between mb-8">
         <div>
           <h1 className="text-2xl font-medium tracking-[-0.5px]">Sources</h1>
-          <p className="text-dark/50 mt-1">
+          <p className="text-dark/80 mt-1">
             Gérez vos connexions aux outils de support
           </p>
         </div>
@@ -247,7 +247,7 @@ export default function SourcesPage() {
                   )}
                 </div>
                 <h3 className="text-sm font-medium mb-1">{source.name}</h3>
-                <p className="text-xs text-dark/70 font-light">
+                <p className="text-xs text-dark/80 font-light">
                   {source.description}
                 </p>
               </button>
@@ -262,7 +262,7 @@ export default function SourcesPage() {
           <div className="flex items-center gap-3 mb-6">
             <button
               onClick={() => setSelectedType(null)}
-              className="text-dark/70 hover:text-dark transition-colors"
+              className="text-dark/80 hover:text-dark transition-colors"
             >
               <svg className="w-5 h-5" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M14 4l-8 6 8 6" />
@@ -274,7 +274,7 @@ export default function SourcesPage() {
           </div>
           <form onSubmit={handleConnect} className="space-y-4 max-w-md">
             <div>
-              <label className="block text-sm font-medium text-dark/70 mb-1.5">
+              <label className="block text-sm font-medium text-dark/80 mb-1.5">
                 Nom de la connexion
               </label>
               <input
@@ -282,12 +282,12 @@ export default function SourcesPage() {
                 value={formName}
                 onChange={(e) => setFormName(e.target.value)}
                 placeholder={`${selectedType.name} Production`}
-                className="w-full px-4 py-2.5 rounded-lg border border-dark/10 bg-white text-dark placeholder:text-dark/65 focus:outline-none focus:ring-2 focus:ring-orchid transition-all"
+                className="w-full px-4 py-2.5 rounded-lg border border-dark/10 bg-white text-dark placeholder:text-dark/80 focus:outline-none focus:ring-2 focus:ring-orchid transition-all"
               />
             </div>
             {selectedType.fields.map((field) => (
               <div key={field.key}>
-                <label className="block text-sm font-medium text-dark/70 mb-1.5">
+                <label className="block text-sm font-medium text-dark/80 mb-1.5">
                   {field.label}
                 </label>
                 <input
@@ -298,7 +298,7 @@ export default function SourcesPage() {
                     setFormData({ ...formData, [field.key]: e.target.value })
                   }
                   placeholder={field.placeholder}
-                  className="w-full px-4 py-2.5 rounded-lg border border-dark/10 bg-white text-dark placeholder:text-dark/65 focus:outline-none focus:ring-2 focus:ring-orchid transition-all"
+                  className="w-full px-4 py-2.5 rounded-lg border border-dark/10 bg-white text-dark placeholder:text-dark/80 focus:outline-none focus:ring-2 focus:ring-orchid transition-all"
                 />
               </div>
             ))}
@@ -330,7 +330,7 @@ export default function SourcesPage() {
               </div>
               <div className="flex-1">
                 <h2 className="text-lg font-medium mb-1">Analyser vos tickets</h2>
-                <p className="text-sm text-dark/70 mb-5">
+                <p className="text-sm text-dark/80 mb-5">
                   Lancez l&apos;analyse IA pour detecter les sujets recurrents et generer des articles
                 </p>
               </div>
@@ -353,7 +353,7 @@ export default function SourcesPage() {
               </div>
               <div>
                 <h2 className="text-lg font-medium">Analyse en cours...</h2>
-                <p className="text-sm text-dark/50">Cela prend quelques instants</p>
+                <p className="text-sm text-dark/80">Cela prend quelques instants</p>
               </div>
             </div>
             <div className="space-y-3">
@@ -371,7 +371,7 @@ export default function SourcesPage() {
                         {discoveredClusters.map((cluster, ci) => (
                           <div
                             key={ci}
-                            className="flex items-center gap-2 text-sm text-dark/70 bg-orchid/5 rounded-lg px-3 py-2"
+                            className="flex items-center gap-2 text-sm text-dark/80 bg-orchid/5 rounded-lg px-3 py-2"
                             style={{
                               transitionDelay: `${ci * 150}ms`,
                               opacity: i <= analysisScanStep ? 1 : 0,
@@ -380,10 +380,10 @@ export default function SourcesPage() {
                           >
                             <span className="w-1.5 h-1.5 rounded-full bg-orchid shrink-0" />
                             <span className="font-medium">{cluster.name}</span>
-                            <span className="text-dark/50 text-xs">({cluster.count} tickets)</span>
+                            <span className="text-dark/80 text-xs">({cluster.count} tickets)</span>
                           </div>
                         ))}
-                        <div className="flex items-center gap-2 text-sm text-dark/40 px-3 py-1">
+                        <div className="flex items-center gap-2 text-sm text-dark/80 px-3 py-1">
                           <span>...</span>
                         </div>
                       </div>
@@ -418,7 +418,7 @@ export default function SourcesPage() {
                     )}
                     <span
                       className={`text-sm ${
-                        i <= analysisScanStep ? "text-dark/70" : "text-dark/65"
+                        i <= analysisScanStep ? "text-dark/80" : "text-dark/80"
                       } ${i === analysisScanSteps.length - 1 && i <= analysisScanStep ? "font-medium text-mint" : ""}`}
                     >
                       {step}
@@ -441,7 +441,7 @@ export default function SourcesPage() {
               </div>
               <div>
                 <h2 className="text-lg font-medium">Analyse terminee</h2>
-                <p className="text-sm text-dark/50">12 articles generes a partir de 4 050 tickets</p>
+                <p className="text-sm text-dark/80">12 articles generes a partir de 4 050 tickets</p>
               </div>
             </div>
 
@@ -449,21 +449,21 @@ export default function SourcesPage() {
             <div className="grid grid-cols-3 gap-3 mb-5">
               <div className="bg-dark/[0.02] rounded-xl p-4 text-center">
                 <p className="text-2xl font-semibold tracking-tight">4 050</p>
-                <p className="text-xs text-dark/50 mt-1">Tickets analyses</p>
+                <p className="text-xs text-dark/80 mt-1">Tickets analyses</p>
               </div>
               <div className="bg-dark/[0.02] rounded-xl p-4 text-center">
                 <p className="text-2xl font-semibold tracking-tight">12</p>
-                <p className="text-xs text-dark/50 mt-1">Clusters identifies</p>
+                <p className="text-xs text-dark/80 mt-1">Clusters identifies</p>
               </div>
               <div className="bg-dark/[0.02] rounded-xl p-4 text-center">
                 <p className="text-2xl font-semibold tracking-tight text-mint">12</p>
-                <p className="text-xs text-dark/50 mt-1">Articles generes</p>
+                <p className="text-xs text-dark/80 mt-1">Articles generes</p>
               </div>
             </div>
 
             {/* Cluster results */}
             <div className="mb-5">
-              <h3 className="text-sm font-medium text-dark/70 mb-3">Sujets identifies</h3>
+              <h3 className="text-sm font-medium text-dark/80 mb-3">Sujets identifies</h3>
               <div className="space-y-1.5">
                 {discoveredClusters.map((cluster, i) => (
                   <div
@@ -472,12 +472,12 @@ export default function SourcesPage() {
                   >
                     <div className="flex items-center gap-2">
                       <span className="w-1.5 h-1.5 rounded-full bg-orchid shrink-0" />
-                      <span className="text-dark/75 font-medium">{cluster.name}</span>
+                      <span className="text-dark/85 font-medium">{cluster.name}</span>
                     </div>
-                    <span className="text-dark/50 text-xs">{cluster.count} tickets</span>
+                    <span className="text-dark/80 text-xs">{cluster.count} tickets</span>
                   </div>
                 ))}
-                <div className="text-sm text-dark/40 px-4 py-1">+ 7 autres sujets</div>
+                <div className="text-sm text-dark/80 px-4 py-1">+ 7 autres sujets</div>
               </div>
             </div>
 
@@ -495,8 +495,8 @@ export default function SourcesPage() {
       {/* Connected sources */}
       {sources.length === 0 && !showConnect && (
         <div className="bg-lift rounded-2xl shadow-[0_2px_20px_rgba(0,0,0,0.03)] p-12 text-center">
-          <p className="text-dark/70 mb-2">Aucune source connectée</p>
-          <p className="text-sm text-dark/65">
+          <p className="text-dark/80 mb-2">Aucune source connectée</p>
+          <p className="text-sm text-dark/80">
             Ajoutez votre premier outil de support pour commencer.
           </p>
         </div>
@@ -522,13 +522,13 @@ export default function SourcesPage() {
                 <h3 className="text-base font-medium">{source.name}</h3>
                 <span
                   className={`text-xs font-medium px-2.5 py-1 rounded-full ${
-                    statusConfig[source.status]?.color || "bg-dark/10 text-dark/70"
+                    statusConfig[source.status]?.color || "bg-dark/10 text-dark/80"
                   }`}
                 >
                   {statusConfig[source.status]?.label || source.status}
                 </span>
               </div>
-              <div className="flex items-center gap-4 text-sm text-dark/70">
+              <div className="flex items-center gap-4 text-sm text-dark/80">
                 <span>
                   {source.ticketsImported.toLocaleString("fr-FR")} {source.metricLabel || "tickets importés"}
                 </span>
@@ -540,13 +540,13 @@ export default function SourcesPage() {
               <button
                 onClick={() => handleSync(source.id)}
                 disabled={source.status === "syncing"}
-                className="bg-dark/5 text-dark/75 px-4 py-2 rounded-lg text-sm font-medium hover:bg-dark/10 transition-colors disabled:opacity-50"
+                className="bg-dark/5 text-dark/85 px-4 py-2 rounded-lg text-sm font-medium hover:bg-dark/10 transition-colors disabled:opacity-50"
               >
                 Sync
               </button>
               <button
                 onClick={() => handleDelete(source.id)}
-                className="text-dark/65 hover:text-coral transition-colors px-2 py-2"
+                className="text-dark/80 hover:text-coral transition-colors px-2 py-2"
               >
                 <svg
                   className="w-4 h-4"
