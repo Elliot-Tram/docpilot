@@ -64,8 +64,8 @@ const sourceLogos: Record<string, { label: string; color: string }> = {
 };
 
 const statusConfig: Record<string, { label: string; color: string }> = {
-  connected: { label: "Connecté", color: "bg-mint text-dark/80" },
-  syncing: { label: "Synchronisation...", color: "bg-sand text-dark/80" },
+  connected: { label: "Connecté", color: "bg-emerald-100 text-emerald-700" },
+  syncing: { label: "Synchronisation...", color: "bg-amber-100 text-amber-700" },
   disconnected: { label: "Déconnecté", color: "bg-dark/10 text-dark/80" },
   error: { label: "Erreur", color: "bg-coral/20 text-coral" },
 };
@@ -399,7 +399,7 @@ export default function SourcesPage() {
                   >
                     {i < analysisScanStep ? (
                       <svg
-                        className="w-5 h-5 text-mint shrink-0"
+                        className="w-5 h-5 text-emerald-600 shrink-0"
                         viewBox="0 0 20 20"
                         fill="none"
                         stroke="currentColor"
@@ -419,7 +419,7 @@ export default function SourcesPage() {
                     <span
                       className={`text-sm ${
                         i <= analysisScanStep ? "text-dark/80" : "text-dark/80"
-                      } ${i === analysisScanSteps.length - 1 && i <= analysisScanStep ? "font-medium text-mint" : ""}`}
+                      } ${i === analysisScanSteps.length - 1 && i <= analysisScanStep ? "font-medium text-emerald-600" : ""}`}
                     >
                       {step}
                     </span>
@@ -435,7 +435,7 @@ export default function SourcesPage() {
           <div>
             <div className="flex items-center gap-3 mb-5">
               <div className="w-10 h-10 rounded-xl bg-mint/15 flex items-center justify-center shrink-0">
-                <svg className="w-5 h-5 text-mint" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <svg className="w-5 h-5 text-emerald-600" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M5 10l4 4 6-7" />
                 </svg>
               </div>
@@ -456,7 +456,7 @@ export default function SourcesPage() {
                 <p className="text-xs text-dark/80 mt-1">Clusters identifies</p>
               </div>
               <div className="bg-dark/[0.02] rounded-xl p-4 text-center">
-                <p className="text-2xl font-semibold tracking-tight text-mint">12</p>
+                <p className="text-2xl font-semibold tracking-tight text-emerald-600">12</p>
                 <p className="text-xs text-dark/80 mt-1">Articles generes</p>
               </div>
             </div>

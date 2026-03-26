@@ -13,9 +13,9 @@ const originLabel: Record<string, string> = {
 };
 
 const originColor: Record<string, string> = {
-  tickets: "bg-sky/10 text-sky",
+  tickets: "bg-blue-100 text-blue-700",
   veille: "bg-orchid/10 text-accent-purple",
-  both: "bg-mint/10 text-dark/85",
+  both: "bg-emerald-100 text-emerald-700",
 };
 
 const statusLabel: Record<string, string> = {
@@ -26,9 +26,9 @@ const statusLabel: Record<string, string> = {
 };
 
 const statusColor: Record<string, string> = {
-  draft: "bg-sand text-dark/80",
-  approved: "bg-mint text-dark/80",
-  published: "bg-sky text-dark/80",
+  draft: "bg-amber-100 text-amber-700",
+  approved: "bg-emerald-100 text-emerald-700",
+  published: "bg-blue-100 text-blue-700",
   rejected: "bg-coral/20 text-coral",
 };
 
@@ -92,7 +92,7 @@ export default function DashboardOverview() {
         </div>
         <div className="bg-lift rounded-2xl p-6 shadow-[0_2px_20px_rgba(0,0,0,0.03)]">
           <p className="text-sm text-dark/80 font-medium mb-2">Valides et publies</p>
-          <p className="text-3xl font-semibold tracking-tight text-mint">{approved.length + published.length}</p>
+          <p className="text-3xl font-semibold tracking-tight text-emerald-600">{approved.length + published.length}</p>
           <p className="text-xs text-dark/80 mt-1">{published.length} en ligne sur le help center</p>
         </div>
         <div className="bg-lift rounded-2xl p-6 shadow-[0_2px_20px_rgba(0,0,0,0.03)]">

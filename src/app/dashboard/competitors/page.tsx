@@ -272,7 +272,7 @@ export default function CompetitorsPage() {
               >
                 {i < scanStep ? (
                   <svg
-                    className="w-5 h-5 text-mint shrink-0"
+                    className="w-5 h-5 text-emerald-600 shrink-0"
                     viewBox="0 0 20 20"
                     fill="none"
                     stroke="currentColor"
@@ -448,7 +448,7 @@ export default function CompetitorsPage() {
                       },
                       absent: {
                         label: "Opportunite",
-                        class: "bg-sand text-dark/85",
+                        class: "bg-amber-100 text-amber-700/85",
                       },
                     };
                     return (
@@ -479,7 +479,7 @@ export default function CompetitorsPage() {
                         <td className="px-4 py-2.5 text-center">
                           {row.you ? (
                             <svg
-                              className="w-4 h-4 text-mint mx-auto"
+                              className="w-4 h-4 text-emerald-600 mx-auto"
                               viewBox="0 0 20 20"
                               fill="none"
                               stroke="currentColor"

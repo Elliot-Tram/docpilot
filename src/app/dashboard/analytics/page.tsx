@@ -81,7 +81,7 @@ export default function AnalyticsPage() {
         </div>
         <div className="bg-lift rounded-2xl p-5 shadow-[0_2px_20px_rgba(0,0,0,0.03)]">
           <p className="text-sm text-dark/80 font-medium mb-1">ROI mensuel</p>
-          <p className="text-2xl font-semibold tracking-tight text-mint">x29</p>
+          <p className="text-2xl font-semibold tracking-tight text-emerald-600">x29</p>
           <p className="text-xs text-dark/80 mt-1">7 200 EUR / 249 EUR abo</p>
         </div>
       </div>
@@ -103,7 +103,7 @@ export default function AnalyticsPage() {
                 <p className="text-sm font-semibold text-dark/90">{article.views.toLocaleString("fr-FR")} vues</p>
                 <p className="text-xs text-dark/80">{article.deflected} tickets devies</p>
               </div>
-              <span className="text-xs font-medium text-mint bg-mint/10 px-2 py-0.5 rounded-full shrink-0">
+              <span className="text-xs font-medium text-emerald-600 bg-emerald-100 px-2 py-0.5 rounded-full shrink-0">
                 {article.trend}
               </span>
             </div>
@@ -139,7 +139,7 @@ export default function AnalyticsPage() {
               <div className="text-right shrink-0 w-28">
                 <span className="text-sm font-medium text-dark/90">{m.tickets.toLocaleString("fr-FR")}</span>
                 {m.deflected > 0 && (
-                  <span className="text-xs text-mint ml-2">-{m.deflected}</span>
+                  <span className="text-xs text-emerald-600 ml-2">-{m.deflected}</span>
                 )}
               </div>
             </div>

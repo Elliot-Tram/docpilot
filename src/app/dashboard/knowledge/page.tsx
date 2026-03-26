@@ -193,7 +193,7 @@ export default function KnowledgePage() {
               >
                 {i < scanStep ? (
                   <svg
-                    className="w-5 h-5 text-mint shrink-0"
+                    className="w-5 h-5 text-emerald-600 shrink-0"
                     viewBox="0 0 20 20"
                     fill="none"
                     stroke="currentColor"
@@ -248,7 +248,7 @@ export default function KnowledgePage() {
               <p className="text-sm text-dark/80 font-medium mb-1">
                 Profil pret
               </p>
-              <p className="text-2xl font-semibold tracking-tight text-mint">
+              <p className="text-2xl font-semibold tracking-tight text-emerald-600">
                 Actif
               </p>
             </div>

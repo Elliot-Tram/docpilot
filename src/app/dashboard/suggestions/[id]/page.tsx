@@ -18,9 +18,9 @@ const statusLabel: Record<string, string> = {
 };
 
 const statusColor: Record<string, string> = {
-  draft: "bg-sand text-dark/80",
-  approved: "bg-mint text-dark/80",
-  published: "bg-sky text-dark/80",
+  draft: "bg-amber-100 text-amber-700",
+  approved: "bg-emerald-100 text-emerald-700",
+  published: "bg-blue-100 text-blue-700",
   rejected: "bg-coral/20 text-coral",
 };
 
@@ -194,7 +194,7 @@ export default function ArticleDetailPage() {
             {status === "published" && (
               <span className="text-sm text-dark/80 flex items-center gap-2">
                 <svg
-                  className="w-4 h-4 text-mint"
+                  className="w-4 h-4 text-emerald-600"
                   viewBox="0 0 20 20"
                   fill="none"
                   stroke="currentColor"
@@ -287,7 +287,7 @@ export default function ArticleDetailPage() {
                 <div className="pt-2 space-y-1.5">
                   <div className="flex items-center gap-2 text-xs">
                     {(article.collaboration as SlackThread).expertResponse ? (
-                      <svg className="w-3.5 h-3.5 text-mint" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 10l4 4 6-7"/></svg>
+                      <svg className="w-3.5 h-3.5 text-emerald-600" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 10l4 4 6-7"/></svg>
                     ) : (
                       <div className="w-3.5 h-3.5 rounded-full border border-dark/20" />
                     )}
@@ -295,7 +295,7 @@ export default function ArticleDetailPage() {
                   </div>
                   <div className="flex items-center gap-2 text-xs">
                     {(article.collaboration as SlackThread).aiIntegrated ? (
-                      <svg className="w-3.5 h-3.5 text-mint" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 10l4 4 6-7"/></svg>
+                      <svg className="w-3.5 h-3.5 text-emerald-600" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 10l4 4 6-7"/></svg>
                     ) : (
                       <div className="w-3.5 h-3.5 rounded-full border border-dark/20" />
                     )}
@@ -303,7 +303,7 @@ export default function ArticleDetailPage() {
                   </div>
                   <div className="flex items-center gap-2 text-xs">
                     {(article.collaboration as SlackThread).techValidated ? (
-                      <svg className="w-3.5 h-3.5 text-mint" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 10l4 4 6-7"/></svg>
+                      <svg className="w-3.5 h-3.5 text-emerald-600" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 10l4 4 6-7"/></svg>
                     ) : (
                       <div className="w-3.5 h-3.5 rounded-full border border-dark/20" />
                     )}
@@ -311,7 +311,7 @@ export default function ArticleDetailPage() {
                   </div>
                   <div className="flex items-center gap-2 text-xs">
                     {(article.collaboration as SlackThread).csmValidated ? (
-                      <svg className="w-3.5 h-3.5 text-mint" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 10l4 4 6-7"/></svg>
+                      <svg className="w-3.5 h-3.5 text-emerald-600" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 10l4 4 6-7"/></svg>
                     ) : (
                       <div className="w-3.5 h-3.5 rounded-full border border-dark/20" />
                     )}

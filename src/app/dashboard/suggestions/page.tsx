@@ -12,9 +12,9 @@ const originLabel: Record<ArticleSource, string> = {
 };
 
 const originColor: Record<ArticleSource, string> = {
-  tickets: "bg-sky/10 text-sky",
+  tickets: "bg-blue-100 text-blue-700",
   veille: "bg-orchid/10 text-accent-purple",
-  both: "bg-mint/10 text-dark/85",
+  both: "bg-emerald-100 text-emerald-700",
 };
 
 const fetcher = (url: string) => fetch(url).then((r) => r.json());
@@ -27,9 +27,9 @@ const statusLabel: Record<string, string> = {
 };
 
 const statusColor: Record<string, string> = {
-  draft: "bg-sand text-dark/80",
-  approved: "bg-mint text-dark/80",
-  published: "bg-sky text-dark/80",
+  draft: "bg-amber-100 text-amber-700",
+  approved: "bg-emerald-100 text-emerald-700",
+  published: "bg-blue-100 text-blue-700",
   rejected: "bg-coral/20 text-coral",
 };
 

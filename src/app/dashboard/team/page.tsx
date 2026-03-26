@@ -5,7 +5,7 @@ const experts = [
     name: "Thomas M.",
     role: "Ingenieur VoIP",
     avatar: "TM",
-    color: "bg-sky/20 text-sky",
+    color: "bg-sky/20 text-blue-600",
     slackHandle: "@thomas.music",
     topics: ["Telephonie", "SVI", "Transfert d'appel", "Qualite audio"],
     articlesAssigned: 3,
@@ -38,7 +38,7 @@ const experts = [
     name: "Marie L.",
     role: "Product Manager Telephonie",
     avatar: "ML",
-    color: "bg-sand text-dark/80",
+    color: "bg-amber-100 text-amber-700",
     slackHandle: "@marie.pm",
     topics: ["Receptionniste IA", "SVI", "Numeros", "Portabilite", "App mobile"],
     articlesAssigned: 2,
@@ -117,13 +117,13 @@ const statusLabel = {
 };
 
 const statusColor = {
-  available: "bg-mint text-dark/80",
-  busy: "bg-sand text-dark/80",
+  available: "bg-emerald-100 text-emerald-700",
+  busy: "bg-amber-100 text-amber-700",
 };
 
 const messageStatusConfig = {
   responded: { label: "Repondu", color: "bg-mint/20 text-dark/80" },
-  waiting: { label: "En attente", color: "bg-sand text-dark/80" },
+  waiting: { label: "En attente", color: "bg-amber-100 text-amber-700" },
 };
 
 export default function TeamPage() {
