@@ -59,6 +59,15 @@ const navItems = [
     ),
   },
   {
+    label: "Analytics",
+    href: "/dashboard/analytics",
+    icon: (
+      <svg className="w-5 h-5" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M3 17V10h3v7H3zM8.5 17V7h3v10h-3zM14 17V3h3v14h-3z" />
+      </svg>
+    ),
+  },
+  {
     label: "Equipe & Slack",
     href: "/dashboard/team",
     icon: (
