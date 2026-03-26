@@ -82,26 +82,26 @@ const features = [
   {
     icon: IconTicketToArticle,
     color: "bg-orchid/30 text-accent-purple",
-    label: "Fini les tickets répétitifs",
+    label: "Fini les tickets repetitifs",
     title: "Vos tickets deviennent des articles",
     description:
-      "Docpilot analyse vos tickets Zendesk, Intercom ou Freshdesk, détecte les questions récurrentes et génère des articles prêts à publier. Vos clients trouvent la réponse eux-mêmes, le ticket n'arrive jamais.",
+      "Docpilot analyse vos tickets Zendesk, Intercom ou Freshdesk, detecte les questions recurrentes et genere des articles prets a publier. Vos clients trouvent la reponse eux-memes, le ticket n'arrive jamais.",
   },
   {
     icon: IconRadar,
     color: "bg-sky/30 text-accent-purple",
-    label: "Toujours à jour",
-    title: "Votre doc suit le rythme de votre produit",
+    label: "Votre style, pas celui d'un robot",
+    title: "L'IA ecrit comme vous",
     description:
-      "À chaque nouvelle feature, bug récurrent ou changement produit, Docpilot détecte le gap et propose un brouillon. Votre help center n'est plus jamais en retard.",
+      "Docpilot scanne votre help center existant et en extrait votre ton, votre vocabulaire et votre structure. Chaque article genere colle a votre marque des le premier brouillon. Pas de contenu generique.",
   },
   {
     icon: IconSlackBot,
     color: "bg-mint/30 text-accent-purple",
-    label: "Zéro effort pour votre équipe",
-    title: "Relisez, approuvez, c'est en ligne",
+    label: "Collaboration automatique via Slack",
+    title: "L'expert repond, l'IA reformule",
     description:
-      "Docpilot collecte l'info technique auprès de vos ingénieurs via Slack, rédige le brouillon et vous le soumet. Vous validez en un clic, pas besoin d'écrire une ligne.",
+      "Docpilot identifie le bon expert interne, lui envoie un message Slack avec le draft et une question precise. L'expert repond en quelques mots, l'IA integre sa correction. Personne n'ecrit un article.",
   },
 ];
 
@@ -109,17 +109,22 @@ const steps = [
   {
     num: "01",
     title: "Connectez vos sources",
-    description: "Zendesk, Intercom, Freshdesk, en 2 minutes.",
+    description: "Tickets (Zendesk, Intercom), CRM (HubSpot), appels (Claap, Gong). En 2 minutes.",
   },
   {
     num: "02",
-    title: "L'IA analyse vos tickets",
-    description: "Détection des questions récurrentes et des lacunes documentaires.",
+    title: "L'IA detecte et redige",
+    description: "Detection des questions recurrentes, analyse de votre ton editorial, generation des brouillons.",
   },
   {
     num: "03",
-    title: "Validez et publiez",
-    description: "Relisez les brouillons, approuvez, et publiez en un clic sur votre help center.",
+    title: "Vos experts valident via Slack",
+    description: "Docpilot contacte automatiquement le bon expert. Il repond, l'IA integre sa correction.",
+  },
+  {
+    num: "04",
+    title: "Relisez et publiez",
+    description: "Vous relisez le draft final et publiez en un clic. L'article est en ligne.",
   },
 ];
 
@@ -127,7 +132,7 @@ const stats = [
   { value: "81%", label: "des clients cherchent dans la doc avant de contacter le support" },
   { value: "40%", label: "des tickets support portent sur des questions déjà documentables" },
   { value: "< 5 min", label: "pour générer un article complet depuis vos tickets" },
-  { value: "78%", label: "des clients ne reviennent pas après un mauvais service" },
+  { value: "3h → 15 min", label: "pour creer un article complet avec validation technique" },
 ];
 
 /* ─────────────────────── Waitlist Form ─────────────────────── */
@@ -249,7 +254,8 @@ export default function Home() {
             {[
               { name: "Zendesk", domain: "zendesk.com" },
               { name: "Intercom", domain: "intercom.com" },
-              { name: "Freshdesk", domain: "freshdesk.com" },
+              { name: "HubSpot", domain: "hubspot.com" },
+              { name: "Slack", domain: "slack.com" },
             ].map((tool) => (
               <div key={tool.name} className="flex items-center gap-2 border border-dark/8 px-3 py-1.5 rounded-lg">
                 <Image
@@ -262,7 +268,7 @@ export default function Home() {
                 <span className="text-sm font-medium text-dark/40">{tool.name}</span>
               </div>
             ))}
-            <span className="text-sm text-dark/30">et bien d&apos;autres</span>
+            <span className="text-sm text-dark/30">et plus</span>
           </div>
         </div>
       </section>
@@ -400,7 +406,7 @@ export default function Home() {
               Comment ça marche
             </span>
             <h2 className="text-4xl md:text-[48px] font-normal tracking-[-1.5px] mt-6">
-              Trois étapes. Zéro effort.
+              Quatre etapes. Zero effort.
             </h2>
           </div>
           <div className="space-y-12">
