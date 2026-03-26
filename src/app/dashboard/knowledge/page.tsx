@@ -69,7 +69,7 @@ export default function KnowledgePage() {
   const [scanning, setScanning] = useState(false);
   const [scanStep, setScanStep] = useState(0);
   const [profile, setProfile] = useState<BrandProfile | null>(null);
-  const [demoStep, setDemoStep] = useState<"welcome" | "scan" | "done">("scan");
+  const [demoStep, setDemoStep] = useState<"welcome" | "scan" | "done">("done");
   const sectionRefs = useRef<(HTMLDivElement | null)[]>([]);
   const [activeSection, setActiveSection] = useState(-1);
 
@@ -77,11 +77,7 @@ export default function KnowledgePage() {
   useEffect(() => {
     if (!profile || activeSection < 0) return;
     if (activeSection >= sectionRefs.current.length) {
-      // Done scrolling, go to competitors
-      const timer = setTimeout(() => {
-        window.location.href = "/dashboard/competitors";
-      }, 1500);
-      return () => clearTimeout(timer);
+      return;
     }
     const el = sectionRefs.current[activeSection];
     if (el) {
