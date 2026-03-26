@@ -15,7 +15,7 @@ const originLabel: Record<string, string> = {
 const originColor: Record<string, string> = {
   tickets: "bg-sky/10 text-sky",
   veille: "bg-orchid/10 text-accent-purple",
-  both: "bg-mint/10 text-dark/60",
+  both: "bg-mint/10 text-dark/75",
 };
 
 const statusLabel: Record<string, string> = {
@@ -64,7 +64,7 @@ export default function DashboardOverview() {
         <h1 className="text-2xl font-medium tracking-[-0.5px]">
           Vue d&apos;ensemble
         </h1>
-        <p className="text-dark/60 mt-1">
+        <p className="text-dark/75 mt-1">
           Activite de votre help center automatise
         </p>
       </div>
@@ -77,7 +77,7 @@ export default function DashboardOverview() {
                 key={s.label}
                 className="bg-lift rounded-2xl p-6 shadow-[0_2px_20px_rgba(0,0,0,0.03)]"
               >
-                <p className="text-sm text-dark/55 font-medium mb-2">{s.label}</p>
+                <p className="text-sm text-dark/70 font-medium mb-2">{s.label}</p>
                 <p className="text-3xl font-semibold tracking-tight">{s.value}</p>
               </div>
             ))
@@ -95,8 +95,8 @@ export default function DashboardOverview() {
       {/* Empty state */}
       {articles.length === 0 && (
         <div className="bg-lift rounded-2xl shadow-[0_2px_20px_rgba(0,0,0,0.03)] p-12 text-center">
-          <p className="text-dark/55 mb-2">Aucun article pour le moment</p>
-          <p className="text-sm text-dark/45">
+          <p className="text-dark/70 mb-2">Aucun article pour le moment</p>
+          <p className="text-sm text-dark/65">
             Connectez une source de tickets pour commencer.
           </p>
           <Link
@@ -124,22 +124,22 @@ export default function DashboardOverview() {
             <table className="w-full">
               <thead>
                 <tr className="border-b border-dark/5">
-                  <th className="text-left text-xs font-medium text-dark/55 uppercase tracking-wider px-6 py-3">
+                  <th className="text-left text-xs font-medium text-dark/70 uppercase tracking-wider px-6 py-3">
                     Article
                   </th>
-                  <th className="text-left text-xs font-medium text-dark/55 uppercase tracking-wider px-6 py-3">
+                  <th className="text-left text-xs font-medium text-dark/70 uppercase tracking-wider px-6 py-3">
                     Catégorie
                   </th>
-                  <th className="text-left text-xs font-medium text-dark/55 uppercase tracking-wider px-6 py-3">
+                  <th className="text-left text-xs font-medium text-dark/70 uppercase tracking-wider px-6 py-3">
                     Tickets
                   </th>
-                  <th className="text-left text-xs font-medium text-dark/55 uppercase tracking-wider px-6 py-3">
+                  <th className="text-left text-xs font-medium text-dark/70 uppercase tracking-wider px-6 py-3">
                     Confiance
                   </th>
-                  <th className="text-left text-xs font-medium text-dark/55 uppercase tracking-wider px-6 py-3">
+                  <th className="text-left text-xs font-medium text-dark/70 uppercase tracking-wider px-6 py-3">
                     Source
                   </th>
-                  <th className="text-left text-xs font-medium text-dark/55 uppercase tracking-wider px-6 py-3">
+                  <th className="text-left text-xs font-medium text-dark/70 uppercase tracking-wider px-6 py-3">
                     Statut
                   </th>
                 </tr>
@@ -159,7 +159,7 @@ export default function DashboardOverview() {
                       </Link>
                     </td>
                     <td className="px-6 py-4">
-                      <span className="font-mono text-xs text-dark/60">
+                      <span className="font-mono text-xs text-dark/75">
                         {article.category}
                       </span>
                     </td>
@@ -185,7 +185,7 @@ export default function DashboardOverview() {
                       {article.origin && (
                         <span
                           className={`text-[10px] font-medium px-2 py-0.5 rounded-full ${
-                            originColor[article.origin] || "bg-dark/5 text-dark/55"
+                            originColor[article.origin] || "bg-dark/5 text-dark/70"
                           }`}
                         >
                           {originLabel[article.origin] || article.origin}

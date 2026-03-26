@@ -58,6 +58,18 @@ const navItems = [
       </svg>
     ),
   },
+  {
+    label: "Equipe & Slack",
+    href: "/dashboard/team",
+    icon: (
+      <svg className="w-5 h-5" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <circle cx="7" cy="7" r="3" />
+        <circle cx="14" cy="8" r="2.5" />
+        <path d="M1 17c0-3 2.5-5 6-5s6 2 6 5" />
+        <path d="M13 14c2.5 0 5 1.5 5 3.5" />
+      </svg>
+    ),
+  },
 ];
 
 export default function DashboardLayout({
