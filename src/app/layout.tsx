@@ -39,7 +39,7 @@ export default function RootLayout({
         className={`${jakarta.variable} ${jetbrains.variable} font-sans antialiased`}
       >
         <GoogleTagManager gtmId="GTM-PQ53F8RB" />
-        <GoogleAnalytics gaId="G-V644R0HGX3" />
+        <GoogleAnalytics gaId="G-P5KHM164G5" />
         {children}
       </body>
     </html>
